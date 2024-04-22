@@ -11,9 +11,10 @@ docker ps
    // /usr/local/bin/yapf
    // -i $FileName$
    // $FileName$
-4. 参考configure-pycharm.
-5. reopen pycharm, close welcome reminder.
-6. 配置浏览器，加入https://www.baidu.com,https://netron.app等到收藏栏.
+4. setting->editor->code folding 全部去掉勾选.
+5. setting->editor->inlay hints 全部去掉勾选.
+6. reopen pycharm, close welcome reminder.
+7. 配置浏览器，加入https://www.baidu.com,https://netron.app等到收藏栏.
 
 docker commit jetbrains-pycharm 10.150.9.98:80/devops_tools/jetbrains-pycharm:master
 docker push 10.150.9.98:80/devops_tools/jetbrains-pycharm:master
