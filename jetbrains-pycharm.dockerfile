@@ -13,8 +13,6 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # configure system.
 RUN set -x \
-&& echo "fs.inotify.max_user_watches = 500000" > /etc/sysctl.d/60-jetbrains.conf \
-&& sysctl -p \
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
 # install pycharm.
@@ -34,5 +32,7 @@ Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/pycharm.desktop \
+&& echo "fs.inotify.max_user_watches = 500000" > /etc/sysctl.d/60-jetbrains.conf \
+&& sysctl -p \
 && rm -rf /tmp/* \
 && echo "end"

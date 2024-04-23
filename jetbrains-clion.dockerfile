@@ -11,12 +11,6 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
-# configure system.
-RUN set -x \
-&& echo "fs.inotify.max_user_watches = 500000" > /etc/sysctl.d/60-jetbrains.conf \
-&& sysctl -p \
-&& echo "end"
-#-----------------------------------------------------------------------------------------------------------------------
 # install clion.
 RUN set -x \
 && apt update \
@@ -32,5 +26,7 @@ Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/clion.desktop \
+&& echo "fs.inotify.max_user_watches = 500000" > /etc/sysctl.d/60-jetbrains.conf \
+&& sysctl -p \
 && rm -rf /tmp/* \
 && echo "end"
