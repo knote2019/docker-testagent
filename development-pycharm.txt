@@ -12,15 +12,15 @@ docker ps
 3. create default project.
 4. install eclipse keymap plugin.
 5. install file watchers plugin and configure yapf.
-   // /usr/local/bin/yapf
-   // -i $FileName$
-   // $FileName$
+   /usr/local/bin/yapf
+   -i $FileName$
+   $FileName$
 6. setting->editor->code folding 去除所有勾选.
 7. setting->editor->inlay hints  去除所有勾选.
 8. reopen pycharm, close welcome reminder.
 9. configure chrome.
-   // https://www.baidu.com
-   // https://netron.app
+   https://www.baidu.com
+   https://netron.app
 
 docker commit development-pycharm 10.150.9.98:80/devops_tools/development-pycharm:master
 docker push 10.150.9.98:80/devops_tools/development-pycharm:master
