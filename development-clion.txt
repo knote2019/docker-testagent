@@ -6,10 +6,10 @@ docker run -itd --privileged -p:22 -p :6901 --name development-clion development
 docker ps
 
 配置 clion:
-1. disable AI related plugins.
-2. import color scheme.
+1. create default project.
+2. disable AI related plugins.
+3. import color scheme.
    http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls
-3. create default project.
 4. install eclipse keymap plugin.
 5. install file watchers plugin and configure clang-format.
    /usr/bin/clang-format
