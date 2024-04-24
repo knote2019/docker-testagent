@@ -14,6 +14,7 @@ RUN set -x \
 # install clion.
 RUN set -x \
 && apt update \
+&& apt install -y clang-format \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/CLion-2021.3.4.tar.gz -P /tmp \
 && tar -xzf /tmp/CLion-2021.3.4.tar.gz -C /opt \
 && echo "\
