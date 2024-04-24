@@ -15,19 +15,17 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y clang-format \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/CLion-2021.3.4.tar.gz -P /tmp \
-&& tar -xzf /tmp/CLion-2021.3.4.tar.gz -C /opt \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/CLion-2023.3.tar.gz -P /tmp \
+&& tar -xzf /tmp/CLion-2023.3.tar.gz -C /opt \
 && echo "\
 [Desktop Entry]\n\
 Name=CLion\n\
 Comment=CLion\n\
-Exec=/opt/clion-2021.3.4/bin/clion.sh\n\
-Icon=/opt/clion-2021.3.4/bin/clion.png\n\
+Exec=/opt/clion-2023.3/bin/clion.sh\n\
+Icon=/opt/clion-2023.3/bin/clion.png\n\
 Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/clion.desktop \
-&& echo "fs.inotify.max_user_watches = 500000" > /etc/sysctl.d/60-jetbrains.conf \
-&& sysctl -p \
 && rm -rf /tmp/* \
 && echo "end"
