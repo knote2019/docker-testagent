@@ -1,1 +1,1 @@
-# jetbrains-ide
+# development-ide
