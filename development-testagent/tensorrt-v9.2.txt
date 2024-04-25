@@ -1,0 +1,7 @@
+
+
+docker build --force-rm --tag 10.150.9.98:80/devops_tools/tensorrt-v9.2:master --file tensorrt-v9.2.dockerfile .
+docker push 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
+
+docker pull 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
+docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -p :22 -p :6901 -v /code:/code --name tensorrt-v9.2 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
