@@ -39,56 +39,6 @@ RUN set -x \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
 && echo "end"
 
-# install clang.
-RUN set -x \
-&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
-> /etc/apt/sources.list.d/clang.list \
-&& wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
-&& apt update \
-&& apt install -y clang-16 \
-&& apt install -y lldb-16 \
-&& apt install -y lld-16 \
-&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
-&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
-&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
-&& apt clean all \
-&& echo "end"
-
-# install cmake.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
-&& bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
-&& ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install opencv.
-RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& wget -nv http://10.113.3.1/corex/toolbox/opencv/4.8.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/4.8.0.tar.gz -C /tmp \
-&& mkdir /tmp/opencv-4.8.0/build \
-&& cd /tmp/opencv-4.8.0/build \
-&& cmake -D CMAKE_INSTALL_PREFIX=/tmp/opencv .. \
-&& make -j32 \
-&& make install \
-&& cp -r /tmp/opencv/include/opencv4/* /usr/local/include \
-&& cp -r /tmp/opencv/lib/* /usr/local/lib \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install openmpi.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
-&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
-&& cd /tmp/openmpi-5.0.2 \
-&& ./configure \
-&& make -j32 \
-&& make install \
-&& ldconfig \
-&& rm -rf /tmp/* \
-&& echo "end"
-
 #-----------------------------------------------------------------------------------------------------------------------
 # install umd.
 RUN set -x \
@@ -124,3 +74,26 @@ RUN set -x \
 && echo "end"
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+
+# install clang.
+RUN set -x \
+&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
+> /etc/apt/sources.list.d/clang.list \
+&& wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
+&& apt update \
+&& apt install -y clang-16 \
+&& apt install -y lldb-16 \
+&& apt install -y lld-16 \
+&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
+&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
+&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
+&& apt clean all \
+&& echo "end"
+
+# install cmake.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
+&& bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
+&& ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
+&& rm -rf /tmp/* \
+&& echo "end"

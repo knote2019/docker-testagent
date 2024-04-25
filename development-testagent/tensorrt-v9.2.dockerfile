@@ -39,6 +39,42 @@ RUN set -x \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
 && echo "end"
 
+#-----------------------------------------------------------------------------------------------------------------------
+# install umd.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-535.54.03.run -P /tmp \
+&& bash /tmp/NVIDIA-Linux-x86_64-535.54.03.run --extract-only --target /tmp/umd \
+&& cp /tmp/umd/libcuda.so.535.54.03 /usr/lib/x86_64-linux-gnu \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.535.54.03 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.1 /usr/lib/x86_64-linux-gnu/libcuda.so \
+&& cp /tmp/umd/libnvidia-ml.so.535.54.03 /usr/lib/x86_64-linux-gnu \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.535.54.03 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
+&& cp /tmp/umd/nvidia-smi /usr/bin \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+# install cuda.
+RUN set -x \
+&& apt update \
+&& apt install -y libxml2 \
+&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.1.1_530.30.02_linux.run -P /tmp \
+&& bash /tmp/cuda_12.1.1_530.30.02_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.6.50_cuda12-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.6.50_cuda12-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.18.3-1+cuda12.1_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.18.3-1+cuda12.1_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/lib/* /usr/local/cuda/lib64 \
+&& ldconfig \
+&& rm -rf /tmp/* \
+&& echo "end"
+ENV PATH=$PATH:/usr/local/cuda/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+
 # install clang.
 RUN set -x \
 && echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
@@ -107,42 +143,6 @@ RUN set -x \
 && ldconfig \
 && rm -rf /tmp/* \
 && echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install umd.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-535.54.03.run -P /tmp \
-&& bash /tmp/NVIDIA-Linux-x86_64-535.54.03.run --extract-only --target /tmp/umd \
-&& cp /tmp/umd/libcuda.so.535.54.03 /usr/lib/x86_64-linux-gnu \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.535.54.03 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.1 /usr/lib/x86_64-linux-gnu/libcuda.so \
-&& cp /tmp/umd/libnvidia-ml.so.535.54.03 /usr/lib/x86_64-linux-gnu \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.535.54.03 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
-&& cp /tmp/umd/nvidia-smi /usr/bin \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install cuda.
-RUN set -x \
-&& apt update \
-&& apt install -y libxml2 \
-&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.1.1_530.30.02_linux.run -P /tmp \
-&& bash /tmp/cuda_12.1.1_530.30.02_linux.run --toolkit --silent \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-8.9.6.50_cuda12-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-8.9.6.50_cuda12-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-8.9.6.50_cuda12-archive/lib/* /usr/local/cuda/lib64 \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.18.3-1+cuda12.1_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.18.3-1+cuda12.1_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/lib/* /usr/local/cuda/lib64 \
-&& ldconfig \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV PATH=$PATH:/usr/local/cuda/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 # install torch.
 RUN set -x \
