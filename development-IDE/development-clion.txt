@@ -17,9 +17,8 @@ docker ps
    $FileName$
 6. setting->editor->code folding 去除所有勾选.
 7. setting->editor->inlay hints  去除所有勾选.
-8. setting 里面的encode设置.
-9. reopen IDE, close welcome reminder.
-10. configure chrome.
+8. reopen IDE, close welcome reminder.
+9. configure chrome.
    https://www.baidu.com
    https://netron.app
 
