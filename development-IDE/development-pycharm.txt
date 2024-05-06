@@ -5,6 +5,10 @@ docker build --force-rm --tag development-pycharm:master --file development-pych
 docker run -itd --privileged -p:22 -p :6901 --name development-pycharm development-pycharm:master
 docker ps
 
+配置 chrome:
+   https://www.baidu.com
+   https://netron.app
+
 配置 pycharm:
 1. disable new UI and create default project.
 2. disable AI related plugins.
@@ -18,9 +22,6 @@ docker ps
 6. setting->editor->code folding 去除所有勾选.
 7. setting->editor->inlay hints  去除所有勾选.
 8. reopen IDE, close welcome reminder.
-9. configure chrome.
-   https://www.baidu.com
-   https://netron.app
 
 docker commit development-pycharm 10.150.9.98:80/devops_tools/development-pycharm:master
 docker push 10.150.9.98:80/devops_tools/development-pycharm:master
