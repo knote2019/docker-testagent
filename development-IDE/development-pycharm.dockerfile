@@ -6,7 +6,7 @@ RUN set -x \
 && apt install ttf-wqy-zenhei \
 && wget -nv http://10.113.3.1/corex/toolbox/chrome/google-chrome-stable_current_amd64.deb -P /tmp \
 && apt install -y -f /tmp/google-chrome-stable_current_amd64.deb \
-&& sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox/' /usr/share/applications/google-chrome.desktop \
+&& sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox --no-first-run/' /usr/share/applications/google-chrome.desktop \
 && apt clean all \
 && rm -rf /tmp/* \
 && echo "end"
@@ -28,4 +28,5 @@ Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/pycharm.desktop \
 && rm -rf /tmp/* \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/pycharm-color-scheme-2024-04-24.icls -P /tmp \
 && echo "end"
