@@ -21,16 +21,16 @@ RUN set -x \
 
 # set timezone.
 RUN set -x \
+&& apt update \
+&& apt install -y tzdata \
 && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && echo "end"
 
 # install language.
 RUN set -x \
-&& apt-get install -y language-pack-zh-hans \
+&& apt install -y language-pack-zh-hans \
+&& apt install -y language-pack-zh-hant \
 && echo "end"
-ENV LANG=zh_CN.utf8
-ENV LANGUAGE=zh_CN.utf8
-ENV LC_ALL=zh_CN.utf8
 
 # configure bashrc.
 RUN set -x \
