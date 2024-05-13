@@ -150,6 +150,15 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.16.1+cu121-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
+# install transformer engine.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/transformerengine/TransformerEngine.tar.gz -P /tmp \
+&& tar -xzf /tmp/TransformerEngine.tar.gz -C /tmp \
+&& cd /tmp/TransformerEngine \
+&& python setup.py install \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install transformers.
 RUN set -x \
 && pip install transformers==4.33.1 \
