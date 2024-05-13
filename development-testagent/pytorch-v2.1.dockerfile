@@ -152,10 +152,12 @@ RUN set -x \
 
 # install transformer engine.
 RUN set -x \
+&& pip install packaging \
+&& pip install flash-attn==2.4.2 \
 && wget -nv http://10.113.3.1/corex/toolbox/transformerengine/TransformerEngine.tar.gz -P /tmp \
 && tar -xzf /tmp/TransformerEngine.tar.gz -C /tmp \
 && cd /tmp/TransformerEngine \
-&& python setup.py install \
+&& pip install . \
 && rm -rf /tmp/* \
 && echo "end"
 
