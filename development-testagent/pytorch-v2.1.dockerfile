@@ -157,7 +157,6 @@ RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/transformerengine/TransformerEngine.tar.gz -P /tmp \
 && tar -xzf /tmp/TransformerEngine.tar.gz -C /tmp \
 && cd /tmp/TransformerEngine \
-&& export NVTE_FRAMEWORK=pytorch \
 && pip install . \
 && rm -rf /tmp/* \
 && echo "end"
