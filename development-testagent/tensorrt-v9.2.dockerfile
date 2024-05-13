@@ -104,9 +104,9 @@ RUN set -x \
 && apt install -y libx264-dev \
 && apt install -y libx265-dev \
 && apt install -y libsdl2-dev \
-&& wget -nv http://10.113.3.1/corex/toolbox/ffmpeg/n6.1.tar.gz -P /tmp \
-&& tar -xzf /tmp/n6.1.tar.gz -C /tmp \
-&& cd /tmp/FFmpeg-n6.1 \
+&& wget -nv http://10.113.3.1/corex/toolbox/ffmpeg/n7.0.tar.gz -P /tmp \
+&& tar -xzf /tmp/n7.0.tar.gz -C /tmp \
+&& cd /tmp/FFmpeg-n7.0 \
 && ./configure --prefix=/usr/local/ffmpeg --enable-gpl --enable-libx264 --enable-libx265 --enable-ffplay --enable-ffprobe --enable-shared \
 && make -j32 \
 && make install \
