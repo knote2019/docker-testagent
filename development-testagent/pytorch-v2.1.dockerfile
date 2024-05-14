@@ -154,9 +154,8 @@ RUN set -x \
 RUN set -x \
 && pip install packaging \
 && pip install flash-attn==2.4.2 \
-&& wget -nv http://10.113.3.1/corex/toolbox/transformerengine/TransformerEngine.tar.gz -P /tmp \
-&& tar -xzf /tmp/TransformerEngine.tar.gz -C /tmp \
-&& cd /tmp/TransformerEngine \
+&& git clone --branch release_v1.6 --recursive https://github.com/NVIDIA/TransformerEngine.git \
+&& cd TransformerEngine \
 && export NVTE_FRAMEWORK=pytorch \
 && pip install . \
 && rm -rf /tmp/* \
