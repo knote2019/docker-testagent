@@ -178,7 +178,7 @@ RUN set -x \
 # install torch-examples.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/pytorch-models/torch-examples-main.zip -P /tmp \
-&& tar -xzf /tmp/torch-examples-main.zip -d /root \
+&& unzip -q /tmp/torch-examples-main.zip -d /root \
 && rm -rf /tmp/* \
 && echo "end"
 
