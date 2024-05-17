@@ -189,3 +189,10 @@ RUN set -x \
 && pip install ultralytics \
 && rm -rf /tmp/* \
 && echo "end"
+
+# install llama2.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/llm-models/llama-v2.tar.gz -P /tmp \
+&& tar -xzf /tmp/llama-v2.tar.gz -C /root \
+&& rm -rf /tmp/* \
+&& echo "end"
