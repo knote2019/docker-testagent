@@ -5,10 +5,10 @@ docker build --force-rm --tag development-clion:master --file development-clion.
 docker run -itd --privileged -p:22 -p :6901 --name development-clion development-clion:master
 docker ps
 
-配置 chrome:
+configure chrome:
    https://netron.app
 
-配置 clion:
+configure clion:
 1. disable new UI and create default project.
 2. disable AI related plugins.
 3. install eclipse keymap plugin and set as this keymap.
@@ -16,8 +16,8 @@ docker ps
    /usr/bin/clang-format
    -i $FileName$ --style=file
    $FileName$
-5. setting->editor->code folding 去除所有勾选.
-6. setting->editor->inlay hints  去除所有勾选.
+5. setting->editor->code folding # remove all choose option
+6. setting->editor->inlay hints  # remove all choose option
 7. import color scheme.
    /tmp/clion-color-scheme-2024-04-24.icls
 8. reopen IDE, close welcome reminder.
