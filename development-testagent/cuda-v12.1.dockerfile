@@ -75,6 +75,22 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
+# install nvtop.
+RUN set -x \
+&& apt install -y libncurses5-dev \
+&& apt install -y libncursesw5-dev \
+&& apt install -y libudev-dev \
+&& apt install -y libdrm-dev \
+&& wget -nv http://10.113.3.1/corex/toolbox/nvtop/nvtop-3.1.0.tar.gz -P /tmp \
+&& tar -xzf /tmp/nvtop-3.1.0.tar.gz -C /tmp \
+&& mkdir /tmp/nvtop-3.1.0/build \
+&& cd /tmp/nvtop-3.1.0/build \
+&& cmake .. \
+&& make \
+&& mv src/nvtop /usr/bin/ixtop \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install clang.
 RUN set -x \
 && echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
