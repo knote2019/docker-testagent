@@ -2,7 +2,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 docker build --force-rm --tag development-pycharm:master --file development-pycharm.dockerfile .
-docker run -itd --privileged -p:22 -p :6901 --name development-pycharm development-pycharm:master
+docker run -itd --privileged -P --name development-pycharm development-pycharm:master
 docker ps
 
 configure chrome:

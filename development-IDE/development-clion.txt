@@ -2,7 +2,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 docker build --force-rm --tag development-clion:master --file development-clion.dockerfile .
-docker run -itd --privileged -p:22 -p :6901 --name development-clion development-clion:master
+docker run -itd --privileged -P --name development-clion development-clion:master
 docker ps
 
 configure chrome:
