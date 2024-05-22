@@ -177,6 +177,16 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install megatron.
+RUN set -x \
+&& pip install sentencepiece \
+&& wget -nv http://10.113.3.1/corex/toolbox/megatron/Megatron-LM-0.7.0.tar.gz -P /tmp \
+&& tar -xzf /tmp/Megatron-LM-0.7.0.tar.gz -C /tmp \
+&& cd /tmp/Megatron-LM \
+&& pip install .\
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install transformers.
 RUN set -x \
 && pip install transformers==4.33.1 \
@@ -191,24 +201,31 @@ RUN set -x \
 && pip install onnx \
 && echo "end"
 
-# install torch-examples.
+#-----------------------------------------------------------------------------------------------------------------------
+# download torch-examples repo.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/pytorch-models/torch-examples-main.zip -P /tmp \
 && unzip -q /tmp/torch-examples-main.zip -d /root \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install ultralytics.
+# download yolov5 repo.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/pytorch-models/yolov5-v7.0.tar.gz -P /tmp \
 && tar -xzf /tmp/yolov5-v7.0.tar.gz -C /root \
-&& pip install ultralytics \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install llama2.
+# download llama2 repo.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/llm-models/llama-v2.tar.gz -P /tmp \
 && tar -xzf /tmp/llama-v2.tar.gz -C /root \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+# download megatron repo.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/megatron/Megatron-LM-0.7.0.tar.gz -P /tmp \
+&& tar -xzf /tmp/Megatron-LM-0.7.0.tar.gz -C /root \
 && rm -rf /tmp/* \
 && echo "end"
