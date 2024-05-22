@@ -166,12 +166,12 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.16.1+cu121-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install transformer engine.
+# install transformer engine (need install from git clone code).
 RUN set -x \
 && pip install packaging \
 && pip install flash-attn==2.4.2 \
-&& git clone --branch release_v1.6 --recursive https://github.com/NVIDIA/TransformerEngine.git \
-&& cd TransformerEngine \
+&& git clone --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
+&& cd /tmp/TransformerEngine \
 && export NVTE_FRAMEWORK=pytorch \
 && pip install . \
 && rm -rf /tmp/* \
