@@ -177,16 +177,6 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install megatron.
-RUN set -x \
-&& pip install sentencepiece \
-&& wget -nv http://10.113.3.1/corex/toolbox/megatron/Megatron-LM-0.7.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/Megatron-LM-0.7.0.tar.gz -C /tmp \
-&& cd /tmp/Megatron-LM \
-&& pip install .\
-&& rm -rf /tmp/* \
-&& echo "end"
-
 # install transformers.
 RUN set -x \
 && pip install transformers==4.33.1 \
@@ -225,7 +215,5 @@ RUN set -x \
 
 # download megatron repo.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/megatron/Megatron-LM-0.7.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/Megatron-LM-0.7.0.tar.gz -C /root \
-&& rm -rf /tmp/* \
+&& git clone -b core_r0.4.0 https://github.com/NVIDIA/Megatron-LM.git /root/megatron \
 && echo "end"
