@@ -215,5 +215,5 @@ RUN set -x \
 
 # download megatron repo.
 RUN set -x \
-&& git clone -b core_r0.6.0 https://github.com/NVIDIA/Megatron-LM.git /root/megatron \
+&& git clone -b core_r0.6.0 https://github.com/NVIDIA/Megatron-LM.git /root/megatron-0.6 \
 && echo "end"
