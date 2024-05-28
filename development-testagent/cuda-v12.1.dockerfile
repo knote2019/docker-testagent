@@ -113,3 +113,15 @@ RUN set -x \
 && mv src/nvtop /usr/bin/ixtop \
 && rm -rf /tmp/* \
 && echo "end"
+
+# GUI tool.
+RUN set -x \
+&& apt install -y libxkbcommon-x11-0 \
+&& apt install -y libxcb-icccm4 \
+&& apt install -y libxcb-image0 \
+&& apt install -y libxcb-keysyms1 \
+&& apt install -y libxcb-render-util0 \
+&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
+&& rm -f /usr/share/applications/nsight.desktop \
+&& rm -f /usr/share/applications/nvvp.desktop \
+&& echo "end"
