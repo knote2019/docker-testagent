@@ -197,11 +197,11 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install python-3pp.
 RUN set -x \
+&& pip install fire \
 && pip install numpy \
 && pip install scipy \
 && pip install opencv_python \
 && pip install onnx \
-&& pip install fire \
 && pip install fairscale \
 && echo "end"
 
