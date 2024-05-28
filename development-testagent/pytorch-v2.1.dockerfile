@@ -203,6 +203,7 @@ RUN set -x \
 && pip install opencv_python \
 && pip install onnx \
 && pip install fairscale \
+&& pip install sentencepiece \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
