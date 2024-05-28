@@ -201,6 +201,8 @@ RUN set -x \
 && pip install scipy \
 && pip install opencv_python \
 && pip install onnx \
+&& pip install fire \
+&& pip install fairscale \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
