@@ -75,6 +75,18 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
+# cuda GUI tool.
+RUN set -x \
+&& apt install -y libxkbcommon-x11-0 \
+&& apt install -y libxcb-icccm4 \
+&& apt install -y libxcb-image0 \
+&& apt install -y libxcb-keysyms1 \
+&& apt install -y libxcb-render-util0 \
+&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
+&& rm -f /usr/share/applications/nsight.desktop \
+&& rm -f /usr/share/applications/nvvp.desktop \
+&& echo "end"
+
 # install clang.
 RUN set -x \
 && echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
@@ -112,16 +124,4 @@ RUN set -x \
 && make \
 && mv src/nvtop /usr/bin/ixtop \
 && rm -rf /tmp/* \
-&& echo "end"
-
-# GUI tool.
-RUN set -x \
-&& apt install -y libxkbcommon-x11-0 \
-&& apt install -y libxcb-icccm4 \
-&& apt install -y libxcb-image0 \
-&& apt install -y libxcb-keysyms1 \
-&& apt install -y libxcb-render-util0 \
-&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
-&& rm -f /usr/share/applications/nsight.desktop \
-&& rm -f /usr/share/applications/nvvp.desktop \
 && echo "end"
