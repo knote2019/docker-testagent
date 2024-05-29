@@ -39,6 +39,16 @@ RUN set -x \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
 && echo "end"
 
+# add more xcb libs for GUI apps.
+RUN set -x \
+&& apt install -y libxkbcommon-x11-0 \
+&& apt install -y libxcb-icccm4 \
+&& apt install -y libxcb-image0 \
+&& apt install -y libxcb-keysyms1 \
+&& apt install -y libxcb-render-util0 \
+&& apt install -y libxcb-xinerama0 \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install umd.
 RUN set -x \
@@ -70,22 +80,13 @@ RUN set -x \
 && cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/include/* /usr/local/cuda/include \
 && cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/lib/* /usr/local/cuda/lib64 \
 && ldconfig \
+&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
+&& rm -f /usr/share/applications/nsight.desktop \
+&& rm -f /usr/share/applications/nvvp.desktop \
 && rm -rf /tmp/* \
 && echo "end"
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
-
-# cuda GUI tool.
-RUN set -x \
-&& apt install -y libxkbcommon-x11-0 \
-&& apt install -y libxcb-icccm4 \
-&& apt install -y libxcb-image0 \
-&& apt install -y libxcb-keysyms1 \
-&& apt install -y libxcb-render-util0 \
-&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
-&& rm -f /usr/share/applications/nsight.desktop \
-&& rm -f /usr/share/applications/nvvp.desktop \
-&& echo "end"
 
 # install clang.
 RUN set -x \
