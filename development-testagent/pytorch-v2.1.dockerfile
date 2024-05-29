@@ -198,6 +198,7 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install python-3pp.
 RUN set -x \
+&& pip install PyQt5 \
 && pip install fire \
 && pip install numpy \
 && pip install scipy \
