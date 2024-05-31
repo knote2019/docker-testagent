@@ -30,3 +30,23 @@ Categories=Development\n\
 && rm -rf /tmp/* \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp \
 && echo "end"
+#-----------------------------------------------------------------------------------------------------------------------
+# install pycharm.
+RUN set -x \
+&& apt update \
+&& pip install yapf \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/pycharm-community-2022.3.3.tar.gz -P /tmp \
+&& tar -xzf /tmp/pycharm-community-2022.3.3.tar.gz -C /opt \
+&& echo "\
+[Desktop Entry]\n\
+Name=Pycharm\n\
+Comment=Pycharm\n\
+Exec=/opt/pycharm-community-2022.3.3/bin/pycharm.sh\n\
+Icon=/opt/pycharm-community-2022.3.3/bin/pycharm.png\n\
+Terminal=false\n\
+Type=Application\n\
+Categories=Development\n\
+" > /usr/share/applications/pycharm.desktop \
+&& rm -rf /tmp/* \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/pycharm-color-scheme-2024-04-24.icls -P /tmp \
+&& echo "end"
