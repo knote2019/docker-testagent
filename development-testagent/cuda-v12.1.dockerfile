@@ -1,4 +1,4 @@
-FROM 10.150.9.98:80/devops_tools/ubuntu22.04-kasmvnc-amd64:master
+FROM 10.150.9.98:80/devops_tools/development-ide:master
 #-----------------------------------------------------------------------------------------------------------------------
 # configure git.
 RUN set -x \
