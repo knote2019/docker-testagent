@@ -17,13 +17,12 @@ configure clion:
 3. install eclipse keymap plugin and set as this keymap.
 4. install file watchers plugin and configure clang-format.
    /usr/bin/clang-format
-   -i $FileName$ --style=file
+   -i $FileName$
    $FileName$
-5. setting->editor->code folding # remove all choose option
-6. setting->editor->inlay hints  # remove all choose option
-7. import color scheme.
-   /tmp/clion-color-scheme-2024-04-24.icls
-8. reopen IDE, close welcome reminder.
+5. set color scheme with /tmp/clion-color-scheme-2024-04-24.icls.
+6. setting->editor->general->code folding # remove all choose option
+7. setting->editor->inlay hints           # remove all choose option
+8. reopen ide, close welcome reminder.
 
 >>> >>> >>>
 configure pycharm:
