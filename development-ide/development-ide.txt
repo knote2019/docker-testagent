@@ -12,6 +12,7 @@ configure chrome:
 
 >>> >>> >>>
 configure clion:
+0. disable markdown plugin.
 1. disable new UI and create default project.
 2. disable AI related plugins.
 3. install eclipse keymap plugin and set as this keymap.
