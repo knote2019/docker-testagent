@@ -12,28 +12,6 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
-# install clion.
-RUN set -x \
-&& apt update \
-&& apt install -y clang-format \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/CLion-2023.3.tar.gz -P /tmp \
-&& tar -xzf /tmp/CLion-2023.3.tar.gz -C /opt \
-&& echo "\
-[Desktop Entry]\n\
-Name=CLion\n\
-Comment=CLion\n\
-Exec=/opt/clion-2023.3/bin/clion.sh\n\
-Icon=/opt/clion-2023.3/bin/clion.png\n\
-Terminal=false\n\
-Type=Application\n\
-Categories=Development\n\
-" > /usr/share/applications/clion.desktop \
-&& rm -rf /tmp/* \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/gtest-tool.tar.gz -P /tmp \
-&& tar -xzf /tmp/gtest-tool.tar.gz -C /root \
-&& echo "end"
-#-----------------------------------------------------------------------------------------------------------------------
 # install pycharm.
 RUN set -x \
 && apt update \
