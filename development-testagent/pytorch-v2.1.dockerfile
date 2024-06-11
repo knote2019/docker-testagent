@@ -42,6 +42,22 @@ RUN set -x \
 && apt clean all \
 && echo "end"
 
+# install ncurses.
+RUN set -x \
+&& apt install -y libncurses5-dev \
+&& apt install -y libncursesw5-dev \
+&& echo "end"
+
+# add more xcb libs for GUI apps.
+RUN set -x \
+&& apt install -y libxkbcommon-x11-0 \
+&& apt install -y libxcb-icccm4 \
+&& apt install -y libxcb-image0 \
+&& apt install -y libxcb-keysyms1 \
+&& apt install -y libxcb-render-util0 \
+&& apt install -y libxcb-xinerama0 \
+&& echo "end"
+
 # set timezone.
 RUN set -x \
 && apt update \
@@ -60,16 +76,6 @@ RUN set -x \
 && echo "alias ll='ls --color -alF'">/root/.bashrc \
 && echo "export PS1='\[\033[01;37m\][\[\033[01;32m\]\u\[\033[01;33m\]@\[\033[01;34m\]\h\[\033[01;36m\] \w\[\033[01;37m\]]\[\033[01;35m\]\$ \[\033[0m\]'">>/root/.bashrc \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
-&& echo "end"
-
-# add more xcb libs for GUI apps.
-RUN set -x \
-&& apt install -y libxkbcommon-x11-0 \
-&& apt install -y libxcb-icccm4 \
-&& apt install -y libxcb-image0 \
-&& apt install -y libxcb-keysyms1 \
-&& apt install -y libxcb-render-util0 \
-&& apt install -y libxcb-xinerama0 \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
