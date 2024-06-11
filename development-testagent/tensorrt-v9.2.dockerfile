@@ -142,8 +142,6 @@ RUN set -x \
 
 # install nvitop.
 RUN set -x \
-&& apt install -y libncurses5-dev \
-&& apt install -y libncursesw5-dev \
 && pip install nvidia-ml-py \
 && pip install nvitop \
 && rm -rf /tmp/* \
