@@ -134,18 +134,19 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install nvtop.
+# install nvitop.
 RUN set -x \
 && apt install -y libncurses5-dev \
 && apt install -y libncursesw5-dev \
 && apt install -y libudev-dev \
 && apt install -y libdrm-dev \
-&& wget -nv http://10.113.3.1/corex/toolbox/nvtop/nvtop-3.1.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/nvtop-3.1.0.tar.gz -C /tmp \
-&& mkdir /tmp/nvtop-3.1.0/build \
-&& cd /tmp/nvtop-3.1.0/build \
-&& cmake .. \
-&& make \
-&& mv src/nvtop /usr/bin/ixtop \
+&& wget -nv http://10.113.3.1/corex/toolbox/nvitop/nvidia-ml-py3.tar.gz -P /tmp \
+&& tar -xzf /tmp/nvidia-ml-py3.tar.gz -C /tmp \
+&& cd /tmp/nvidia-ml-py3 \
+&& pip install . \
+&& wget -nv http://10.113.3.1/corex/toolbox/nvitop/nvitop.tar.gz -P /tmp \
+&& tar -xzf /tmp/nvitop.tar.gz -C /tmp \
+&& cd /tmp/nvitop \
+&& pip install . \
 && rm -rf /tmp/* \
 && echo "end"
