@@ -138,8 +138,6 @@ RUN set -x \
 RUN set -x \
 && apt install -y libncurses5-dev \
 && apt install -y libncursesw5-dev \
-&& apt install -y libudev-dev \
-&& apt install -y libdrm-dev \
 && pip install nvidia-ml-py \
 && pip install nvitop \
 && rm -rf /tmp/* \
