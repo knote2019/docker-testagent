@@ -140,14 +140,8 @@ RUN set -x \
 && apt install -y libncursesw5-dev \
 && apt install -y libudev-dev \
 && apt install -y libdrm-dev \
-&& wget -nv http://10.113.3.1/corex/toolbox/nvitop/nvidia-ml-py3.tar.gz -P /tmp \
-&& tar -xzf /tmp/nvidia-ml-py3.tar.gz -C /tmp \
-&& cd /tmp/nvidia-ml-py3 \
-&& pip install . \
-&& wget -nv http://10.113.3.1/corex/toolbox/nvitop/nvitop.tar.gz -P /tmp \
-&& tar -xzf /tmp/nvitop.tar.gz -C /tmp \
-&& cd /tmp/nvitop \
-&& pip install . \
+&& pip install nvidia-ml-py \
+&& pip install nvitop \
 && rm -rf /tmp/* \
 && echo "end"
 
