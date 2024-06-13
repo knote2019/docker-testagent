@@ -7,6 +7,25 @@ docker run -itd --privileged -P --name ubuntu22.04-ide-amd64 ubuntu22.04-ide-amd
 docker ps
 
 >>> >>> >>>
+configure chrome:
+https://netron.app.
+
+>>> >>> >>>
+configure clion:
+0. disable markdown plugin.
+1. disable new UI and create gtest-tool project.
+2. disable AI related plugins.
+3. set eclipse keymap.
+4. install file watchers plugin and configure clang-format.
+   /usr/bin/clang-format
+   -i $FileName$
+   $FileName$
+5. set color scheme with /tmp/clion-color-scheme-2024-04-24.icls.
+6. setting->editor->general->code folding # remove all choose option
+7. setting->editor->inlay hints           # remove all choose option
+8. reopen ide, close welcome reminder.
+
+>>> >>> >>>
 configure pycharm:
 1. disable new UI and create default project.
 2. disable AI related plugins.
