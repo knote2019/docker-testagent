@@ -8,7 +8,7 @@ docker ps
 
 >>> >>> >>>
 configure chrome:
-https://netron.app.
+https://netron.app
 
 >>> >>> >>>
 configure clion:
@@ -22,7 +22,7 @@ configure clion:
    $FileName$
 5. set color scheme: wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp
 6. setting->editor->general->code folding # remove all choose option
-7. setting->editor->inlay hints           # remove all choose option
+7. setting->editor->Inlay Hints           # remove all choose option
 8. reopen ide, close welcome reminder.
 
 >>> >>> >>>
@@ -36,7 +36,7 @@ configure pycharm:
    $FileName$
 5. install Dracula VSCode plugin to set color scheme.
 6. setting->editor->general->code folding # remove all choose option
-7. setting->editor->inlay hints           # remove all choose option
+7. setting->editor->Inlay Hints           # remove all choose option
 8. reopen ide, close welcome reminder.
 
 docker commit ubuntu22.04-ide-amd64 10.150.9.98:80/devops_tools/ubuntu22.04-ide-amd64:master
