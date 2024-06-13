@@ -29,9 +29,6 @@ Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/clion.desktop \
 && rm -rf /tmp/* \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/gtest-tool.tar.gz -P /tmp \
-&& tar -xzf /tmp/gtest-tool.tar.gz -C /root \
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
 # install pycharm.
