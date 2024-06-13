@@ -16,14 +16,14 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y clang-format \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/CLion-2024.1.3.tar.gz -P /tmp \
-&& tar -xzf /tmp/CLion-2024.1.3.tar.gz -C /opt \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/CLion-2023.3.5.tar.gz -P /tmp \
+&& tar -xzf /tmp/CLion-2023.3.5.tar.gz -C /opt \
 && echo "\
 [Desktop Entry]\n\
 Name=CLion\n\
 Comment=CLion\n\
-Exec=/opt/clion-2024.1.3/bin/clion.sh\n\
-Icon=/opt/clion-2024.1.3/bin/clion.png\n\
+Exec=/opt/clion-2023.3.5/bin/clion.sh\n\
+Icon=/opt/clion-2023.3.5/bin/clion.png\n\
 Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
