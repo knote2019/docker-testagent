@@ -13,7 +13,7 @@ https://netron.app.
 >>> >>> >>>
 configure clion:
 0. disable markdown plugin.
-1. disable new UI and create gtest-tool project.
+1. disable new UI and create test project.
 2. disable AI related plugins.
 3. set eclipse keymap.
 4. install file watchers plugin and configure clang-format.
@@ -27,7 +27,7 @@ configure clion:
 
 >>> >>> >>>
 configure pycharm:
-1. disable new UI and create default project.
+1. disable new UI and create test project.
 2. disable AI related plugins.
 3. install eclipse keymap plugin and set as this keymap.
 4. install file watchers plugin and configure yapf.
