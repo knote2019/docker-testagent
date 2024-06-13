@@ -27,7 +27,7 @@ configure clion:
    wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option
-8. reopen ide, remove license, choose active code input view, close welcome reminder.
+8. reopen ide, remove license, close welcome reminder.
 
 >>> >>> >>>
 configure pycharm:
