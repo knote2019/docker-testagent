@@ -13,14 +13,17 @@ https://netron.app
 >>> >>> >>>
 configure clion:
 0. disable markdown plugin and python community version plugin.
-1. disable new UI and create test project.
+1. disable new UI and create test project:
+   wget -nv http://10.113.3.1/corex/toolbox/ide/gtest-tool.tar.gz -P /tmp
+   tar -xzf /tmp/gtest-tool.tar.gz -C /root
 2. disable AI related plugins.
 3. set eclipse keymap.
 4. install file watchers plugin and configure clang-format.
    /usr/bin/clang-format
    -i $FileName$
    $FileName$
-5. set color scheme: wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp
+5. set color scheme:
+   wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option
 8. reopen ide, choose active code input view, close welcome reminder.
