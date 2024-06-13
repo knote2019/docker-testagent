@@ -7,18 +7,3 @@ docker push 10.150.9.98:80/devops_tools/pytorch-v2.1:master
 
 docker pull 10.150.9.98:80/devops_tools/pytorch-v2.1:master
 docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size=64g -v /stores:/stores -v /code:/code -P --name pytorch-v2.1 10.150.9.98:80/devops_tools/pytorch-v2.1:master
-
->>> >>> >>>
-configure clion:
-0. disable markdown plugin.
-1. disable new UI and create default project.
-2. disable AI related plugins.
-3. install eclipse keymap plugin and set as this keymap.
-4. install file watchers plugin and configure clang-format.
-   /usr/bin/clang-format
-   -i $FileName$
-   $FileName$
-5. set color scheme with /tmp/clion-color-scheme-2024-04-24.icls.
-6. setting->editor->general->code folding # remove all choose option
-7. setting->editor->inlay hints           # remove all choose option
-8. reopen ide, close welcome reminder.
