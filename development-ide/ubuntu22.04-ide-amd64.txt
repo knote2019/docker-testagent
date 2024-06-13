@@ -12,7 +12,7 @@ https://netron.app
 
 >>> >>> >>>
 configure clion:
-0. disable markdown plugin.
+0. disable markdown plugin and python community version plugin.
 1. disable new UI and create test project.
 2. disable AI related plugins.
 3. set eclipse keymap.
