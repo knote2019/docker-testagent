@@ -12,12 +12,12 @@ https://netron.app
 
 >>> >>> >>>
 configure clion:
-0. disable markdown plugin and python community version plugin.
-1. disable new UI and create test project:
+0. disable markdown plugin and python community version plugin, disable AI related plugins.
+1. create test project:
    wget -nv http://10.113.3.1/corex/toolbox/ide/gtest-tool.tar.gz -P /tmp
    tar -xzf /tmp/gtest-tool.tar.gz -C /root
    rm -f /tmp/gtest-tool.tar.gz
-2. disable AI related plugins.
+2. disable new UI.
 3. set eclipse keymap.
 4. install file watchers plugin and configure clang-format.
    /usr/bin/clang-format
