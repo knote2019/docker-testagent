@@ -6,7 +6,7 @@ RUN set -x \
 && apt install ttf-wqy-zenhei \
 && wget -nv http://10.113.3.1/corex/toolbox/chrome/google-chrome-stable_current_amd64.deb -P /tmp \
 && apt install -y -f /tmp/google-chrome-stable_current_amd64.deb \
-&& sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox --no-first-run/' /usr/share/applications/google-chrome.desktop \
+&& sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox/' /usr/share/applications/google-chrome.desktop \
 && cat /usr/share/applications/google-chrome.desktop > /usr/share/applications/xfce4-web-browser.desktop \
 && sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "$HERE/google-chrome-stable" "--no-sandbox" "$\@"@g' /usr/bin/x-www-browser \
 && apt clean all \
