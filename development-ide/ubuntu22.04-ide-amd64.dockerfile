@@ -7,8 +7,9 @@ RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/chrome/google-chrome-stable_current_amd64.deb -P /tmp \
 && apt install -y -f /tmp/google-chrome-stable_current_amd64.deb \
 && cat /usr/share/applications/google-chrome.desktop > /usr/share/applications/xfce4-web-browser.desktop \
-&& sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "$HERE/chrome" "--no-sandbox" "$\@"@g' /usr/bin/x-www-browser \
-&& sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "$HERE/chrome" "--no-sandbox" "$\@"@g' /usr/bin/google-chrome \
+&& sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "/opt/google/chrome/google-chrome" "--no-sandbox" "$\@"@g' /usr/bin/x-www-browser \
+&& sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "/opt/google/chrome/google-chrome" "--no-sandbox" "$\@"@g' /usr/bin/google-chrome \
+&& sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "/opt/google/chrome/google-chrome" "--no-sandbox" "$\@"@g' /usr/bin/google-chrome-stable \
 && apt clean all \
 && rm -rf /tmp/* \
 && echo "end"
