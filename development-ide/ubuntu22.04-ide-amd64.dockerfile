@@ -8,6 +8,7 @@ RUN set -x \
 && apt install -y -f /tmp/google-chrome-stable_current_amd64.deb \
 && sed -i 's/google-chrome-stable/google-chrome-stable --no-sandbox --no-first-run/' /usr/share/applications/google-chrome.desktop \
 && cat /usr/share/applications/google-chrome.desktop > /usr/share/applications/xfce4-web-browser.desktop \
+&& sed -i 's@exec -a "$0" "$HERE/chrome" "$\@"@exec -a "$0" "$HERE/google-chrome-stable" "--no-sandbox" "$\@"@g' /usr/bin/x-www-browser \
 && apt clean all \
 && rm -rf /tmp/* \
 && echo "end"
