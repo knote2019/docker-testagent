@@ -10,6 +10,10 @@ docker ps
 configure chrome:
 https://netron.app
 
+NOTE:
+check default browser:
+exo-open --launch WebBrowser %u
+
 >>> >>> >>>
 configure clion:
 0. disable markdown plugin and python community version plugin, disable AI related plugins.
