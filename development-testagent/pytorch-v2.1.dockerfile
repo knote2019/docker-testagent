@@ -59,13 +59,13 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install umd.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-535.54.03.run -P /tmp \
-&& bash /tmp/NVIDIA-Linux-x86_64-535.54.03.run --extract-only --target /tmp/umd \
-&& cp /tmp/umd/libcuda.so.535.54.03 /usr/lib/x86_64-linux-gnu \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.535.54.03 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-530.30.02.run -P /tmp \
+&& bash /tmp/NVIDIA-Linux-x86_64-530.30.02.run --extract-only --target /tmp/umd \
+&& cp /tmp/umd/libcuda.so.530.30.02 /usr/lib/x86_64-linux-gnu \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.530.30.02 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
 && ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.1 /usr/lib/x86_64-linux-gnu/libcuda.so \
-&& cp /tmp/umd/libnvidia-ml.so.535.54.03 /usr/lib/x86_64-linux-gnu \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.535.54.03 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
+&& cp /tmp/umd/libnvidia-ml.so.530.30.02 /usr/lib/x86_64-linux-gnu \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.530.30.02 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
 && ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
 && cp /tmp/umd/nvidia-smi /usr/bin \
 && rm -rf /tmp/* \
