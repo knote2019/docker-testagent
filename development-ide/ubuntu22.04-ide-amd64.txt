@@ -52,6 +52,6 @@ rm -f /corex.72
 rm -f /.dockerenv
 rm -rf /tmp/*
 
-NOTE: REMOVE LICENSE !!!
+NOTE: remove LICENSE !!!
 docker commit ubuntu22.04-ide-amd64 10.150.9.98:80/devops_tools/ubuntu22.04-ide-amd64:master
 docker push 10.150.9.98:80/devops_tools/ubuntu22.04-ide-amd64:master
