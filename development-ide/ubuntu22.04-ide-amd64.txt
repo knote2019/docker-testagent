@@ -32,6 +32,7 @@ configure clion:
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option
 8. reopen ide, close welcome reminder.
+9. set JVM option to 16g.
 
 >>> >>> >>>
 configure pycharm:
@@ -46,6 +47,7 @@ configure pycharm:
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option
 8. reopen ide, close welcome reminder.
+9. set JVM option to 16g.
 
 NOTE:
 rm -f /corex.72
