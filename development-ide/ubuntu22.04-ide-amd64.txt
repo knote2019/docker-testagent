@@ -48,6 +48,7 @@ configure pycharm:
 7. setting->editor->Inlay Hints           # remove all choose option
 8. reopen ide, close welcome reminder.
 9. set JVM option -Xmx to 16g.
+10. settings -> build, execution, deployment -> python debugger -> Gevent compatible. DUE TO: collecting data too slow when debug.
 
 NOTE:
 rm -f /corex.72
