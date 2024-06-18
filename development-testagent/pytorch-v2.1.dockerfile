@@ -95,27 +95,18 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
-# install clang.
-RUN set -x \
-&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
-> /etc/apt/sources.list.d/clang.list \
-&& wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
-&& apt update \
-&& apt install -y clang-16 \
-&& apt install -y lldb-16 \
-&& apt install -y lld-16 \
-&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
-&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
-&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
-&& apt clean all \
-&& echo "end"
-
 # install cmake.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
 && bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
 && ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
 && rm -rf /tmp/* \
+&& echo "end"
+
+# install msgpack.
+RUN set -x \
+&& yum install -y libmsgpack-devel \
+&& yum clean all \
 && echo "end"
 
 # install nvitop.
