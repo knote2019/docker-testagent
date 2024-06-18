@@ -103,11 +103,6 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install msgpack.
-RUN set -x \
-&& apt install -y libmsgpack-devel \
-&& echo "end"
-
 # install nvitop.
 RUN set -x \
 && pip install nvidia-ml-py \
