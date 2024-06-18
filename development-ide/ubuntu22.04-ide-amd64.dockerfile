@@ -30,6 +30,9 @@ Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/clion.desktop \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /opt/clion-2023.3.5 \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/gtest-tool.tar.gz -P /tmp \
+&& tar -xzf /tmp/gtest-tool.tar.gz -C /root \
 && rm -rf /tmp/* \
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
@@ -37,6 +40,7 @@ Categories=Development\n\
 RUN set -x \
 && apt update \
 && pip install yapf \
+&& pip install pytest \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/pycharm-community-2022.3.3.tar.gz -P /tmp \
 && tar -xzf /tmp/pycharm-community-2022.3.3.tar.gz -C /opt \
 && echo "\
@@ -49,5 +53,7 @@ Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/pycharm.desktop \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/pytest-tool.tar.gz -P /tmp \
+&& tar -xzf /tmp/pytest-tool.tar.gz -C /root \
 && rm -rf /tmp/* \
 && echo "end"

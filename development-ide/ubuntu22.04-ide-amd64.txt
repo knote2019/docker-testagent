@@ -17,38 +17,36 @@ exo-open --launch WebBrowser %u
 >>> >>> >>>
 configure clion:
 0. disable markdown plugin and python community version plugin, disable AI related plugins.
-1. create test project:
-   wget -nv http://10.113.3.1/corex/toolbox/ide/gtest-tool.tar.gz -P /tmp
-   tar -xzf /tmp/gtest-tool.tar.gz -C /root
-   rm -f /tmp/gtest-tool.tar.gz
+1. create test project with /root/gtest-tool. run test and select show all test cases.
 2. disable new UI.
 3. set eclipse keymap.
-4. install file watchers plugin and configure clang-format.
+4. in external tools configure clang-format.
    /usr/bin/clang-format
    -i $FileName$
    $FileName$
-5. set color scheme:
-   wget -nv http://10.113.3.1/corex/toolbox/ide/clion-color-scheme-2024-04-24.icls -P /tmp
+   enable 'reformat code' in 'actions on save'.
+5. set color scheme with /opt/clion-2023.3.5/clion-color-scheme-2024-04-24.icls.
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option
-8. reopen ide, close welcome reminder.
-9. set JVM option -Xmx to 16g.
+8. set JVM option -Xmx to 16g.
+9. reopen ide, close welcome reminder.
 
 >>> >>> >>>
 configure pycharm:
-1. disable new UI and create test project.
-2. disable AI related plugins.
+1. disable new UI and disable AI related plugins.
+2. create test project with /root/pytest-tool. run test and select show all test cases.
 3. install eclipse keymap plugin and set as this keymap.
-4. install file watchers plugin and configure yapf.
+4. in external tools configure yapf.
    /usr/local/bin/yapf
    -i $FileName$
    $FileName$
+   enable 'reformat code' in 'actions on save'.
 5. install Dracula VSCode plugin to set color scheme.
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option
+8. set JVM option -Xmx to 16g.
+9. settings -> build, execution, deployment -> python debugger -> Gevent compatible. DUE TO: collecting data too slow when debug.
 8. reopen ide, close welcome reminder.
-9. set JVM option -Xmx to 16g.
-10. settings -> build, execution, deployment -> python debugger -> Gevent compatible. DUE TO: collecting data too slow when debug.
 
 NOTE:
 rm -f /corex.72
