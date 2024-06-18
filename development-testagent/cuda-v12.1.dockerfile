@@ -105,8 +105,7 @@ RUN set -x \
 
 # install msgpack.
 RUN set -x \
-&& yum install -y libmsgpack-devel \
-&& yum clean all \
+&& apt install -y libmsgpack-devel \
 && echo "end"
 
 # install nvitop.
