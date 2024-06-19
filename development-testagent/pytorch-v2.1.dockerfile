@@ -185,7 +185,7 @@ RUN set -x \
 RUN set -x \
 && pip install PyQt5 \
 && pip install fire \
-&& pip install numpy \
+&& pip install numpy==1.26.4 \
 && pip install scipy \
 && pip install opencv_python \
 && pip install onnx \
