@@ -1,0 +1,9 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+docker pull 10.150.9.98:80/devops_tools/ubuntu22.04-kasmvnc-amd64:master
+docker build --force-rm --tag 10.150.9.98:80/devops_tools/cuda-v10.2:master --file cuda-v10.2.dockerfile .
+docker push 10.150.9.98:80/devops_tools/cuda-v10.2:master
+
+docker pull 10.150.9.98:80/devops_tools/cuda-v10.2:master
+docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -v /home:/home -P --name cuda-v10.2 10.150.9.98:80/devops_tools/cuda-v10.2:master
