@@ -197,9 +197,7 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # download torch-examples repo.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/pytorch-models/torch-examples-main.zip -P /tmp \
-&& unzip -q /tmp/torch-examples-main.zip -d /root \
-&& rm -rf /tmp/* \
+&& git clone https://github.com/knote2019/resnet50.git \
 && echo "end"
 
 # download yolov5 repo.
