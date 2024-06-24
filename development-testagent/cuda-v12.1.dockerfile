@@ -126,3 +126,11 @@ RUN set -x \
 && pip install nvitop \
 && rm -rf /tmp/* \
 && echo "end"
+
+# install vscode.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/code_1.88.1-1712771838_amd64.deb -P /tmp \
+&& dpkg -i /tmp/code_1.88.1-1712771838_amd64.deb \
+&& sed -i 's$/usr/share/code/code$/usr/share/code/code --no-sandbox --user-data-dir$' /usr/share/applications/code.desktop \
+&& rm -rf /tmp/* \
+&& echo "end"
