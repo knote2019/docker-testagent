@@ -14,6 +14,11 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
+# configure sysctl.
+RUN set -x \
+&& echo "fs.inotify.max_user_watches = 524288">/etc/sysctl.conf \
+&& echo "end"
+#-----------------------------------------------------------------------------------------------------------------------
 # install clion.
 RUN set -x \
 && apt update \
@@ -39,8 +44,8 @@ Categories=Development\n\
 # install pycharm.
 RUN set -x \
 && apt update \
-&& pip install yapf \
 && pip install pytest \
+&& pip install cpython \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/pycharm-community-2022.3.3.tar.gz -P /tmp \
 && tar -xzf /tmp/pycharm-community-2022.3.3.tar.gz -C /opt \
 && echo "\
@@ -56,9 +61,4 @@ Categories=Development\n\
 && wget -nv http://10.113.3.1/corex/toolbox/ide/pytest-tool.tar.gz -P /tmp \
 && tar -xzf /tmp/pytest-tool.tar.gz -C /root \
 && rm -rf /tmp/* \
-&& echo "end"
-#-----------------------------------------------------------------------------------------------------------------------
-# configure sysctl.
-RUN set -x \
-&& echo "fs.inotify.max_user_watches = 524288">/etc/sysctl.conf \
 && echo "end"
