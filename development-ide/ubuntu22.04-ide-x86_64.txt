@@ -36,11 +36,7 @@ configure pycharm:
 1. disable new UI and disable AI related plugins.
 2. create test project with /root/pytest-tool. run test and select show all test cases.
 3. install eclipse keymap plugin and set as this keymap.
-4. in external tools configure yapf.
-   /usr/local/bin/yapf
-   -i $FileName$
-   $FileName$
-   enable 'reformat code' in 'actions on save'.
+4. enable 'reformat code' in 'actions on save'.
 5. install Dracula VSCode plugin to set color scheme.
 6. setting->editor->general->code folding # remove all choose option
 7. setting->editor->Inlay Hints           # remove all choose option

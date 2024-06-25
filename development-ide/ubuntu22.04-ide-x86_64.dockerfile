@@ -39,7 +39,6 @@ Categories=Development\n\
 # install pycharm.
 RUN set -x \
 && apt update \
-&& pip install yapf \
 && pip install pytest \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/pycharm-community-2022.3.3.tar.gz -P /tmp \
 && tar -xzf /tmp/pycharm-community-2022.3.3.tar.gz -C /opt \
