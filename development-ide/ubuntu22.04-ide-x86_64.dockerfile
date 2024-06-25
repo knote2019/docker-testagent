@@ -57,3 +57,8 @@ Categories=Development\n\
 && tar -xzf /tmp/pytest-tool.tar.gz -C /root \
 && rm -rf /tmp/* \
 && echo "end"
+#-----------------------------------------------------------------------------------------------------------------------
+# configure sysctl.
+RUN set -x \
+&& echo "fs.inotify.max_user_watches = 524288">/etc/sysctl.conf \
+&& echo "end"
