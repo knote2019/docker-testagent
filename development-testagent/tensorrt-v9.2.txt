@@ -6,4 +6,4 @@ docker build --force-rm --tag 10.150.9.98:80/devops_tools/tensorrt-v9.2:master -
 docker push 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
 
 docker pull 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
-docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -v /home:/home -P --name tensorrt-v9.2-kenny 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
+docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -v /home:/home -w /home -P --name tensorrt-v9.2-kenny 10.150.9.98:80/devops_tools/tensorrt-v9.2:master
