@@ -131,20 +131,6 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/ffmpeg/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/ffmpeg/lib
 
-# install cvcuda.
-RUN set -x \
-&& mkdir -p /usr/local/cvcuda/include \
-&& mkdir -p /usr/local/cvcuda/lib \
-&& wget -nv http://10.113.3.1/corex/toolbox/cvcuda/cvcuda-dev-0.9.0_beta-cuda12-x86_64-linux.tar.xz -P /tmp \
-&& wget -nv http://10.113.3.1/corex/toolbox/cvcuda/cvcuda-lib-0.9.0_beta-cuda12-x86_64-linux.tar.xz -P /tmp \
-&& tar -xJf /tmp/cvcuda-dev-0.9.0_beta-cuda12-x86_64-linux.tar.xz -C /tmp \
-&& tar -xJf /tmp/cvcuda-lib-0.9.0_beta-cuda12-x86_64-linux.tar.xz -C /tmp \
-&& cp -r /tmp/opt/nvidia/cvcuda0/include/* /usr/local/cvcuda/include \
-&& cp -r /tmp/opt/nvidia/cvcuda0/lib/x86_64-linux-gnu/* /usr/local/cvcuda/lib \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cvcuda/lib
-
 # install opencv.
 RUN set -x \
 && apt install -y libgtk2.0-dev \
