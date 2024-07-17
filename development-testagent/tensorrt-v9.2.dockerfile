@@ -143,6 +143,7 @@ RUN set -x \
 && cp -r /tmp/opt/nvidia/cvcuda0/lib/x86_64-linux-gnu/* /usr/local/cvcuda/lib \
 && rm -rf /tmp/* \
 && echo "end"
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cvcuda/lib
 
 # install opencv.
 RUN set -x \
