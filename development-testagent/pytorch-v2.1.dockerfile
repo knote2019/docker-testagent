@@ -194,28 +194,3 @@ RUN set -x \
 && pip install fairscale \
 && pip install sentencepiece \
 && echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# download torch-examples repo.
-RUN set -x \
-&& git clone https://github.com/knote2019/resnet50.git \
-&& echo "end"
-
-# download yolov5 repo.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/pytorch-models/yolov5-v7.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/yolov5-v7.0.tar.gz -C /root \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# download llama2 repo.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/llm-models/llama-v2.tar.gz -P /tmp \
-&& tar -xzf /tmp/llama-v2.tar.gz -C /root \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# download megatron repo.
-RUN set -x \
-&& git clone -b core_r0.6.0 https://github.com/NVIDIA/Megatron-LM.git /root/megatron-0.6 \
-&& echo "end"
