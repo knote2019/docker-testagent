@@ -93,7 +93,7 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
-# install clang (used as cuda compiler)
+# install clang (cuda compiler)
 RUN set -x \
 && echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
 > /etc/apt/sources.list.d/clang.list \
