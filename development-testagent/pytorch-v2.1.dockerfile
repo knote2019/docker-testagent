@@ -200,11 +200,6 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install transformers.
-RUN set -x \
-&& pip install transformers==4.33.1 \
-&& echo "end"
-
 #-----------------------------------------------------------------------------------------------------------------------
 # install python-3pp.
 RUN set -x \
