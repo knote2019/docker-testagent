@@ -200,6 +200,11 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install megatron.
+RUN set -x \
+&& pip install nltk \
+&& echo "end"
+
 # install torchtune.
 RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchtune-0.2.1+cu121-py3-none-any.whl \
