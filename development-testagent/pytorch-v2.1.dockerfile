@@ -192,12 +192,11 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install apex.
+# install apex (https://github.com/NVIDIA/apex/issues/1594).
 RUN set -x \
-&& git clone https://github.com/NVIDIA/apex \
+&& git clone -b 23.05 https://github.com/NVIDIA/apex \
 && cd apex \
-&& git checkout 6943fd26e04c59327de32592cf5af68be8f5c44e \
-&& pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
+&& pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
 && rm -rf /tmp/* \
 && echo "end"
 
