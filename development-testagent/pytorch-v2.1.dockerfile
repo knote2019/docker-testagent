@@ -192,6 +192,15 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install apex.
+RUN set -x \
+&& git clone https://github.com/NVIDIA/apex \
+&& cd apex \
+&& git checkout 6943fd26e04c59327de32592cf5af68be8f5c44e \
+&& pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install transformers.
 RUN set -x \
 && pip install transformers==4.33.1 \
