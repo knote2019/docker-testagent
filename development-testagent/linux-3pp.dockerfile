@@ -68,6 +68,8 @@ RUN set -x \
 && ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.530.30.02 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
 && ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
 && cp /tmp/umd/nvidia-smi /usr/bin \
+&& pip install nvidia-ml-py \
+&& pip install nvitop \
 && rm -rf /tmp/* \
 && echo "end"
 
@@ -102,13 +104,6 @@ RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
 && bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
 && ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install nvitop.
-RUN set -x \
-&& pip install nvidia-ml-py \
-&& pip install nvitop \
 && rm -rf /tmp/* \
 && echo "end"
 

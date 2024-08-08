@@ -68,6 +68,8 @@ RUN set -x \
 && ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.530.30.02 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
 && ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
 && cp /tmp/umd/nvidia-smi /usr/bin \
+&& pip install nvidia-ml-py \
+&& pip install nvitop \
 && rm -rf /tmp/* \
 && echo "end"
 
@@ -179,23 +181,6 @@ RUN set -x \
 RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu121-cp310-cp310-linux_x86_64.whl \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu121-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-# uninstall cuda whl.
-RUN set -x \
-&& pip uninstall -y nvidia-cublas-cu12 \
-&& pip uninstall -y nvidia-cuda-cupti-cu12 \
-&& pip uninstall -y nvidia-cuda-nvrtc-cu12 \
-&& pip uninstall -y nvidia-cuda-runtime-cu12 \
-&& pip uninstall -y nvidia-cudnn-cu12 \
-&& pip uninstall -y nvidia-cufft-cu12 \
-&& pip uninstall -y nvidia-curand-cu12  \
-&& pip uninstall -y nvidia-cusolver-cu12 \
-&& pip uninstall -y nvidia-cusparse-cu12 \
-&& pip uninstall -y nvidia-ml-py \
-&& pip uninstall -y nvidia-nccl-cu12 \
-&& pip uninstall -y nvidia-nvjitlink-cu12 \
-&& pip uninstall -y nvidia-nvtx-cu12 \
 && echo "end"
 
 # install transformer engine (need install from git clone code).
