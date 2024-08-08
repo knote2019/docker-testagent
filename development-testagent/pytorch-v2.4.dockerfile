@@ -57,6 +57,19 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
+# install openmpi.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
+&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
+&& cd /tmp/openmpi-5.0.2 \
+&& ./configure \
+&& make -j32 \
+&& make install \
+&& ldconfig \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
 # install umd.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-530.30.02.run -P /tmp \
@@ -78,16 +91,16 @@ RUN set -x \
 && apt update \
 && apt install -y libxml2 \
 && sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.1.1_530.30.02_linux.run -P /tmp \
-&& bash /tmp/cuda_12.1.1_530.30.02_linux.run --toolkit --silent \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda12-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive/lib/* /usr/local/cuda/lib64 \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.18.3-1+cuda12.1_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.18.3-1+cuda12.1_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
+&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.3.0.75_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.3.0.75_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.3.0.75_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.3.0.75_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.21.5-1+cuda11.0_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.21.5-1+cuda11.0_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.21.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.21.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
 && ldconfig \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
@@ -99,33 +112,20 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
-# install openmpi.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
-&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
-&& cd /tmp/openmpi-5.0.2 \
-&& ./configure \
-&& make -j32 \
-&& make install \
-&& ldconfig \
-&& rm -rf /tmp/* \
-&& echo "end"
-
 # install torch.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu121-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu121-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install transformer engine (need install from git clone code).
+# install flash_attn.
 RUN set -x \
-&& pip install packaging \
-&& pip install flash-attn==2.4.2 \
-&& git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
-&& cd /tmp/TransformerEngine \
-&& export NVTE_FRAMEWORK=pytorch \
-&& pip install . \
-&& rm -rf /tmp/* \
+&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.6.3+cu118torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+# install transformer engine.
+RUN set -x \
+&& pip install transformer-engine \
 && echo "end"
 
 # install apex (https://github.com/NVIDIA/apex/issues/1594).
@@ -143,5 +143,5 @@ RUN set -x \
 
 # install torchtune.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchtune-0.2.1+cu121-py3-none-any.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchtune-0.2.1+cu118-py3-none-any.whl \
 && echo "end"
