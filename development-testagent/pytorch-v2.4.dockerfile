@@ -94,9 +94,9 @@ RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
 && bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.3.0.75_cuda11-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.3.0.75_cuda11-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.3.0.75_cuda11-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.3.0.75_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.21.5-1+cuda11.0_x86_64.txz -P /tmp \
 && tar -xf /tmp/nccl_2.21.5-1+cuda11.0_x86_64.txz -C /tmp \
 && cp -r /tmp/nccl_2.21.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
