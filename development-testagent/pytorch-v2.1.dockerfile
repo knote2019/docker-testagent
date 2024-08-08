@@ -191,24 +191,3 @@ RUN set -x \
 && pip install . \
 && rm -rf /tmp/* \
 && echo "end"
-
-# install apex (https://github.com/NVIDIA/apex/issues/1594).
-RUN set -x \
-&& git clone -b 23.05 https://github.com/NVIDIA/apex \
-&& cd apex \
-&& pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install python-3pp.
-RUN set -x \
-&& pip install PyQt5 \
-&& pip install fire \
-&& pip install numpy==1.26.4 \
-&& pip install scipy \
-&& pip install opencv_python \
-&& pip install onnx \
-&& pip install fairscale \
-&& pip install sentencepiece \
-&& echo "end"
