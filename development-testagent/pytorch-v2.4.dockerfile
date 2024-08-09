@@ -3,8 +3,8 @@ FROM 10.150.9.98:80/devops_tools/ubuntu22.04-ide-x86_64:master
 # configure git.
 RUN set -x \
 && git config --global credential.helper store \
-&& git config --global user.name minghong.kang \
-&& git config --global user.email minghong.kang@iluvatar.com \
+&& git config --global user.name kasmvnc \
+&& git config --global user.email kasmvnc@iluvatar.com \
 && echo "end"
 
 # install tool.
@@ -128,8 +128,9 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 # install torch.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install typing_extensions filelock fsspec jinja2 networkx sympy numpy pillow triton==3.0.0 \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl --no-deps \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl --no-deps \
 && echo "end"
 
 # install transformer engine (need install from git clone code).

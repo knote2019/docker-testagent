@@ -3,8 +3,8 @@ FROM 10.150.9.98:80/devops_tools/ubuntu22.04-ide-x86_64:master
 # configure git.
 RUN set -x \
 && git config --global credential.helper store \
-&& git config --global user.name minghong.kang \
-&& git config --global user.email minghong.kang@iluvatar.com \
+&& git config --global user.name kasmvnc \
+&& git config --global user.email kasmvnc@iluvatar.com \
 && echo "end"
 
 # install tool.
