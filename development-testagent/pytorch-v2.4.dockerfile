@@ -20,6 +20,14 @@ RUN set -x \
 && apt clean all \
 && echo "end"
 
+# install cmake.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
+&& bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
+&& ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install ncurses.
 RUN set -x \
 && apt install -y libncurses5-dev \
@@ -118,14 +126,16 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install flash_attn.
+# install transformer engine (need install from git clone code).
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.6.3+cu118torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-# install transformer engine.
-RUN set -x \
-&& pip install transformer-engine \
+&& apt install -y ninja-build \
+&& pip install packaging \
+&& pip install flash-attn==2.4.2 \
+&& git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
+&& cd /tmp/TransformerEngine \
+&& export NVTE_FRAMEWORK=pytorch \
+&& pip install . \
+&& rm -rf /tmp/* \
 && echo "end"
 
 # install apex (https://github.com/NVIDIA/apex/issues/1594).
@@ -139,6 +149,7 @@ RUN set -x \
 # install megatron.
 RUN set -x \
 && pip install nltk \
+&& pip install megatron-core \
 && echo "end"
 
 # install torchtune.
