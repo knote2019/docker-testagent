@@ -115,14 +115,14 @@ RUN set -x \
 && pip install torchtune==0.2.1 --index-url https://download.pytorch.org/whl/cu118 \
 && echo "end"
 
-# install transformer engine (https://github.com/NVIDIA/apex/issues/1594).
+# install transformer-engine.
 RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
-&& pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
 && pip install transformer-engine --index-url https://pypi.nvidia.com \
+&& pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
 && echo "end"
 
-# install megatron (https://github.com/NVIDIA/apex/issues/1594).
+# install megatron-core (https://github.com/NVIDIA/apex/issues/1594).
 RUN set -x \
 && pip install nltk \
 && git clone -b 23.05 https://github.com/NVIDIA/apex \
