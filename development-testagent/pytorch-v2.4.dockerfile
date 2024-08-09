@@ -138,17 +138,12 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install apex (https://github.com/NVIDIA/apex/issues/1594).
+# install megatron (https://github.com/NVIDIA/apex/issues/1594).
 RUN set -x \
+&& pip install nltk \
 && git clone -b 23.05 https://github.com/NVIDIA/apex \
 && cd apex \
 && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install megatron.
-RUN set -x \
-&& pip install nltk \
 && pip install megatron-core \
 && echo "end"
 
