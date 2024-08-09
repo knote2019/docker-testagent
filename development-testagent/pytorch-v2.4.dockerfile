@@ -134,8 +134,9 @@ RUN set -x \
 && echo "end"
 
 # install transformer engine (need install from git clone code).
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
 RUN set -x \
-&& pip install flash-attn==2.5.8 \
+&& pip install flash-attn==2.5.8 --no-deps \
 && git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
 && cd /tmp/TransformerEngine \
 && export NVTE_FRAMEWORK=pytorch \
