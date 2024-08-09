@@ -133,7 +133,7 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install transformer engine.
+# install transformer engine (https://github.com/NVIDIA/apex/issues/1594).
 RUN set -x \
 && pip install flash-attn==2.5.8 \
 && git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
