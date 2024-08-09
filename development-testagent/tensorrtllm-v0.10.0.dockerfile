@@ -138,5 +138,6 @@ RUN set -x \
 # install tensorrt_llm.
 RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
+&& pip install accelerate \
 && pip install tensorrt_llm==0.10.0 --index-url https://pypi.nvidia.com \
 && echo "end"

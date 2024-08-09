@@ -139,7 +139,7 @@ RUN set -x \
 RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
 && pip install pydantic \
-&& pip install flash-attn==2.5.8 --no-deps \
+&& pip install flash-attn==2.4.2 --no-deps \
 && pip install transformer-engine --index-url https://pypi.nvidia.com \
 && pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
 && echo "end"
