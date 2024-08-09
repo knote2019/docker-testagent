@@ -28,6 +28,12 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install ninja.
+RUN set -x \
+&& apt install -y ninja-build \
+&& pip install ninja \
+&& echo "end"
+
 # install ncurses.
 RUN set -x \
 && apt install -y libncurses5-dev \
@@ -128,9 +134,7 @@ RUN set -x \
 
 # install transformer engine (need install from git clone code).
 RUN set -x \
-&& apt install -y ninja-build \
-&& pip install packaging \
-&& pip install flash-attn==2.4.2 \
+&& pip install flash-attn==2.5.8 \
 && git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
 && cd /tmp/TransformerEngine \
 && export NVTE_FRAMEWORK=pytorch \
