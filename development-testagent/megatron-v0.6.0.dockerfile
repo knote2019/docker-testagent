@@ -129,26 +129,26 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extra
 #-----------------------------------------------------------------------------------------------------------------------
 # install torch.
 RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& pip install torch==2.3.1 --index-url https://download.pytorch.org/whl/cu118 \
-&& pip install torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cu118 \
+&& pip install typing_extensions filelock fsspec jinja2 networkx sympy numpy pillow triton==3.0.0 \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl --no-deps \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl --no-deps \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install transformer-engine.
-RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& pip install pydantic \
-&& pip install flash-attn==2.5.8 \
-&& pip install transformer-engine --index-url https://pypi.nvidia.com \
-&& pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
-&& echo "end"
-
-# install megatron-core (https://github.com/NVIDIA/apex/issues/1594).
-RUN set -x \
-&& pip install nltk \
-&& git clone -b 23.05 https://github.com/NVIDIA/apex \
-&& cd apex \
-&& pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
-&& pip install megatron-core \
-&& echo "end"
+# #-----------------------------------------------------------------------------------------------------------------------
+# # install transformer-engine.
+# RUN set -x \
+# && export https_proxy=http://192.168.100.200:3128 \
+# && pip install pydantic \
+# && pip install flash-attn==2.5.8 \
+# && pip install transformer-engine --index-url https://pypi.nvidia.com \
+# && pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
+# && echo "end"
+#
+# # install megatron-core (https://github.com/NVIDIA/apex/issues/1594).
+# RUN set -x \
+# && pip install nltk \
+# && git clone -b 23.05 https://github.com/NVIDIA/apex \
+# && cd apex \
+# && pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
+# && pip install megatron-core \
+# && echo "end"
