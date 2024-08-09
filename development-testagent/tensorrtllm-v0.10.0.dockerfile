@@ -101,6 +101,14 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
+# install torch.
+RUN set -x \
+&& export https_proxy=http://192.168.100.200:3128 \
+&& pip install torch==2.3.1 --index-url https://download.pytorch.org/whl/cu118 \
+&& pip install torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cu118 \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
 # install tensorrt_llm.
 RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
