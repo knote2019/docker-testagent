@@ -106,6 +106,12 @@ RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
 && pip install torch==2.3.1 --index-url https://download.pytorch.org/whl/cu118 \
 && pip install torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cu118 \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install torchtune.
+RUN set -x \
+&& export https_proxy=http://192.168.100.200:3128 \
 && pip install torchtune==0.2.1 --index-url https://download.pytorch.org/whl/cu118 \
 && echo "end"
 
