@@ -100,6 +100,32 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install cuda.
+RUN set -x \
+&& apt update \
+&& apt install -y libxml2 \
+&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
+&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
+&& ldconfig \
+&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
+&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
+&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
+&& rm -f /usr/share/applications/nsight.desktop \
+&& rm -f /usr/share/applications/nvvp.desktop \
+&& rm -rf /tmp/* \
+&& echo "end"
+ENV PATH=$PATH:/usr/local/cuda/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install torch.
 RUN set -x \
@@ -108,16 +134,12 @@ RUN set -x \
 && pip install torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cu118 \
 && echo "end"
 
-# install torchtune.
-RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& pip install torchtune==0.2.1 --index-url https://download.pytorch.org/whl/cu118 \
-&& echo "end"
-
 #-----------------------------------------------------------------------------------------------------------------------
 # install transformer-engine.
 RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
+&& pip install pydantic \
+&& pip install flash-attn==2.5.8 \
 && pip install transformer-engine --index-url https://pypi.nvidia.com \
 && pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
 && echo "end"
