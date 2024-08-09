@@ -124,19 +124,18 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 ENV PATH=$PATH:/usr/local/cuda/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
 
 # install torch.
 RUN set -x \
-&& pip install typing_extensions filelock fsspec jinja2 networkx sympy numpy pillow triton==3.0.0 \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl --no-deps \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl --no-deps \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
 # install transformer engine (need install from git clone code).
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
 RUN set -x \
-&& pip install flash-attn==2.5.8 --no-deps \
+&& pip install flash-attn==2.5.8 \
 && git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
 && cd /tmp/TransformerEngine \
 && export NVTE_FRAMEWORK=pytorch \
