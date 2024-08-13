@@ -20,6 +20,21 @@ RUN set -x \
 && apt clean all \
 && echo "end"
 
+# install clang.
+RUN set -x \
+&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
+> /etc/apt/sources.list.d/clang.list \
+&& wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
+&& apt update \
+&& apt install -y clang-16 \
+&& apt install -y lldb-16 \
+&& apt install -y lld-16 \
+&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
+&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
+&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
+&& apt clean all \
+&& echo "end"
+
 # install cmake.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
@@ -31,7 +46,6 @@ RUN set -x \
 # install ninja.
 RUN set -x \
 && apt install -y ninja-build \
-&& pip install ninja \
 && echo "end"
 
 # install ncurses.
@@ -70,21 +84,16 @@ RUN set -x \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install openmpi.
+# install vscode.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
-&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
-&& cd /tmp/openmpi-5.0.2 \
-&& ./configure \
-&& make -j32 \
-&& make install \
-&& ldconfig \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/code_1.88.1-1712771838_amd64.deb -P /tmp \
+&& dpkg -i /tmp/code_1.88.1-1712771838_amd64.deb \
+&& sed -i 's$/usr/share/code/code$/usr/share/code/code --no-sandbox --user-data-dir$' /usr/share/applications/code.desktop \
 && rm -rf /tmp/* \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install umd.
+# install driver.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-555.42.02.run -P /tmp \
 && bash /tmp/NVIDIA-Linux-x86_64-555.42.02.run --extract-only --target /tmp/umd \
@@ -110,12 +119,13 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install torchtune.
 RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
+&& pip install ninja \
 && pip install datasets \
 && pip install safetensors \
 && pip install sentencepiece \
 && pip install tiktoken \
 && pip install blobfile \
 && pip install omegaconf \
+&& export https_proxy=http://192.168.100.200:3128 \
 && pip install torchtune==0.2.1 --index-url https://download.pytorch.org/whl/cu118 \
 && echo "end"

@@ -20,6 +20,34 @@ RUN set -x \
 && apt clean all \
 && echo "end"
 
+# install clang.
+RUN set -x \
+&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
+> /etc/apt/sources.list.d/clang.list \
+&& wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
+&& apt update \
+&& apt install -y clang-16 \
+&& apt install -y lldb-16 \
+&& apt install -y lld-16 \
+&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
+&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
+&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
+&& apt clean all \
+&& echo "end"
+
+# install cmake.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
+&& bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
+&& ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+# install ninja.
+RUN set -x \
+&& apt install -y ninja-build \
+&& echo "end"
+
 # install ncurses.
 RUN set -x \
 && apt install -y libncurses5-dev \
@@ -56,72 +84,15 @@ RUN set -x \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
 && echo "end"
 
+# install vscode.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/ide/code_1.88.1-1712771838_amd64.deb -P /tmp \
+&& dpkg -i /tmp/code_1.88.1-1712771838_amd64.deb \
+&& sed -i 's$/usr/share/code/code$/usr/share/code/code --no-sandbox --user-data-dir$' /usr/share/applications/code.desktop \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
-# install umd.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-555.42.02.run -P /tmp \
-&& bash /tmp/NVIDIA-Linux-x86_64-555.42.02.run --extract-only --target /tmp/umd \
-&& cp /tmp/umd/libcuda.so.555.42.02 /usr/lib/x86_64-linux-gnu \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.555.42.02 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.1 /usr/lib/x86_64-linux-gnu/libcuda.so \
-&& cp /tmp/umd/libnvidia-ml.so.555.42.02 /usr/lib/x86_64-linux-gnu \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.555.42.02 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
-&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
-&& cp /tmp/umd/nvidia-smi /usr/bin \
-&& pip install nvidia-ml-py \
-&& pip install nvitop \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install cuda.
-RUN set -x \
-&& apt update \
-&& apt install -y libxml2 \
-&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
-&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
-&& ldconfig \
-&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
-&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
-&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
-&& rm -f /usr/share/applications/nsight.desktop \
-&& rm -f /usr/share/applications/nvvp.desktop \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV PATH=$PATH:/usr/local/cuda/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
-
-# install clang (cuda compiler)
-RUN set -x \
-&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
-> /etc/apt/sources.list.d/clang.list \
-&& wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
-&& apt update \
-&& apt install -y clang-16 \
-&& apt install -y lldb-16 \
-&& apt install -y lld-16 \
-&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
-&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
-&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
-&& apt clean all \
-&& echo "end"
-
-# install cmake.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
-&& bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
-&& ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
-&& rm -rf /tmp/* \
-&& echo "end"
-
 # install ffmpeg.
 RUN set -x \
 && apt install -y yasm \
@@ -158,65 +129,58 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install openmpi.
+#-----------------------------------------------------------------------------------------------------------------------
+# install driver.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
-&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
-&& cd /tmp/openmpi-5.0.2 \
-&& ./configure \
-&& make -j32 \
-&& make install \
-&& ldconfig \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-555.42.02.run -P /tmp \
+&& bash /tmp/NVIDIA-Linux-x86_64-555.42.02.run --extract-only --target /tmp/umd \
+&& cp /tmp/umd/libcuda.so.555.42.02 /usr/lib/x86_64-linux-gnu \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.555.42.02 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.1 /usr/lib/x86_64-linux-gnu/libcuda.so \
+&& cp /tmp/umd/libnvidia-ml.so.555.42.02 /usr/lib/x86_64-linux-gnu \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.555.42.02 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 \
+&& ln -sf /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1 /usr/lib/x86_64-linux-gnu/libnvidia-ml.so \
+&& cp /tmp/umd/nvidia-smi /usr/bin \
+&& pip install nvidia-ml-py \
+&& pip install nvitop \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install pytorch.
+# install cuda.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.1.1+cu121-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.16.1+cu121-cp310-cp310-linux_x86_64.whl \
+&& apt update \
+&& apt install -y libxml2 \
+&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
+&& echo "install cuda" \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
+&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
+&& ldconfig \
+&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
+&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
+&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
+&& rm -f /usr/share/applications/nsight.desktop \
+&& rm -f /usr/share/applications/nvvp.desktop \
+&& echo "install cudnn" \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& echo "install nccl" \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
+&& rm -rf /tmp/* \
 && echo "end"
-
-# install transformers.
-RUN set -x \
-&& pip install transformers==4.33.1 \
-&& echo "end"
+ENV PATH=$PATH:/usr/local/cuda/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 # install tensorrt.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/tensorrt-9.2.0.5.linux.x86_64-gnu.cuda-12.2.tar.gz -P /tmp \
-&& tar -xzf /tmp/tensorrt-9.2.0.5.linux.x86_64-gnu.cuda-12.2.tar.gz -C /usr/local \
-&& mv /usr/local/TensorRT-9.2.0.5 /usr/local/tensorrt \
-&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.9.2.0 /usr/lib/x86_64-linux-gnu \
-&& echo "/usr/local/tensorrt/lib">/etc/ld.so.conf.d/tensorrt.conf \
-&& ldconfig \
-&& pip install /usr/local/tensorrt/python/tensorrt-9.2.0.post12.dev5-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-9.2.0.post12.dev5-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_lean-9.2.0.post12.dev5-cp310-none-linux_x86_64.whl \
+&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-11.8.tar.gz -P /tmp \
+&& tar -xzf /tmp/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-11.8.tar.gz -C /usr/local \
+&& mv /usr/local/TensorRT-10.1.0.27 /usr/local/tensorrt \
+&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.1.0 /usr/lib/x86_64-linux-gnu \
 && rm -rf /tmp/* \
 && echo "end"
-
-# install tensorrt-llm.
-RUN set -x \
-&& apt update \
-&& pip install http://10.113.3.1/corex/toolbox/tensorrt-llm/tensorrt_llm-0.7.1-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install python-3pp.
-RUN set -x \
-&& pip install psutil \
-&& pip install pynvml \
-&& pip install rouge_score \
-&& pip install transformers_stream_generator \
-&& pip install einops \
-&& pip install tiktoken \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# download tensorrt-llm repo.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt-llm/TensorRT-LLM-0.7.1.tar.gz -P /tmp \
-&& tar -xzf /tmp/TensorRT-LLM-0.7.1.tar.gz -C /root \
-&& mv /root/TensorRT-LLM-0.7.1 /root/TensorRT-LLM \
-&& rm -rf /tmp/* \
-&& echo "end"
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib
