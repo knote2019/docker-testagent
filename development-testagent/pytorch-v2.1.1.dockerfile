@@ -170,7 +170,7 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-# install torch.
+# install pytorch.
 RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.1.1+cu121-cp310-cp310-linux_x86_64.whl \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.16.1+cu121-cp310-cp310-linux_x86_64.whl \
