@@ -4,6 +4,18 @@
 https://launchpad.net/ubuntu/+source/libxcb
 
 ------------------------------------------------------------------------------------------------------------------------
+# install openmpi.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
+&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
+&& cd /tmp/openmpi-5.0.2 \
+&& ./configure \
+&& make -j32 \
+&& make install \
+&& ldconfig \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install cvcuda.
 RUN set -x \
 && mkdir -p /usr/local/cvcuda/include \
