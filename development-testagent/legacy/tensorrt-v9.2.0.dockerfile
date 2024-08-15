@@ -61,7 +61,6 @@ RUN set -x \
 && echo "install cuda" \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
 && bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
-&& ldconfig \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
@@ -88,6 +87,9 @@ RUN set -x \
 && tar -xzf /tmp/tensorrt-9.2.0.5.linux.x86_64-gnu.cuda-11.8.tar.gz -C /usr/local \
 && mv /usr/local/TensorRT-9.2.0.5 /usr/local/tensorrt \
 && mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.9.2.0 /usr/lib/x86_64-linux-gnu \
+&& pip install /usr/local/tensorrt/python/tensorrt-9.2.0.post11.dev5-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-9.2.0.post11.dev5-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_lean-9.2.0.post11.dev5-cp310-none-linux_x86_64.whl \
 && rm -rf /tmp/* \
 && echo "end"
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib

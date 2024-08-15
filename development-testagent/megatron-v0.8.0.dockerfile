@@ -24,7 +24,6 @@ RUN set -x \
 && echo "install cuda" \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
 && bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
-&& ldconfig \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
@@ -52,21 +51,15 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install openmpi.
-RUN set -x \
-&& apt install -y openmpi-bin \
-&& apt install -y libopenmpi-dev \
-&& echo "end"
-
 # install transformer-engine.
 RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& pip install pydantic \
-&& pip install einops \
+&& pip install packaging \
 && pip install flash-attn==2.4.2 \
-&& pip install transformer-engine --index-url https://pypi.nvidia.com \
-&& pip install transformer-engine-torch --index-url https://pypi.nvidia.com \
+&& git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
+&& cd /tmp/TransformerEngine \
+&& export NVTE_FRAMEWORK=pytorch \
+&& pip install . \
+&& rm -rf /tmp/* \
 && echo "end"
 
 # install megatron-core (https://github.com/NVIDIA/apex/issues/1594).

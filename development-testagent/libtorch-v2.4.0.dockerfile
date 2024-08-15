@@ -53,6 +53,34 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install cuda.
+RUN set -x \
+&& apt update \
+&& apt install -y libxml2 \
+&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
+&& echo "install cuda" \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
+&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
+&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
+&& sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
+&& sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
+&& rm -f /usr/share/applications/nsight.desktop \
+&& rm -f /usr/share/applications/nvvp.desktop \
+&& echo "install cudnn" \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& echo "install nccl" \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
+&& rm -rf /tmp/* \
+&& echo "end"
+ENV PATH=$PATH:/usr/local/cuda/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+
 # install libtorch.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/pytorch/libtorch-cxx11-abi-shared-with-deps-2.4.0+cu118.zip -P /tmp \

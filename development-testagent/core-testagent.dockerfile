@@ -48,6 +48,12 @@ RUN set -x \
 && apt install -y ninja-build \
 && echo "end"
 
+# install openmpi.
+RUN set -x \
+&& apt install -y openmpi-bin \
+&& apt install -y libopenmpi-dev \
+&& echo "end"
+
 # install ncurses.
 RUN set -x \
 && apt install -y libncurses5-dev \
