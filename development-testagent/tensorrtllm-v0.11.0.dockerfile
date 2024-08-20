@@ -78,7 +78,7 @@ RUN set -x \
 && echo "end"
 
 # # clone tensorrt-llm repo.
-# RUN set -x \
-# && export https_proxy=http://192.168.100.200:3128 \
-# && git clone -b v0.11.0 --recursive https://github.com/NVIDIA/TensorRT-LLM.git /root/TensorRT-LLM \
-# && echo "end"
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt-llm/TensorRT-LLM-0.11.0.tar.gz -P /tmp \
+&& tar -xzf /tmp/TensorRT-LLM-0.11.0.tar.gz -C /root \
+&& echo "end"
