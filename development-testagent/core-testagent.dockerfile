@@ -36,6 +36,7 @@ RUN set -x \
 && echo "end"
 
 # install cmake.
+# https://github.com/Kitware/CMake
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
 && bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
@@ -88,7 +89,7 @@ RUN set -x \
 && echo "end"
 
 # install openmpi.
-# https://www.open-mpi.org/
+# https://www.open-mpi.org
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
 && tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
