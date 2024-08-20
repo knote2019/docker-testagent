@@ -87,10 +87,17 @@ RUN set -x \
 
 # install openmpi.
 RUN set -x \
-&& apt install -y openmpi-bin \
-&& apt install -y libopenmpi-dev \
+&& wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
+&& tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
+&& cd /tmp/openmpi-5.0.2 \
+&& ./configure \
+&& make -j32 \
+&& make install \
+&& ldconfig \
+&& rm -rf /tmp/* \
 && echo "end"
 
+#-----------------------------------------------------------------------------------------------------------------------
 # install ncurses.
 RUN set -x \
 && apt install -y libncurses5-dev \
@@ -98,6 +105,7 @@ RUN set -x \
 && echo "end"
 
 # add more xcb libs for GUI apps.
+# https://launchpad.net/ubuntu/+source/libxcb
 RUN set -x \
 && apt install -y libxkbcommon-x11-0 \
 && apt install -y libxcb-icccm4 \
@@ -127,6 +135,7 @@ RUN set -x \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
 && echo "end"
 
+#-----------------------------------------------------------------------------------------------------------------------
 # install vscode.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/code_1.88.1-1712771838_amd64.deb -P /tmp \
