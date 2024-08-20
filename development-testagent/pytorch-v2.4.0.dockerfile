@@ -21,7 +21,6 @@ RUN set -x \
 && apt update \
 && apt install -y libxml2 \
 && sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& echo "install cuda" \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
 && bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
