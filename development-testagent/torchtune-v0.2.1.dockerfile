@@ -2,7 +2,7 @@ FROM 10.150.9.98:80/devops_tools/core-testagent:master
 #-----------------------------------------------------------------------------------------------------------------------
 # install driver.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/NVIDIA-Linux-x86_64-555.42.02.run -P /tmp \
+&& wget -nv http://10.113.3.1/corex/toolbox/nvidia/NVIDIA-Linux-x86_64-555.42.02.run -P /tmp \
 && bash /tmp/NVIDIA-Linux-x86_64-555.42.02.run --extract-only --target /tmp/umd \
 && cp /tmp/umd/libcuda.so.555.42.02 /usr/lib/x86_64-linux-gnu \
 && ln -sf /usr/lib/x86_64-linux-gnu/libcuda.so.555.42.02 /usr/lib/x86_64-linux-gnu/libcuda.so.1 \
