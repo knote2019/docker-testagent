@@ -22,23 +22,23 @@ RUN set -x \
 && apt install -y libxml2 \
 && sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
 && echo "install cuda" \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
-&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.1.1_530.30.02_linux.run -P /tmp \
+&& bash /tmp/cuda_12.1.1_530.30.02_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
 && rm -f /usr/share/applications/nsight.desktop \
 && rm -f /usr/share/applications/nvvp.desktop \
 && echo "install cudnn" \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda12-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive/lib/* /usr/local/cuda/lib64 \
 && echo "install nccl" \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.18.3-1+cuda12.1_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.18.3-1+cuda12.1_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 ENV PATH=$PATH:/usr/local/cuda/bin
@@ -47,26 +47,32 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 #-----------------------------------------------------------------------------------------------------------------------
 # install pytorch.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu121-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu121-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+# install flash-attn.
+RUN set -x \
+&& pip install packaging \
+&& pip install ninja \
+&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.4.2 -v \
 && echo "end"
 
 # install transformer-engine.
 RUN set -x \
-&& pip install packaging \
-&& pip install flash-attn==2.4.2 \
-&& git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /tmp/TransformerEngine \
-&& cd /tmp/TransformerEngine \
-&& export NVTE_FRAMEWORK=pytorch \
-&& pip install . \
-&& rm -rf /tmp/* \
+&& pip install git+https://github.com/NVIDIA/TransformerEngine.git@v1.7 -v \
 && echo "end"
 
-# install megatron-core (https://github.com/NVIDIA/apex/issues/1594).
+# install apex.
+# https://github.com/NVIDIA/apex/issues/1594
+RUN set -x \
+&& pip install git+https://github.com/NVIDIA/apex.git@23.05 -v --global-option="--cpp_ext" --global-option="--cuda_ext" \
+&& echo "end"
+
+# install megatron-core.
 RUN set -x \
 && pip install nltk \
-&& git clone -b 23.05 https://github.com/NVIDIA/apex \
-&& cd apex \
-&& pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" . \
-&& pip install megatron-core \
+&& git clone -b core_r0.8.0 --recursive https://github.com/NVIDIA/Megatron-LM.git /root/Megatron-LM \
+&& cd /root/Megatron-LM \
+&& pip install -e . \
 && echo "end"

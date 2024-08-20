@@ -45,9 +45,33 @@ ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 #-----------------------------------------------------------------------------------------------------------------------
+# install pytorch.
+RUN set -x \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.3.1+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+# install tensorrt.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-11.8.tar.gz -P /tmp \
+&& tar -xzf /tmp/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-11.8.tar.gz -C /usr/local \
+&& mv /usr/local/TensorRT-10.1.0.27 /usr/local/tensorrt \
+&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.1.0 /usr/lib/x86_64-linux-gnu \
+&& pip install /usr/local/tensorrt/python/tensorrt-10.1.0-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-10.1.0-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_lean-10.1.0-cp310-none-linux_x86_64.whl \
+&& rm -rf /tmp/* \
+&& echo "end"
+ENV PATH=$PATH:/usr/local/tensorrt/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib
+
 # install tensorrt-llm.
 RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
 && pip install accelerate \
-&& pip install tensorrt_llm==0.11.0 --extra-index-url https://pypi.nvidia.com --extra-index-url https://download.pytorch.org/whl/cu118 \
+&& pip install http://10.113.3.1/corex/toolbox/tensorrt-llm/tensorrt_llm-0.11.0-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+# clone tensorrt-llm repo.
+RUN set -x \
+&& git clone -b v0.11.0 --recursive https://github.com/NVIDIA/TensorRT-LLM.git /root/TensorRT-LLM \
 && echo "end"

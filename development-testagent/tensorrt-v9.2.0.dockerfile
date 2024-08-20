@@ -67,10 +67,10 @@ RUN set -x \
 && rm -f /usr/share/applications/nsight.desktop \
 && rm -f /usr/share/applications/nvvp.desktop \
 && echo "install cudnn" \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-8.9.5.30_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-8.9.5.30_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda11-archive/lib/* /usr/local/cuda/lib64 \
 && echo "install nccl" \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
 && tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
@@ -81,6 +81,7 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
+#-----------------------------------------------------------------------------------------------------------------------
 # install tensorrt.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/tensorrt/tensorrt-9.2.0.5.linux.x86_64-gnu.cuda-11.8.tar.gz -P /tmp \
@@ -92,4 +93,5 @@ RUN set -x \
 && pip install /usr/local/tensorrt/python/tensorrt_lean-9.2.0.post11.dev5-cp310-none-linux_x86_64.whl \
 && rm -rf /tmp/* \
 && echo "end"
+ENV PATH=$PATH:/usr/local/tensorrt/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib

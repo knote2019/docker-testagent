@@ -61,6 +61,7 @@ RUN set -x \
 && pip install tiktoken \
 && pip install blobfile \
 && pip install omegaconf \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& pip install torchtune==0.2.1 --extra-index-url https://download.pytorch.org/whl/cu118 \
+&& git clone -b v0.2.1 --recursive https://github.com/pytorch/torchtune.git /root/torchtune \
+&& cd /root/torchtune \
+&& pip install -e . \
 && echo "end"
