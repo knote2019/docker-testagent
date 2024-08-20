@@ -50,6 +50,7 @@ RUN set -x \
 
 #-----------------------------------------------------------------------------------------------------------------------
 # install ffmpeg.
+# https://github.com/FFmpeg/FFmpeg
 RUN set -x \
 && apt install -y yasm \
 && apt install -y libx264-dev \
@@ -69,6 +70,7 @@ ENV PATH=$PATH:/usr/local/ffmpeg/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/ffmpeg/lib
 
 # install opencv.
+# https://github.com/opencv/opencv
 RUN set -x \
 && apt install -y libgtk2.0-dev \
 && apt install -y gtk2-engines-pixbuf \
@@ -86,6 +88,7 @@ RUN set -x \
 && echo "end"
 
 # install openmpi.
+# https://www.open-mpi.org/
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
 && tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
