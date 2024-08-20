@@ -28,26 +28,33 @@ RUN set -x \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
 && rm -f /usr/share/applications/nsight.desktop \
 && rm -f /usr/share/applications/nvvp.desktop \
-&& echo "install cudnn" \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
-&& echo "install nccl" \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
+# install cudnn.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+# install nccl.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install pytorch.
 RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
