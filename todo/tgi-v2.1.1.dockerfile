@@ -57,6 +57,13 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu121-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
+# install flash-attn.
+RUN set -x \
+&& pip install packaging \
+&& pip install ninja \
+&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.6.0 -v \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install tgi.
 RUN set -x \
