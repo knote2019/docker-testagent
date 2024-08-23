@@ -22,5 +22,8 @@ https://github.com/microsoft/onnxruntime/releases
 tensorrt-llm:
 https://pypi.nvidia.cn/tensorrt-llm
 
+vllm:
+https://docs.vllm.ai/en/latest/getting_started/installation.html
+
 tgi:
 https://huggingface.co/docs/text-generation-inference/installation
