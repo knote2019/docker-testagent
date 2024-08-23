@@ -43,7 +43,9 @@ RUN set -x \
 && echo "end"
 
 # install onnxruntime.
-# https://github.com/microsoft/onnxruntime/releases
 RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/onnxruntime/onnxruntime-linux-x64-gpu-1.19.0.tgz -P /usr/local \
+&& mv /usr/local/onnxruntime-linux-x64-gpu-1.19.0 /usr/local/onnxruntime \
 && pip install onnxruntime-gpu==1.19.0 \
 && echo "end"
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/onnxruntime/lib

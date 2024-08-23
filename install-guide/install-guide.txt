@@ -16,6 +16,9 @@ https://download.pytorch.org/whl
 tensorrt:
 https://github.com/NVIDIA/TensorRT
 
+onnxruntime:
+https://github.com/microsoft/onnxruntime/releases
+
 tensorrt-llm:
 https://pypi.nvidia.cn/tensorrt-llm
 
