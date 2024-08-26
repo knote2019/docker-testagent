@@ -59,6 +59,8 @@ RUN set -x \
 
 # install flashinfer.
 RUN set -x \
+&& pip install numpy \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
 && git clone -b v0.1.5 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
 && pip install -e /usr/local/flashinfer/python \
 && echo "end"
@@ -66,6 +68,5 @@ RUN set -x \
 # install sglang.
 RUN set -x \
 && git clone -b v0.2.12 https://github.com/sgl-project/sglang.git /usr/local/sglang \
-&& cd /usr/local/sglang \
-&& pip install -e "python[all]" \
+&& pip install -e /usr/local/sglang/python \
 && echo "end"
