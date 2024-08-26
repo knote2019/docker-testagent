@@ -57,10 +57,15 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu121-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
+# install flashinfer.
+RUN set -x \
+&& git clone -b v0.1.5 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
+&& pip install -e /usr/local/flashinfer/python \
+&& echo "end"
+
 # install sglang.
 RUN set -x \
-&& git clone -b v0.2.12 https://github.com/sgl-project/sglang.git /tmp/sglang \
-&& cd /tmp/sglang \
-&& pip install "python[all]" \
-&& rm -rf /tmp/* \
+&& git clone -b v0.2.12 https://github.com/sgl-project/sglang.git /usr/local/sglang \
+&& cd /usr/local/sglang \
+&& pip install -e "python[all]" \
 && echo "end"
