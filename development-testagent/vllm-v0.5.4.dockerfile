@@ -54,5 +54,5 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install vllm.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/vllm/vllm-0.5.4+cu118-cp310-cp310-manylinux1_x86_64.whl \
+&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 -v \
 && echo "end"

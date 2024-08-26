@@ -67,9 +67,8 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install tgi.
 RUN set -x \
-&& wget -nv https://github.com/huggingface/text-generation-inference/archive/refs/tags/v2.1.1.tar.gz -P /tmp \
-&& tar -xzf /tmp/v2.1.1.tar.gz -C /tmp \
-&& cd /tmp/text-generation-inference-2.1.1 \
+&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git \
+&& cd text-generation-inference \
 && make install \
 && rm -rf /tmp/* \
 && echo "end"
