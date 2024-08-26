@@ -61,7 +61,7 @@ RUN set -x \
 RUN set -x \
 && pip install packaging \
 && pip install ninja \
-&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.6.0 -v \
+&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.5.9.post1 -v \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
