@@ -52,11 +52,6 @@ RUN set -x \
 && mkdir /tmp/apache-tvm-src-v0.17.0.rc0/build \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/build \
 && echo "set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)" > config.cmake \
-&& echo "set(HIDE_PRIVATE_SYMBOLS ON)" >> config.cmake \
-&& echo "set(USE_CUDA ON)" >> config.cmake \
-&& echo "set(USE_CUBLAS ON)" >> config.cmake \
-&& echo "set(USE_CUDNN ON)" >> config.cmake \
-&& echo "set(USE_CUTLASS ON)" >> config.cmake \
 && cmake .. \
 && make -j32 \
 && make install \
