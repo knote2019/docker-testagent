@@ -50,18 +50,21 @@ RUN set -x \
 && tar -xzf /tmp/apache-tvm-src-v0.17.0.tar.gz -C /tmp \
 && echo "install tvm cpp api" \
 && mkdir /tmp/apache-tvm-src-v0.17.0.rc0/build \
-&& cp /tmp/apache-tvm-src-v0.17.0.rc0/cmake/config.cmake /tmp/apache-tvm-src-v0.17.0.rc0/build \
-&& sed -i 's@set(USE_LLVM OFF)@set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)@' /tmp/apache-tvm-src-v0.17.0.rc0/build/config.cmake \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/build \
+&& echo "set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)" > config.cmake \
+&& echo "set(HIDE_PRIVATE_SYMBOLS ON)" >> config.cmake \
+&& echo "set(USE_CUDA ON)" >> config.cmake \
+&& echo "set(USE_CUBLAS ON)" >> config.cmake \
+&& echo "set(USE_CUDNN ON)" >> config.cmake \
+&& echo "set(USE_CUTLASS ON)" >> config.cmake \
 && cmake .. \
 && make -j32 \
 && make install \
 && echo "install tvm python api" \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/python \
-&& python3 gen_requirements.py \
-&& pip3 install -r requirements/core.txt \
-&& python3 setup.py build \
-&& python3 setup.py install \
+&& python gen_requirements.py \
+&& pip install -r requirements/core.txt \
+&& pip install . \
 && echo "install dmlc-core" \
 && mkdir /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dmlc-core/build \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dmlc-core/build \
