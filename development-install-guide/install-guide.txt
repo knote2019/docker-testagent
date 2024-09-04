@@ -16,6 +16,9 @@ https://download.pytorch.org/whl
 tensorrt:
 https://github.com/NVIDIA/TensorRT
 
+tvm:
+https://tvm.apache.org/docs/v0.9.0/install/from_source.html
+
 onnxruntime:
 https://github.com/microsoft/onnxruntime/releases
 
