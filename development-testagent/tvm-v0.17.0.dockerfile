@@ -49,28 +49,28 @@ RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/tvm/apache-tvm-src-v0.17.0.tar.gz -P /tmp \
 && tar -xzf /tmp/apache-tvm-src-v0.17.0.tar.gz -C /tmp \
 && echo "install tvm cpp api" \
-&& mkdir /tmp/apache-tvm-src-v0.17.0/build \
-&& cp /tmp/apache-tvm-src-v0.17.0/cmake/config.cmake /tmp/apache-tvm-src-v0.17.0/build \
-&& sed -i 's@set(USE_LLVM OFF)@set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)@' /tmp/apache-tvm-src-v0.17.0/build/config.cmake \
-&& cd /tmp/apache-tvm-src-v0.17.0/build \
+&& mkdir /tmp/apache-tvm-src-v0.17.0.rc0/build \
+&& cp /tmp/apache-tvm-src-v0.17.0.rc0/cmake/config.cmake /tmp/apache-tvm-src-v0.17.0.rc0/build \
+&& sed -i 's@set(USE_LLVM OFF)@set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)@' /tmp/apache-tvm-src-v0.17.0.rc0/build/config.cmake \
+&& cd /tmp/apache-tvm-src-v0.17.0.rc0/build \
 && cmake .. \
 && make -j32 \
 && make install \
 && echo "install tvm python api" \
-&& cd /tmp/apache-tvm-src-v0.17.0/python \
+&& cd /tmp/apache-tvm-src-v0.17.0.rc0/python \
 && python3 gen_requirements.py \
 && pip3 install -r requirements/core.txt \
 && python3 setup.py build \
 && python3 setup.py install \
 && echo "install dmlc-core" \
-&& mkdir /tmp/apache-tvm-src-v0.17.0/3rdparty/dmlc-core/build \
-&& cd /tmp/apache-tvm-src-v0.17.0/3rdparty/dmlc-core/build \
+&& mkdir /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dmlc-core/build \
+&& cd /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dmlc-core/build \
 && cmake .. \
 && make -j32 \
 && make install \
 && echo "install dlpack" \
-&& mkdir /tmp/apache-tvm-src-v0.17.0/3rdparty/dlpack/build \
-&& cd /tmp/apache-tvm-src-v0.17.0/3rdparty/dlpack/build \
+&& mkdir /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dlpack/build \
+&& cd /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dlpack/build \
 && cmake .. \
 && make -j32 \
 && make install \
