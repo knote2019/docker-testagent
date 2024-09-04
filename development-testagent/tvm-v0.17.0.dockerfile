@@ -33,15 +33,6 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
-# install cudnn.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -C /usr/local \
-&& mv /usr/local/cudnn-linux-x86_64-8.9.5.30_cuda12-archive /usr/local/cudnn \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cudnn/lib
-
 #-----------------------------------------------------------------------------------------------------------------------
 # install tvm.
 RUN set -x \
@@ -58,8 +49,6 @@ RUN set -x \
 && make install \
 && echo "install tvm python api" \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/python \
-&& python gen_requirements.py \
-&& pip install -r requirements/core.txt \
 && pip install . \
 && echo "install dmlc-core" \
 && mkdir /tmp/apache-tvm-src-v0.17.0.rc0/3rdparty/dmlc-core/build \
