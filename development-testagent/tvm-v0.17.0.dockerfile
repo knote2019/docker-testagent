@@ -51,6 +51,8 @@ RUN set -x \
 && echo "install tvm cpp api" \
 && mkdir /tmp/apache-tvm-src-v0.17.0.rc0/build \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/build \
+&& export TVM_CUDA_ARCH=sm_80 \
+&& export TVM_CUDA_PATH=/usr/local/cuda \
 && echo "set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)" > config.cmake \
 && echo "set(USE_CUDA ON)" >> config.cmake \
 && cmake .. \
