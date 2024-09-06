@@ -59,11 +59,21 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install flash-attn.
-# tgi install from src also need download flash-attn's whl. not sure why.
+# install rust.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.5.9.post1+cu122torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
+&& export RUSTUP_DIST_SERVER=http://mirrors.tuna.tsinghua.edu.cn/rustup \
+&& export RUSTUP_UPDATE_ROOT=http://mirrors.tuna.tsinghua.edu.cn/rustup/rustup \
+&& wget -nv http://10.113.3.1/corex/toolbox/rust/rustup.sh -P /tmp \
+&& bash /tmp/rustup.sh -y \
+&& echo "\
+[source.crates-io]\n\
+registry = 'https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git'\n\
+[net]\n\
+git-fetch-with-cli = true\n\
+" > /root/.cargo/config.toml \
+&& rm -rf /tmp/* \
 && echo "end"
+ENV PATH=$PATH:/root/.cargo/bin
 
 # install tgi.
 RUN set -x \
