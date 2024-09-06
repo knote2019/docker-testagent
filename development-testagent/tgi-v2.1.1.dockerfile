@@ -60,9 +60,7 @@ RUN set -x \
 
 # install flash-attn.
 RUN set -x \
-&& pip install packaging \
-&& pip install ninja \
-&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.5.9.post1 -v \
+&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.5.9.post1+cu122torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
