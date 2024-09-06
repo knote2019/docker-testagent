@@ -58,6 +58,7 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu124-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
+#-----------------------------------------------------------------------------------------------------------------------
 # install flash-attn.
 # install from src also need download whl. not sure why.
 RUN set -x \
@@ -69,7 +70,6 @@ RUN set -x \
 && pip install git+https://github.com/vllm-project/vllm-nccl.git@v0.1.0 -v \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
 # install tgi.
 RUN set -x \
 && export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
