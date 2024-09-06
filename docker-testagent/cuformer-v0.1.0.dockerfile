@@ -50,27 +50,3 @@ RUN set -x \
 && cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install pytorch.
-RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu124-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu124-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install flash-attn.
-# tgi install from src also need download flash-attn's whl. not sure why.
-RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.5.9.post1+cu122torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-# install tgi.
-RUN set -x \
-&& export https_proxy=http://192.168.100.200:3128 \
-&& export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
-&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git \
-&& cd text-generation-inference \
-&& make install \
-&& rm -rf /tmp/* \
-&& echo "end"
