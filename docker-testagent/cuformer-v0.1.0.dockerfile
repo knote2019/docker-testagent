@@ -68,3 +68,8 @@ RUN set -x \
 RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/bitsandbytes/bitsandbytes-0.43.3-py3-none-manylinux_2_24_x86_64.whl \
 && echo "end"
+
+# install vllm.
+RUN set -x \
+&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 --verbose \
+&& echo "end"
