@@ -10,8 +10,20 @@ https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/
 nccl:
 https://developer.nvidia.com/nccl/nccl-legacy-downloads
 
+------------------------------------------------------------------------------------------------------------------------
+小模型训练:
 pytorch:
 https://download.pytorch.org/whl
+
+------------------------------------------------------------------------------------------------------------------------
+大模型训练:
+megatron:
+https://github.com/NVIDIA/Megatron-LM
+
+------------------------------------------------------------------------------------------------------------------------
+小模型推理:
+libtorch:
+https://download.pytorch.org/libtorch/cu121
 
 tensorrt:
 https://github.com/NVIDIA/TensorRT
@@ -22,6 +34,8 @@ https://tvm.apache.org/docs/v0.9.0/install/from_source.html
 onnxruntime:
 https://github.com/microsoft/onnxruntime/releases
 
+------------------------------------------------------------------------------------------------------------------------
+大模型推理:
 tensorrt-llm:
 https://pypi.nvidia.cn/tensorrt-llm
 
@@ -31,8 +45,8 @@ https://docs.vllm.ai/en/latest/getting_started/installation.html
 tgi:
 https://huggingface.co/docs/text-generation-inference/installation
 
-flashinfer:
-https://github.com/flashinfer-ai/flashinfer
-
 sglang:
 https://github.com/sgl-project/sglang
+
+flashinfer:
+https://github.com/flashinfer-ai/flashinfer
