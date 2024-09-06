@@ -61,5 +61,5 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install colossalai.
 RUN set -x \
-&& pip install git+https://github.com/hpcaitech/ColossalAI.git@v0.3.7 -v \
+&& pip install git+https://github.com/hpcaitech/ColossalAI.git@v0.3.7 --verbose \
 && echo "end"

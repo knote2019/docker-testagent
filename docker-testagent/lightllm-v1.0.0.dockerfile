@@ -61,5 +61,5 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install lightllm.
 RUN set -x \
-&& pip install git+https://github.com/ModelTC/lightllm.git@main -v \
+&& pip install git+https://github.com/ModelTC/lightllm.git@main --verbose \
 && echo "end"

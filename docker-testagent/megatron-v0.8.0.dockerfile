@@ -62,18 +62,18 @@ RUN set -x \
 RUN set -x \
 && pip install packaging \
 && pip install ninja \
-&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.4.2 -v \
+&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.4.2 --verbose \
 && echo "end"
 
 # install transformer-engine.
 RUN set -x \
-&& pip install git+https://github.com/NVIDIA/TransformerEngine.git@v1.7 -v \
+&& pip install git+https://github.com/NVIDIA/TransformerEngine.git@v1.7 --verbose \
 && echo "end"
 
 # install apex.
 # https://github.com/NVIDIA/apex/issues/1594
 RUN set -x \
-&& pip install git+https://github.com/NVIDIA/apex.git@23.05 -v --global-option="--cpp_ext" --global-option="--cuda_ext" \
+&& pip install git+https://github.com/NVIDIA/apex.git@23.05 --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
 && echo "end"
 
 # install megatron-core.

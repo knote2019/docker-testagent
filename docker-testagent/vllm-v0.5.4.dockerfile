@@ -54,5 +54,5 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install vllm.
 RUN set -x \
-&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 -v \
+&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 --verbose \
 && echo "end"

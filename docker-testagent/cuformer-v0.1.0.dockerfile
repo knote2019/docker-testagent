@@ -50,3 +50,9 @@ RUN set -x \
 && cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install apex.
+RUN set -x \
+&& pip install git+https://github.com/NVIDIA/apex.git@23.08 --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
+&& echo "end"
