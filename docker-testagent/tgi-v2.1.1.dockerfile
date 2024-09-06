@@ -66,6 +66,7 @@ RUN set -x \
 && echo "end"
 
 # install vllm-nccl.
+# tgi default install vllm-nccl hang, install first at here.
 RUN set -x \
 && pip install git+https://github.com/vllm-project/vllm-nccl.git@v0.1.0 -v \
 && echo "end"
