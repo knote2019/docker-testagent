@@ -59,6 +59,7 @@ RUN set -x \
 && echo "end"
 
 # install flash-attn.
+# install from src also need download whl. not sure why.
 RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.5.9.post1+cu122torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
 && echo "end"
