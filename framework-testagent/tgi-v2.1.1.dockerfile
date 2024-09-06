@@ -75,6 +75,16 @@ git-fetch-with-cli = true\n\
 && echo "end"
 ENV PATH=$PATH:/root/.cargo/bin
 
+# install openssl.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/openssl/openssl-1.1.1v.tar.gz -P /tmp \
+&& tar -xzf /tmp/openssl-1.1.1v.tar.gz -C /tmp \
+&& cd /tmp/openssl-1.1.1v \
+&& ./config --prefix=/usr \
+&& make -j32 \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install tgi.
 RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
