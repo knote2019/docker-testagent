@@ -20,6 +20,9 @@ https://download.pytorch.org/whl
 megatron:
 https://github.com/NVIDIA/Megatron-LM
 
+flash-attn:
+https://github.com/Dao-AILab/flash-attention
+
 ------------------------------------------------------------------------------------------------------------------------
 小模型推理:
 libtorch:
