@@ -74,6 +74,11 @@ RUN set -x \
 && pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 --verbose \
 && echo "end"
 
+# install intel-extension-for-pytorch.
+RUN set -x \
+&& pip install intel-extension-for-pytorch \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install cuformer.
 RUN set -x \
