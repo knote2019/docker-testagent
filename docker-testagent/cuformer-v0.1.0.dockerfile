@@ -52,6 +52,13 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
+# install pytorch.
+RUN set -x \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu124-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu124-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
 # install apex.
 RUN set -x \
 && pip install git+https://github.com/NVIDIA/apex.git@23.08 --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
