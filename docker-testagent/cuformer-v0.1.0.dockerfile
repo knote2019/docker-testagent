@@ -73,3 +73,9 @@ RUN set -x \
 RUN set -x \
 && pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 --verbose \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install cuformer.
+RUN set -x \
+&& pip install git+http://bitbucket.iluvatar.ai:7990/scm/swte/cuformer.git --verbose \
+&& echo "end"
