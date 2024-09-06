@@ -56,3 +56,8 @@ RUN set -x \
 RUN set -x \
 && pip install git+https://github.com/NVIDIA/apex.git@23.08 --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
 && echo "end"
+
+# install bitsandbytes.
+RUN set -x \
+&& pip install http://10.113.3.1/corex/toolbox/bitsandbytes/bitsandbytes-0.43.3-py3-none-manylinux_2_24_x86_64.whl \
+&& echo "end"
