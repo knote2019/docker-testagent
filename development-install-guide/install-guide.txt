@@ -49,5 +49,8 @@ https://huggingface.co/docs/text-generation-inference/installation
 sglang:
 https://github.com/sgl-project/sglang
 
+colossalai:
+https://github.com/hpcaitech/ColossalAI
+
 flashinfer:
 https://github.com/flashinfer-ai/flashinfer
