@@ -82,7 +82,7 @@ RUN set -x \
 
 # install AutoGPTQ.
 RUN set -x \
-&& export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
 && pip install git+https://github.com/PanQiWei/AutoGPTQ.git@v0.5.1 --verbose \
 && echo "end"
 
@@ -94,7 +94,7 @@ RUN set -x \
 # install flashinfer.
 RUN set -x \
 && pip install numpy \
-&& export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
 && git clone -b v0.1.5 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
 && pip install -e /usr/local/flashinfer/python \
 && echo "end"

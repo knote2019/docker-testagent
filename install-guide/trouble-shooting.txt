@@ -55,7 +55,7 @@ pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.5.9.post1 -v
 Unknown CUDA Architecture Name 9.0a in CUDA_SELECT_NVCC_ARCH_FLAGS (compiling from source)
 
 解决方案:
-export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0"
+export TORCH_CUDA_ARCH_LIST="8.0"
 https://github.com/pytorch/pytorch/issues/113948
 
 nvcc --list-gpu-arch

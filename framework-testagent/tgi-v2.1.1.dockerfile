@@ -88,7 +88,7 @@ RUN set -x \
 && apt update \
 && apt install -y libssl-dev \
 && export https_proxy=http://192.168.100.200:3128 \
-&& export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
 && git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git \
 && cd text-generation-inference \
 && make install \
