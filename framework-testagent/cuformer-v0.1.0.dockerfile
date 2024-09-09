@@ -71,7 +71,7 @@ RUN set -x \
 
 # install bitsandbytes.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/bitsandbytes/bitsandbytes-0.43.3-py3-none-manylinux_2_24_x86_64.whl \
+&& pip install git+https://github.com/bitsandbytes-foundation/bitsandbytes.git@v0.43.3 --verbose \
 && echo "end"
 
 # install AutoAWQ.
