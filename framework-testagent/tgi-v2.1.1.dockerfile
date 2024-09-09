@@ -75,6 +75,14 @@ git-fetch-with-cli = true\n\
 && echo "end"
 ENV PATH=$PATH:/root/.cargo/bin
 
+# install protoc.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/protoc/protoc-21.12-linux-x86_64.zip -P /tmp \
+&& unzip /tmp/protoc-21.12-linux-x86_64.zip -d /usr/local "bin/protoc" \
+&& unzip /tmp/protoc-21.12-linux-x86_64.zip -d /usr/local 'include/*' \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install tgi.
 RUN set -x \
 && apt update \
