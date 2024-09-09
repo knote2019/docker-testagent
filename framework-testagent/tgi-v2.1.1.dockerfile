@@ -77,7 +77,7 @@ ENV PATH=$PATH:/root/.cargo/bin
 
 # install tgi.
 RUN set -x \
-&& apt udpate \
+&& apt update \
 && apt install -y libssl-dev \
 && export https_proxy=http://192.168.100.200:3128 \
 && export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
