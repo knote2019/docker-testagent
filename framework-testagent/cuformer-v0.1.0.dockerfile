@@ -91,6 +91,14 @@ RUN set -x \
 && pip install intel-extension-for-pytorch \
 && echo "end"
 
+# install flashinfer.
+RUN set -x \
+&& pip install numpy \
+&& export TORCH_CUDA_ARCH_LIST="8.0 8.6 8.9 9.0" \
+&& git clone -b v0.1.5 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
+&& pip install -e /usr/local/flashinfer/python \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install cuformer.
 RUN set -x \
