@@ -71,11 +71,12 @@ RUN set -x \
 
 # install bitsandbytes.
 RUN set -x \
-&& pip install git+https://github.com/bitsandbytes-foundation/bitsandbytes.git@v0.43.3 --verbose \
+&& pip install http://10.113.3.1/corex/toolbox/bitsandbytes/bitsandbytes-0.43.3-py3-none-manylinux_2_24_x86_64.whl \
 && echo "end"
 
 # install AutoAWQ.
 RUN set -x \
+&& pip install gekko \
 && pip install git+https://github.com/casper-hansen/AutoAWQ.git@v0.1.8 --verbose \
 && echo "end"
 
