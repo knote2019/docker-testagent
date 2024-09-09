@@ -54,6 +54,6 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install pytorch.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.0+cu118-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.0+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu118-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
