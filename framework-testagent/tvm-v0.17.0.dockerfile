@@ -33,6 +33,15 @@ RUN set -x \
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
+# install cudnn.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -C /usr/local \
+&& mv /usr/local/cudnn-linux-x86_64-8.9.5.30_cuda12-archive /usr/local/cudnn \
+&& rm -rf /tmp/* \
+&& echo "end"
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cudnn/lib
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install tvm.
 RUN set -x \
@@ -44,6 +53,9 @@ RUN set -x \
 && cd /tmp/apache-tvm-src-v0.17.0.rc0/build \
 && echo "set(USE_LLVM /usr/lib/llvm-16/bin/llvm-config)" > config.cmake \
 && echo "set(USE_CUDA ON)" >> config.cmake \
+&& echo "set(USE_CUBLAS ON)" >> config.cmake \
+&& echo "set(USE_CUDNN ON)" >> config.cmake \
+&& echo "set(USE_CUTLASS ON)" >> config.cmake \
 && cmake .. \
 && make -j32 \
 && make install \
