@@ -88,6 +88,7 @@ RUN set -x \
 && apt update \
 && apt install -y libssl-dev \
 && export https_proxy=http://192.168.100.200:3128 \
+&& export no_proxy=pypi.tuna.tsinghua.edu.cn \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
 && wget -nv http://10.113.3.1/corex/toolbox/tgi/text-generation-inference-2.1.1.tar.gz -P /tmp \
 && tar -xzf /tmp/text-generation-inference-2.1.1.tar.gz \
