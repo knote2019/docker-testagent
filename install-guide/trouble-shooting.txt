@@ -78,18 +78,10 @@ compute_90
 ------------------------------------------------------------------------------------------------------------------------
 问题描述:
 源码安装 tgi:
-Receiving objects:  35% (4115/11669), 2.58 MiB | 35.00 KiB/s
+Receiving objects:  13% (2635/18947), 2.76 MiB | 15.00 KiB/s
 error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet.
-19:34:23  error: 159 bytes of body are still expected
-19:34:23  fetch-pack: unexpected disconnect while reading sideband packet
-19:34:23  fatal: early EOF
-19:34:23  fatal: fetch-pack: invalid index-pack output
-19:34:23  make[1]: *** [Makefile-vllm:4: build-vllm-cuda] Error 128
-19:34:23  make[1]: Leaving directory '/root/text-generation-inference/server'
-19:34:23  make: *** [Makefile:2: install-server] Error 2
-19:34:24  Removing intermediate container 4917e85d814e
+23:45:00  Receiving objects:  13% (2651/18947), 2.79 MiB | 13.00 KiB/s
+error: 5983 bytes of body are still expected
 
 解决方案:
-&& apt install -y gnutls-bin \
-&& git config --global http.sslVerify false \
-&& git config --global http.postBuffer 1048576000 \
+&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git --depth=1 \
