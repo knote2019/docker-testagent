@@ -74,3 +74,22 @@ compute_86
 compute_87
 compute_89
 compute_90
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 tgi:
+Receiving objects:  35% (4115/11669), 2.58 MiB | 35.00 KiB/s
+error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet.
+19:34:23  error: 159 bytes of body are still expected
+19:34:23  fetch-pack: unexpected disconnect while reading sideband packet
+19:34:23  fatal: early EOF
+19:34:23  fatal: fetch-pack: invalid index-pack output
+19:34:23  make[1]: *** [Makefile-vllm:4: build-vllm-cuda] Error 128
+19:34:23  make[1]: Leaving directory '/root/text-generation-inference/server'
+19:34:23  make: *** [Makefile:2: install-server] Error 2
+19:34:24  Removing intermediate container 4917e85d814e
+
+解决方案:
+&& apt install -y gnutls-bin \
+&& git config --global http.sslVerify false \
+&& git config --global http.postBuffer 1048576000 \
