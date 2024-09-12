@@ -86,11 +86,11 @@ RUN set -x \
 # install tgi.
 RUN set -x \
 && apt update \
-&& git config --global http.postBuffer 1048576000 \
 && apt install -y libssl-dev \
 && export https_proxy=http://192.168.100.200:3128 \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git \
+&& wget -nv http://10.113.3.1/corex/toolbox/tgi/text-generation-inference-2.1.1.tar.gz -P /tmp \
+&& tar -xzf /tmp/text-generation-inference-2.1.1.tar.gz -C \
 && cd text-generation-inference \
 && make install \
 && rm -rf /tmp/* \
