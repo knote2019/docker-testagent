@@ -87,7 +87,7 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y libssl-dev \
-&& git config --global https.postBuffer 1048576000 \
+&& git config --global http.sslBackend openssl \
 && export https_proxy=http://192.168.100.200:3128 \
 && export no_proxy=pypi.tuna.tsinghua.edu.cn \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
