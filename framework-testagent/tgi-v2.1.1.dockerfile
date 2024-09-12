@@ -90,7 +90,7 @@ RUN set -x \
 && export https_proxy=http://192.168.100.200:3128 \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
 && wget -nv http://10.113.3.1/corex/toolbox/tgi/text-generation-inference-2.1.1.tar.gz -P /tmp \
-&& tar -xzf /tmp/text-generation-inference-2.1.1.tar.gz -C \
+&& tar -xzf /tmp/text-generation-inference-2.1.1.tar.gz \
 && cd text-generation-inference \
 && make install \
 && rm -rf /tmp/* \
