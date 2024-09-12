@@ -87,11 +87,10 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y libssl-dev \
-&& git config --global http.sslBackend openssl \
 && export https_proxy=http://192.168.100.200:3128 \
 && export no_proxy=pypi.tuna.tsinghua.edu.cn \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git \
+&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git --depth=1 \
 && cd text-generation-inference \
 && make install \
 && rm -rf /tmp/* \
