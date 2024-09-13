@@ -13,6 +13,7 @@ RUN set -x \
 && cp /tmp/umd/nvidia-smi /usr/bin \
 && pip install nvidia-ml-py \
 && pip install nvitop \
+&& ldconfig \
 && rm -rf /tmp/* \
 && echo "end"
 
