@@ -79,6 +79,7 @@ RUN set -x \
 
 # install git.
 RUN set -x \
+&& apt remove --purge libcurl4-gnutls-dev \
 && apt install -y libcurl4-openssl-dev \
 && wget -nv http://10.113.3.1/corex/toolbox/git/git-2.46.0.tar.xz -P /tmp \
 && tar -xf /tmp/git-2.46.0.tar.xz -C /tmp \
