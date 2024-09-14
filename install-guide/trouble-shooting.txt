@@ -78,13 +78,28 @@ compute_90
 ------------------------------------------------------------------------------------------------------------------------
 问题描述:
 源码安装 tgi:
-Receiving objects:  13% (2635/18947), 2.76 MiB | 15.00 KiB/s
 error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet.
-23:45:00  Receiving objects:  13% (2651/18947), 2.79 MiB | 13.00 KiB/s
-error: 5983 bytes of body are still expected
+13:58:46  error: 39 bytes of body are still expected
+13:58:46  fetch-pack: unexpected disconnect while reading sideband packet
+13:58:46  fatal: early EOF
+13:58:46  fatal: fetch-pack: invalid index-pack output
+13:58:46  make[1]: *** [Makefile-vllm:4: build-vllm-cuda] Error 128
+13:58:46  make[1]: Leaving directory '/root/text-generation-inference/server'
 
 解决方案:
-&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git --depth=1 \
+# install git.
+RUN set -x \
+&& apt remove --purge libcurl4-gnutls-dev \
+&& apt install -y libcurl4-openssl-dev \
+&& wget -nv http://10.113.3.1/corex/toolbox/git/git-2.46.0.tar.xz -P /tmp \
+&& tar -xf /tmp/git-2.46.0.tar.xz -C /tmp \
+&& cd /tmp/git-2.46.0 \
+&& make configure \
+&& ./configure --prefix=/usr --with-openssl \
+&& make -j32 \
+&& make install \
+&& rm -rf /tmp/* \
+&& echo "end"
 
 ------------------------------------------------------------------------------------------------------------------------
 问题描述:
