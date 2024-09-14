@@ -99,18 +99,3 @@ RUN set -x \
 && make install \
 && rm -rf /tmp/* \
 && echo "end"
-
-------------------------------------------------------------------------------------------------------------------------
-问题描述:
-源码安装 tgi:
-Receiving objects:  71% (8285/11669), 5.07 MiB | 324.00 KiB/s
-error: RPC failed; curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8)
-00:38:43  error: 3348 bytes of body are still expected
-00:38:43  fetch-pack: unexpected disconnect while reading sideband packet
-00:38:43  fatal: early EOF
-00:38:43  fatal: fetch-pack: invalid index-pack output
-00:38:43  make[1]: *** [Makefile-vllm:4: build-vllm-cuda] Error 128
-00:38:43  make[1]: Leaving directory '/root/text-generation-inference/server'
-
-解决方案:
-git config --global http.version HTTP/1.1
