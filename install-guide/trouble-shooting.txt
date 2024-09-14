@@ -103,3 +103,4 @@ error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received T
 NOTE:
 https://github.com/vllm-project/vllm/issues/4360
 https://github.com/vllm-project/vllm-nccl/releases/tag/v0.1.0
+yes, it is not required now after #5091 , starting in v0.4.3.
