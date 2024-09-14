@@ -93,3 +93,15 @@ RUN set -x \
 && make install \
 && rm -rf /tmp/* \
 && echo "end"
+
+# uninstall default flash-attn.
+RUN set -x \
+&& pip uninstall -y flash-attn \
+&& echo "end"
+
+# install flash-attn.
+RUN set -x \
+&& pip install packaging \
+&& pip install ninja \
+&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.6.2 --verbose \
+&& echo "end"

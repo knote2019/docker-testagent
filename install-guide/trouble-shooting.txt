@@ -104,3 +104,37 @@ NOTE:
 https://github.com/vllm-project/vllm/issues/4360
 https://github.com/vllm-project/vllm-nccl/releases/tag/v0.1.0
 yes, it is not required now after #5091 , starting in v0.4.3.
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+text-generation-launcher --model-id /stores/llm_models/llama/Llama-2-7b-hf \
+--sharded false \
+--dtype float16 \
+--disable-custom-kernels \
+--trust-remote-code \
+--max-total-tokens 6144 \
+--max-batch-total-tokens 6144 \
+--max-batch-prefill-tokens 4096 \
+--port 4000 \
+--max-input-length 4096
+运行出错:
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 748, in _load_attr_from_module
+    return getattribute_from_module(self._modules[module_name], attr)
+
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 692, in getattribute_from_module
+    if hasattr(module, attr):
+
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/import_utils.py", line 1525, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/import_utils.py", line 1537, in _get_module
+    raise RuntimeError(
+
+RuntimeError: Failed to import transformers.models.llama.modeling_llama because of the following error (look up to see its traceback):
+/usr/local/lib/python3.10/dist-packages/flash_attn_2_cuda.cpython-310-x86_64-linux-gnu.so: undefined symbol: _ZN3c1021throwNullDataPtrErrorEv
+ rank=0
+2024-09-14T13:42:12.005358Z ERROR text_generation_launcher: Shard 0 failed to start
+2024-09-14T13:42:12.005401Z  INFO text_generation_launcher: Shutting down shards
+
+解决方案:
+&& pip uninstall -y flash-attn \
