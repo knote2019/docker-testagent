@@ -77,14 +77,25 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install git.
+RUN set -x \
+&& apt install -y libcurl4-openssl-dev \
+&& wget -nv http://10.113.3.1/corex/toolbox/git/git-2.46.0.tar.xz -P /tmp \
+&& tar -xf /tmp/git-2.46.0.tar.xz -C /tmp \
+&& cd /tmp/git-2.46.0 \
+&& make configure \
+&& ./configure --prefix=/usr --with-openssl \
+&& make -j32 \
+&& make install \
+&& rm -rf /tmp/* \
+&& echo "end"
+
 # install tgi.
 RUN set -x \
 && apt update \
-&& apt install -y libssl-dev \
 && export https_proxy=http://192.168.100.200:3128 \
 && export no_proxy=pypi.tuna.tsinghua.edu.cn \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git config --global http.version HTTP/1.1 \
 && git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git --depth=1 \
 && cd text-generation-inference \
 && make install \
