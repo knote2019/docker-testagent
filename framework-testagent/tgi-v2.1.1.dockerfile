@@ -81,6 +81,7 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y libssl-dev \
+&& wget -nv https://github.com/vllm-project/vllm-nccl/releases/download/v0.1.0/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
 && git config --global http.version HTTP/1.1 \
 && git config --global http.postBuffer 524288000 \
 && git config --global https.postBuffer 524288000 \

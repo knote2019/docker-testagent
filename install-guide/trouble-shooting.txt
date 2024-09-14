@@ -90,3 +90,12 @@ error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received T
 && git config --global http.version HTTP/1.1 \
 && git config --global http.postBuffer 524288000 \
 && git config --global https.postBuffer 524288000 \
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 tgi:
+17:14:55  Collecting vllm-nccl-cu12<2.19,>=2.18 (from vllm==0.4.1)
+17:14:55    Downloading https://pypi.tuna.tsinghua.edu.cn/packages/41/07/c1be8f4ffdc257646dda26470b803487150c732aa5c9f532dd789f186a54/vllm_nccl_cu12-2.18.1.0.4.0.tar.gz (6.2 kB)
+
+解决方案:
+&& wget -nv https://github.com/vllm-project/vllm-nccl/releases/download/v0.1.0/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
