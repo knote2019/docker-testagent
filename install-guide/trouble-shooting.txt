@@ -99,3 +99,7 @@ error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received T
 
 解决方案:
 && wget -nv https://github.com/vllm-project/vllm-nccl/releases/download/v0.1.0/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
+
+NOTE:
+https://github.com/vllm-project/vllm/issues/4360
+https://github.com/vllm-project/vllm-nccl/releases/tag/v0.1.0
