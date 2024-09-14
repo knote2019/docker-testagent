@@ -103,5 +103,5 @@ RUN set -x \
 RUN set -x \
 && pip install packaging \
 && pip install ninja \
-&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.6.2 --verbose \
+&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.4.2 --verbose \
 && echo "end"
