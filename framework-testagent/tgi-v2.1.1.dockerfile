@@ -81,13 +81,13 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y libssl-dev \
-&& wget -nv https://github.com/vllm-project/vllm-nccl/releases/download/v0.1.0/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
 && git config --global http.version HTTP/1.1 \
 && git config --global http.postBuffer 524288000 \
 && git config --global https.postBuffer 524288000 \
 && export https_proxy=http://192.168.100.200:3128 \
 && export no_proxy=pypi.tuna.tsinghua.edu.cn \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
+&& wget -nv https://github.com/vllm-project/vllm-nccl/releases/download/v0.1.0/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
 && git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git \
 && cd text-generation-inference \
 && make install \
