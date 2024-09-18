@@ -1,8 +1,8 @@
 
 
 ------------------------------------------------------------------------------------------------------------------------
-docker build --force-rm --tag 10.150.9.98:80/devops_tools/libtorch-v2.4.0:master --file libtorch-v2.4.0.dockerfile .
-docker push 10.150.9.98:80/devops_tools/libtorch-v2.4.0:master
+docker build --force-rm --tag 10.150.9.98:80/devops_tools/libtorch-v2.4.1:master --file libtorch-v2.4.1.dockerfile .
+docker push 10.150.9.98:80/devops_tools/libtorch-v2.4.1:master
 
-docker pull 10.150.9.98:80/devops_tools/libtorch-v2.4.0:master
-docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size=64g -v /stores:/stores -v /home:/home -P --name libtorch-v2.4.0-kenny 10.150.9.98:80/devops_tools/libtorch-v2.4.0:master
+docker pull 10.150.9.98:80/devops_tools/libtorch-v2.4.1:master
+docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size=64g -v /stores:/stores -v /home:/home -P --name libtorch-v2.4.1-kenny 10.150.9.98:80/devops_tools/libtorch-v2.4.1:master
