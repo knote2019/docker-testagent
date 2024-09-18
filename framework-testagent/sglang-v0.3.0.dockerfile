@@ -63,7 +63,7 @@ RUN set -x \
 RUN set -x \
 && pip install numpy \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v0.1.5 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
+&& git clone -b v0.1.6 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
 && pip install -e /usr/local/flashinfer/python \
 && echo "end"
 
@@ -79,6 +79,7 @@ RUN set -x \
 && pip install uvloop \
 && pip install fastapi \
 && pip install outlines \
+&& pip install python-multipart \
 && git clone -b v0.3.0 https://github.com/sgl-project/sglang.git /usr/local/sglang \
 && pip install -e /usr/local/sglang/python \
 && echo "end"
