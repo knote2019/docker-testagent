@@ -42,6 +42,7 @@ Categories=Development\n\
 && echo "end"
 #-----------------------------------------------------------------------------------------------------------------------
 # install pycharm.
+# https://www.jetbrains.com/help/pycharm/2022.3/cython-speedups.html?Cython_Speedups=#aa52e84b
 RUN set -x \
 && apt update \
 && pip install pytest \
