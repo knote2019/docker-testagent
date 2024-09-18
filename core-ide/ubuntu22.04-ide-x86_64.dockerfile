@@ -58,6 +58,7 @@ Terminal=false\n\
 Type=Application\n\
 Categories=Development\n\
 " > /usr/share/applications/pycharm.desktop \
+&& python /opt/pycharm-community-2022.3.3/plugins/python-ce/helpers/pydev/setup_cython.py build_ext --inplace \
 && wget -nv http://10.113.3.1/corex/toolbox/ide/pytest-tool.tar.gz -P /tmp \
 && tar -xzf /tmp/pytest-tool.tar.gz -C /root \
 && rm -rf /tmp/* \
