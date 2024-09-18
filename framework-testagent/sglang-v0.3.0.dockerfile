@@ -67,8 +67,18 @@ RUN set -x \
 && pip install -e /usr/local/flashinfer/python \
 && echo "end"
 
+# install vllm.
+RUN set -x \
+&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.5 --verbose \
+&& echo "end"
+
 # install sglang.
 RUN set -x \
-&& git clone -b v0.2.12 https://github.com/sgl-project/sglang.git /usr/local/sglang \
+&& pip install aiohttp \
+&& pip install uvicorn \
+&& pip install uvloop \
+&& pip install fastapi \
+&& pip install outlines \
+&& git clone -b v0.3.0 https://github.com/sgl-project/sglang.git /usr/local/sglang \
 && pip install -e /usr/local/sglang/python \
 && echo "end"
