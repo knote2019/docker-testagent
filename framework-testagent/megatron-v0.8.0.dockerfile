@@ -89,4 +89,5 @@ RUN set -x \
 # install tool.
 RUN set -x \
 && pip install datasets \
+&& pip install sentencepiece \
 && echo "end"
