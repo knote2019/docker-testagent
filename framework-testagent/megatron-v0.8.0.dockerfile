@@ -84,3 +84,9 @@ RUN set -x \
 && cd /root/Megatron-LM \
 && pip install -e . \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install tool.
+RUN set -x \
+&& pip install datasets \
+&& echo "end"

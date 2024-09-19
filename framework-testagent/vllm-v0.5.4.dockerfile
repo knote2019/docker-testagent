@@ -57,3 +57,9 @@ RUN set -x \
 RUN set -x \
 && pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 --verbose \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install tool.
+RUN set -x \
+&& apt install -y curl \
+&& echo "end"

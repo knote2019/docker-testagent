@@ -105,3 +105,9 @@ RUN set -x \
 && pip install ninja \
 && pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.4.2 --verbose \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install tool.
+RUN set -x \
+&& apt install -y curl \
+&& echo "end"

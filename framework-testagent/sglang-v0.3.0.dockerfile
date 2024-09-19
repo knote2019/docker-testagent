@@ -83,3 +83,9 @@ RUN set -x \
 && git clone -b v0.3.0 https://github.com/sgl-project/sglang.git /usr/local/sglang \
 && pip install -e /usr/local/sglang/python \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install tool.
+RUN set -x \
+&& apt install -y curl \
+&& echo "end"
