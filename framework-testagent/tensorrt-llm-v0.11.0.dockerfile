@@ -53,12 +53,6 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install pytorch.
-RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu124-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
 # install tensorrt.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz -P /tmp \

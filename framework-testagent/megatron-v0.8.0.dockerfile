@@ -90,6 +90,7 @@ RUN set -x \
 RUN set -x \
 && pip install datasets \
 && pip install sentencepiece \
+&& pip install accelerate \
 && pip install transformers \
 && pip install flask-restful --ignore-installed \
 && echo "end"
