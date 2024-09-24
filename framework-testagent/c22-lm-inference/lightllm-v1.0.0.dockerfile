@@ -64,3 +64,21 @@ RUN set -x \
 RUN set -x \
 && pip install git+https://github.com/ModelTC/lightllm.git@main --verbose \
 && echo "end"
+
+# install 3pp.
+RUN set -x \
+&& apt update \
+&& pip install fastapi \
+&& pip install uvicorn \
+&& pip install prometheus_client \
+&& pip install sortedcontainers \
+&& pip install SentencePiece \
+&& pip install protobuf \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install tool.
+RUN set -x \
+&& apt update \
+&& apt install -y curl \
+&& echo "end"
