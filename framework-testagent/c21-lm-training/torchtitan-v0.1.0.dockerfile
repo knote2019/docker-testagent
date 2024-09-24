@@ -60,7 +60,9 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install colossalai.
+# install torchtitan.
 RUN set -x \
-&& pip install git+https://github.com/hpcaitech/ColossalAI.git@v0.3.7 --verbose \
+&& git clone -b main --recursive https://github.com/pytorch/torchtitan.git /root/torchtitan \
+&& cd /root/torchtitan \
+&& pip install -e . \
 && echo "end"
