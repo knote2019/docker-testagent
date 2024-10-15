@@ -28,8 +28,8 @@ wget https://download.pytorch.org/whl/cpu/torch-2.4.0%2Bcpu-cp310-cp310-linux_x8
 
 TensorRT:
 https://github.com/NVIDIA/TensorRT/tree/release/10.3
-cuda-12.4.0 + cuDNN-8.9
-wget https://developer.nvidia.com/downloads/compute/machine-learning/tensorrt/10.1.0/tars/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz
+cuda-12.5.0 + cuDNN-8.9
+wget https://developer.nvidia.com/downloads/compute/machine-learning/tensorrt/10.3.0/tars/TensorRT-10.3.0.26.Linux.x86_64-gnu.cuda-12.5.tar.gz
 
 TensorRT-LLM:
 https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.12.0

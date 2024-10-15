@@ -22,8 +22,8 @@ RUN set -x \
 && apt update \
 && apt install -y libxml2 \
 && sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.4.1_550.54.15_linux.run -P /tmp \
-&& bash /tmp/cuda_12.4.1_550.54.15_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.5.0_555.42.02_linux.run -P /tmp \
+&& bash /tmp/cuda_12.5.0_555.42.02_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
@@ -55,13 +55,13 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install tensorrt.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz -P /tmp \
-&& tar -xzf /tmp/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz -C /usr/local \
-&& mv /usr/local/TensorRT-10.1.0.27 /usr/local/tensorrt \
-&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.1.0 /usr/lib/x86_64-linux-gnu \
-&& pip install /usr/local/tensorrt/python/tensorrt-10.1.0-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-10.1.0-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_lean-10.1.0-cp310-none-linux_x86_64.whl \
+&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.3.0.26.Linux.x86_64-gnu.cuda-12.5.tar.gz -P /tmp \
+&& tar -xzf /tmp/TensorRT-10.3.0.26.Linux.x86_64-gnu.cuda-12.5.tar.gz -C /usr/local \
+&& mv /usr/local/TensorRT-10.3.0.26 /usr/local/tensorrt \
+&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.3.0 /usr/lib/x86_64-linux-gnu \
+&& pip install /usr/local/tensorrt/python/tensorrt-10.3.0-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-10.3.0-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_lean-10.3.0-cp310-none-linux_x86_64.whl \
 && rm -rf /tmp/* \
 && echo "end"
 ENV PATH=$PATH:/usr/local/tensorrt/bin
@@ -70,11 +70,10 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib
 # install tensorrt-llm.
 RUN set -x \
 && pip install accelerate \
-&& pip install http://10.113.3.1/corex/toolbox/tensorrt-llm/tensorrt_llm-0.11.0-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/tensorrt-llm/tensorrt_llm-0.12.0-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
 # # clone tensorrt-llm repo.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt-llm/TensorRT-LLM-0.11.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/TensorRT-LLM-0.11.0.tar.gz -C /root \
+&& git clone -b v0.12.0 https://github.com/NVIDIA/TensorRT-LLM.git /root/TensorRT-LLM \
 && echo "end"
