@@ -1,0 +1,46 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+docker build --force-rm --tag 10.150.9.98:80/devops_tools/tensorrt-llm-v0.11.0:master --file tensorrt-llm-v0.11.0.dockerfile .
+docker push 10.150.9.98:80/devops_tools/tensorrt-llm-v0.11.0:master
+
+docker pull 10.150.9.98:80/devops_tools/tensorrt-llm-v0.11.0:master
+docker run -itd -v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -v /home:/home -P --name tensorrt-llm-v0.11.0-kenny 10.150.9.98:80/devops_tools/tensorrt-llm-v0.11.0:master
+
+
+NOTE:
+
+CUDA:
+https://developer.nvidia.com/cuda-toolkit-archive
+wget https://developer.download.nvidia.com/compute/cuda/12.4.1/local_installers/cuda_12.4.1_550.54.15_linux.run
+
+CUDNN:
+https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/
+wget https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz
+
+NCCL:
+https://developer.nvidia.com/nccl/nccl-legacy-downloads
+wget https://developer.nvidia.com/downloads/compute/machine-learning/nccl/secure/2.21.5/agnostic/x64/nccl_2.21.5-1+cuda12.4_x86_64.txz
+
+Pytorch (CPU):
+https://download.pytorch.org/whl
+wget https://download.pytorch.org/whl/cpu/torch-2.3.1%2Bcpu-cp310-cp310-linux_x86_64.whl
+
+TensorRT:
+https://github.com/NVIDIA/TensorRT/tree/release/10.1
+cuda-12.4.0 + cuDNN-8.9
+wget https://developer.nvidia.com/downloads/compute/machine-learning/tensorrt/10.1.0/tars/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz
+
+TensorRT-LLM:
+https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.11.0
+The dependent TensorRT version is updated to 10.1.0.
+The dependent CUDA version is updated to 12.4.1.
+The dependent PyTorch version is updated to 2.3.1.
+The dependent ModelOpt version is updated to v0.13.0.
+https://pypi.nvidia.cn/tensorrt-llm
+wget https://pypi.nvidia.cn/tensorrt-llm/tensorrt_llm-0.11.0-cp310-cp310-linux_x86_64.whl
+
+The dependent TensorRT version is updated to 10.3.0.
+The dependent CUDA version is updated to 12.5.1.
+The dependent PyTorch version is updated to 2.4.0.
+The dependent ModelOpt version is updated to v0.15.0.
