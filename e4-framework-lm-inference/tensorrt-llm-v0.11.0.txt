@@ -22,10 +22,6 @@ NCCL:
 https://developer.nvidia.com/nccl/nccl-legacy-downloads
 wget https://developer.nvidia.com/downloads/compute/machine-learning/nccl/secure/2.21.5/agnostic/x64/nccl_2.21.5-1+cuda12.4_x86_64.txz
 
-Pytorch (CPU):
-https://download.pytorch.org/whl
-wget https://download.pytorch.org/whl/cpu/torch-2.3.1%2Bcpu-cp310-cp310-linux_x86_64.whl
-
 TensorRT:
 https://github.com/NVIDIA/TensorRT/tree/release/10.1
 cuda-12.4.0 + cuDNN-8.9
@@ -35,7 +31,7 @@ TensorRT-LLM:
 https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.11.0
 The dependent TensorRT version is updated to 10.1.0.
 The dependent CUDA version is updated to 12.4.1.
-The dependent PyTorch version is updated to 2.3.1.
+The dependent PyTorch version is updated to 2.3.1. # NO NEED DOWNLOAD.
 The dependent ModelOpt version is updated to v0.13.0.
 https://pypi.nvidia.cn/tensorrt-llm
 wget https://pypi.nvidia.cn/tensorrt-llm/tensorrt_llm-0.11.0-cp310-cp310-linux_x86_64.whl
