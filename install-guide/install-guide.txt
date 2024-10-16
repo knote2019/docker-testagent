@@ -16,14 +16,6 @@ pytorch:
 https://download.pytorch.org/whl
 
 ------------------------------------------------------------------------------------------------------------------------
-大模型训练:
-megatron:
-https://github.com/NVIDIA/Megatron-LM
-
-flash-attn:
-https://github.com/Dao-AILab/flash-attention
-
-------------------------------------------------------------------------------------------------------------------------
 小模型推理:
 libtorch:
 https://download.pytorch.org/libtorch/cu121
@@ -36,6 +28,19 @@ https://tvm.apache.org/docs/v0.9.0/install/from_source.html
 
 onnxruntime:
 https://github.com/microsoft/onnxruntime/releases
+
+deepstream:
+https://developer.nvidia.com/deepstream-sdk
+https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream
+https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_Installation.html#dgpu-setup-for-ubuntu
+
+------------------------------------------------------------------------------------------------------------------------
+大模型训练:
+megatron:
+https://github.com/NVIDIA/Megatron-LM
+
+flash-attn:
+https://github.com/Dao-AILab/flash-attention
 
 ------------------------------------------------------------------------------------------------------------------------
 大模型推理:
