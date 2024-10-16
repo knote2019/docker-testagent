@@ -50,9 +50,9 @@ RUN set -x \
 && tar -xzf /tmp/TensorRT-8.6.1.6.Linux.x86_64-gnu.cuda-12.0.tar.gz -C /usr/local \
 && mv /usr/local/TensorRT-8.6.1.6 /usr/local/tensorrt \
 && mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.8.6.1 /usr/lib/x86_64-linux-gnu \
-&& pip install /usr/local/tensorrt/python/tensorrt-8.6.1.post12.dev5-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-8.6.1.post12.dev5-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_lean-8.6.1.post12.dev5-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt-8.6.1-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-8.6.1-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_lean-8.6.1-cp310-none-linux_x86_64.whl \
 && rm -rf /tmp/* \
 && echo "end"
 ENV PATH=$PATH:/usr/local/tensorrt/bin
@@ -82,7 +82,7 @@ RUN set -x \
 # install deepstream.
 RUN set -x \
 && apt-get install -y libyaml-cpp-dev \
-&& wget -nv http://10.150.9.95/corex/deepstream/deepstream_sdk_v7.0.0_x86_64.tbz2 -P /tmp \
+&& wget -nv http://10.113.3.1/corex/toolbox/deepstream/deepstream_sdk_v7.0.0_x86_64.tbz2 -P /tmp \
 && tar -xvf /tmp/deepstream_sdk_v7.0.0_x86_64.tbz2 -C / \
 && bash /opt/nvidia/deepstream/deepstream/install.sh \
 && rm -rf /tmp/* \
