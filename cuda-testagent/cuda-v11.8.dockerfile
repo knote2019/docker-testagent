@@ -45,9 +45,9 @@ RUN set -x \
 
 # install nccl.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.16.5-1+cuda11.8_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.16.5-1+cuda11.8_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.16.5-1+cuda11.8_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.16.5-1+cuda11.8_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
