@@ -55,6 +55,7 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install vllm.
 RUN set -x \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
 && pip install git+https://github.com/vllm-project/vllm.git@v0.5.4 --verbose \
 && echo "end"
 

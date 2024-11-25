@@ -52,28 +52,8 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install tensorrt.
+# install graphviz.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.3.0.26.Linux.x86_64-gnu.cuda-12.5.tar.gz -P /tmp \
-&& tar -xzf /tmp/TensorRT-10.3.0.26.Linux.x86_64-gnu.cuda-12.5.tar.gz -C /usr/local \
-&& mv /usr/local/TensorRT-10.3.0.26 /usr/local/tensorrt \
-&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.3.0 /usr/lib/x86_64-linux-gnu \
-&& pip install /usr/local/tensorrt/python/tensorrt-10.3.0-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-10.3.0-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_lean-10.3.0-cp310-none-linux_x86_64.whl \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV PATH=$PATH:/usr/local/tensorrt/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib
-
-# install tensorrt-llm.
-RUN set -x \
-&& pip install accelerate \
-&& pip install http://10.113.3.1/corex/toolbox/tensorrt-llm/tensorrt_llm-0.12.0-cp310-cp310-linux_x86_64.whl \
+&& apt install -y graphviz \
 && echo "end"
 
-# # clone tensorrt-llm repo.
-RUN set -x \
-&& git clone -b v0.12.0 https://github.com/NVIDIA/TensorRT-LLM.git /root/TensorRT-LLM \
-&& echo "end"
