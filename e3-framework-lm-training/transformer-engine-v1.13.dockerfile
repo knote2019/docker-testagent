@@ -61,5 +61,5 @@ RUN set -x \
 
 # install transformer-engine.
 RUN set -x \
-&& pip install git+https://github.com/NVIDIA/TransformerEngine.git@v1.13 --verbose \
+&& pip install git+https://github.com/NVIDIA/TransformerEngine.git@v1.7 --verbose \
 && echo "end"

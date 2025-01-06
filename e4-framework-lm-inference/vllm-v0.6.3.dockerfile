@@ -59,6 +59,31 @@ RUN set -x \
 && pip install git+https://github.com/vllm-project/vllm.git@v0.6.3 --verbose \
 && echo "end"
 
+# install flashinfer.
+RUN set -x \
+&& pip install numpy \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
+&& git clone -b v0.2.0 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
+&& pip install -e /usr/local/flashinfer \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install AWQ.
+RUN set -x \
+&& pip install autoawq \
+&& echo "end"
+
+# install GPTQ.
+RUN set -x \
+&& pip install auto-gptq \
+&& pip install optimum \
+&& echo "end"
+
+# install BNB.
+RUN set -x \
+&& pip install bitsandbytes>=0.44.0 \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install tool.
 RUN set -x \

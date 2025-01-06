@@ -66,27 +66,3 @@ RUN set -x \
 && git clone -b v0.2.0 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
 && pip install -e /usr/local/flashinfer \
 && echo "end"
-
-# install vllm.
-RUN set -x \
-&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.5 --verbose \
-&& echo "end"
-
-# install sglang.
-RUN set -x \
-&& pip install aiohttp \
-&& pip install uvicorn \
-&& pip install uvloop \
-&& pip install fastapi \
-&& pip install outlines \
-&& pip install python-multipart \
-&& git clone -b v0.3.0 https://github.com/sgl-project/sglang.git /usr/local/sglang \
-&& pip install -e /usr/local/sglang/python \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install tool.
-RUN set -x \
-&& apt update \
-&& apt install -y curl \
-&& echo "end"

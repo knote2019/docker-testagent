@@ -132,18 +132,12 @@ RUN set -x \
 && apt install -y language-pack-zh-hant \
 && echo "end"
 
+# configure no_proxy.
+ENV no_proxy=pypi.tuna.tsinghua.edu.cn
+
 # configure bashrc.
 RUN set -x \
 && echo "alias ll='ls --color -alF'">/root/.bashrc \
 && echo "export PS1='\[\033[01;37m\][\[\033[01;32m\]\u\[\033[01;33m\]@\[\033[01;34m\]\h\[\033[01;36m\] \w\[\033[01;37m\]]\[\033[01;35m\]\$ \[\033[0m\]'">>/root/.bashrc \
 && echo "export \$(cat /proc/1/environ | tr \"\\\0\" \"\\\t\" | xargs)">>/root/.bashrc \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install vscode.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/ide/code_1.88.1-1712771838_amd64.deb -P /tmp \
-&& dpkg -i /tmp/code_1.88.1-1712771838_amd64.deb \
-&& sed -i 's$/usr/share/code/code$/usr/share/code/code --no-sandbox --user-data-dir$' /usr/share/applications/code.desktop \
-&& rm -rf /tmp/* \
 && echo "end"

@@ -22,8 +22,8 @@ RUN set -x \
 && apt update \
 && apt install -y libxml2 \
 && sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.1.1_530.30.02_linux.run -P /tmp \
-&& bash /tmp/cuda_12.1.1_530.30.02_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.4.1_550.54.15_linux.run -P /tmp \
+&& bash /tmp/cuda_12.4.1_550.54.15_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
@@ -36,57 +36,49 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 # install cudnn.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-9.1.0.70_cuda12-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda12-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 
 # install nccl.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.18.3-1+cuda12.1_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.18.3-1+cuda12.1_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.18.3-1+cuda12.1_x86_64/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.21.5-1+cuda12.4_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.21.5-1+cuda12.4_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
 # install pytorch.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu121-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu121-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-# install flashinfer.
-RUN set -x \
-&& pip install numpy \
-&& export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v0.2.0 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
-&& pip install -e /usr/local/flashinfer \
-&& echo "end"
-
-# install vllm.
-RUN set -x \
-&& pip install git+https://github.com/vllm-project/vllm.git@v0.5.5 --verbose \
-&& echo "end"
-
-# install sglang.
-RUN set -x \
-&& pip install aiohttp \
-&& pip install uvicorn \
-&& pip install uvloop \
-&& pip install fastapi \
-&& pip install outlines \
-&& pip install python-multipart \
-&& git clone -b v0.3.0 https://github.com/sgl-project/sglang.git /usr/local/sglang \
-&& pip install -e /usr/local/sglang/python \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu124-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install tool.
+# install transformers.
 RUN set -x \
-&& apt update \
-&& apt install -y curl \
+&& export https_proxy=http://192.168.100.200:3128 \
+&& pip install --index-url https://pypi.org/simple transformers==4.45.2 \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install AWQ.
+RUN set -x \
+&& pip install autoawq==0.2.7.post3 \
+&& echo "end"
+
+# install GPTQ.
+RUN set -x \
+&& pip install auto-gptq==0.7.1 \
+&& pip install optimum \
+&& echo "end"
+
+# install BNB.
+RUN set -x \
+&& pip install bitsandbytes==0.45.0 \
 && echo "end"
