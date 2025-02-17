@@ -64,4 +64,5 @@ RUN set -x \
 RUN set -x \
 && pip install pytest \
 && pip install allure-pytest \
+&& pip install ray \
 && echo "end"
