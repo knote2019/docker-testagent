@@ -39,26 +39,27 @@ https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_Installation.htm
 megatron:
 https://github.com/NVIDIA/Megatron-LM
 
+nvte:
+https://github.com/NVIDIA/TransformerEngine.git
+https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/installation.html
+
 flash-attn:
 https://github.com/Dao-AILab/flash-attention
 
 ------------------------------------------------------------------------------------------------------------------------
 大模型推理:
-tensorrt-llm:
-https://pypi.nvidia.cn/tensorrt-llm
-
 vllm:
 https://docs.vllm.ai/en/latest/getting_started/installation.html
-
-tgi:
-https://github.com/huggingface/text-generation-inference
-https://huggingface.co/docs/text-generation-inference/installation
 
 sglang:
 https://github.com/sgl-project/sglang
 
-colossalai:
-https://github.com/hpcaitech/ColossalAI
+tensorrt-llm:
+https://pypi.nvidia.cn/tensorrt-llm
+
+tgi:
+https://github.com/huggingface/text-generation-inference
+https://huggingface.co/docs/text-generation-inference/installation
 
 flashinfer:
 https://github.com/flashinfer-ai/flashinfer

@@ -53,15 +53,16 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install pytorch.
+# install torch.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu124-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install torchtitan.
-RUN set -x \
-&& git clone -b main --recursive https://github.com/pytorch/torchtitan.git /usr/local/torchtitan \
-&& pip install -e /usr/local/torchtitan --no-build-isolation --verbose \
+&& pip install typing_extensions \
+&& wget -nv http://10.113.3.1/corex/toolbox/pytorch/pytorch-v2.4.1.tar.gz -P /tmp \
+&& tar -xzf /tmp/pytorch-v2.4.1.tar.gz -C /tmp \
+&& export USE_CUDA=1 \
+&& export BUILD_TEST=0 \
+&& export DEBUG=0 \
+&& python /tmp/pytorch/tools/build_libtorch.py \
+&& mkdir /usr/local/torch \
+&& cp -r /tmp/pytorch/torch/include/ /usr/local/torch \
+&& cp -r /tmp/pytorch/torch/lib /usr/local/torch \
 && echo "end"

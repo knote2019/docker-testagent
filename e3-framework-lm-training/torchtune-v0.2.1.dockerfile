@@ -69,7 +69,6 @@ RUN set -x \
 && pip install tiktoken \
 && pip install blobfile \
 && pip install omegaconf \
-&& git clone -b v0.2.1 --recursive https://github.com/pytorch/torchtune.git /root/torchtune \
-&& cd /root/torchtune \
-&& pip install -e . \
+&& git clone -b v0.2.1 --recursive https://github.com/pytorch/torchtune.git /usr/local/torchtune \
+&& pip install -e  /usr/local/torchtune --no-build-isolation --verbose \
 && echo "end"

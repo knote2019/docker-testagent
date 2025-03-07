@@ -1,4 +1,4 @@
-FROM 10.150.9.98:80/devops_tools/ubuntu22.04-ide-x86_64:master
+FROM 10.150.9.98:80/devops_tools/ubuntu22.04-dev-x86_64:master
 #-----------------------------------------------------------------------------------------------------------------------
 # configure git.
 RUN set -x \
@@ -17,30 +17,27 @@ RUN set -x \
 && apt install -y iproute2 \
 && apt install -y gdb \
 && apt install -y gdbserver \
-&& apt clean all \
 && echo "end"
 
 # install clang.
 RUN set -x \
-&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-16 main" \
+&& echo "deb http://mirrors.tuna.tsinghua.edu.cn/llvm-apt/jammy/ llvm-toolchain-jammy-18 main" \
 > /etc/apt/sources.list.d/clang.list \
 && wget -O - http://10.113.3.1/corex/toolbox/clang/llvm-snapshot.gpg.key | apt-key add - \
 && apt update \
-&& apt install -y clang-16 \
-&& apt install -y lldb-16 \
-&& apt install -y lld-16 \
-&& ln -sf /usr/bin/clang-16 /usr/bin/clang \
-&& ln -sf /usr/bin/clang++-16 /usr/bin/clang++ \
-&& ln -sf /usr/bin/lldb-16 /usr/bin/lldb \
-&& apt clean all \
+&& apt install -y clang-18 \
+&& apt install -y lldb-18 \
+&& apt install -y lld-18 \
+&& ln -sf /usr/bin/clang-18 /usr/bin/clang \
+&& ln -sf /usr/bin/clang++-18 /usr/bin/clang++ \
+&& ln -sf /usr/bin/lldb-18 /usr/bin/lldb \
 && echo "end"
 
 # install cmake.
-# https://github.com/Kitware/CMake
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.25.2-linux-x86_64.sh -P /tmp \
-&& bash /tmp/cmake-3.25.2-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
-&& ln -sf /usr/local/cmake-3.25.2-linux-x86_64/bin/cmake /usr/bin/cmake \
+&& wget -nv http://10.113.3.1/corex/toolbox/cmake/cmake-3.31.6-linux-x86_64.sh -P /tmp \
+&& bash /tmp/cmake-3.31.6-linux-x86_64.sh --skip-license --include-subdir --prefix=/usr/local \
+&& ln -sf /usr/local/cmake-3.31.6-linux-x86_64/bin/cmake /usr/bin/cmake \
 && rm -rf /tmp/* \
 && echo "end"
 
@@ -51,11 +48,12 @@ RUN set -x \
 
 #-----------------------------------------------------------------------------------------------------------------------
 # install ffmpeg.
-# https://github.com/FFmpeg/FFmpeg
 RUN set -x \
+&& apt update \
 && apt install -y yasm \
 && apt install -y libx264-dev \
 && apt install -y libx265-dev \
+&& apt install -y libegl-mesa0 \
 && apt install -y libsdl2-dev \
 && wget -nv http://10.113.3.1/corex/toolbox/ffmpeg/n7.0.tar.gz -P /tmp \
 && tar -xzf /tmp/n7.0.tar.gz -C /tmp \
@@ -71,16 +69,17 @@ ENV PATH=$PATH:/usr/local/ffmpeg/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/ffmpeg/lib
 
 # install opencv.
-# https://github.com/opencv/opencv
 RUN set -x \
+&& apt update \
 && apt install -y libgtk2.0-dev \
 && apt install -y gtk2-engines-pixbuf \
-&& export https_proxy=http://192.168.100.200:3128 \
 && wget -nv http://10.113.3.1/corex/toolbox/opencv/4.8.0.tar.gz -P /tmp \
 && tar -xzf /tmp/4.8.0.tar.gz -C /tmp \
 && mkdir /tmp/opencv-4.8.0/build \
 && cd /tmp/opencv-4.8.0/build \
-&& cmake -D CMAKE_INSTALL_PREFIX=/tmp/opencv .. \
+&& export OPENCV_IPPICV_URL="NA" \
+&& cmake -D CMAKE_INSTALL_PREFIX=/tmp/opencv -D CMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1' \
+-D BUILD_EXAMPLES=ON -D BUILD_DOCS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_TESTS=OFF .. \
 && make -j32 \
 && make install \
 && cp -r /tmp/opencv/include/opencv4/* /usr/local/include \
@@ -89,7 +88,6 @@ RUN set -x \
 && echo "end"
 
 # install openmpi.
-# https://www.open-mpi.org
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
 && tar -xzf /tmp/openmpi-5.0.2.tar.gz -C /tmp \
@@ -104,13 +102,14 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install ncurses.
 RUN set -x \
+&& apt update \
 && apt install -y libncurses5-dev \
 && apt install -y libncursesw5-dev \
 && echo "end"
 
-# add more xcb libs for GUI apps.
-# https://launchpad.net/ubuntu/+source/libxcb
+# install xcb: https://launchpad.net/ubuntu/+source/libxcb.
 RUN set -x \
+&& apt update \
 && apt install -y libxkbcommon-x11-0 \
 && apt install -y libxcb-icccm4 \
 && apt install -y libxcb-image0 \
@@ -128,6 +127,7 @@ RUN set -x \
 
 # install language.
 RUN set -x \
+&& apt update \
 && apt install -y language-pack-zh-hans \
 && apt install -y language-pack-zh-hant \
 && echo "end"

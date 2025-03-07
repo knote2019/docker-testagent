@@ -53,63 +53,22 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install rust.
+# install pytorch.
 RUN set -x \
-&& export RUSTUP_DIST_SERVER=http://mirrors.tuna.tsinghua.edu.cn/rustup \
-&& export RUSTUP_UPDATE_ROOT=http://mirrors.tuna.tsinghua.edu.cn/rustup/rustup \
-&& wget -nv http://10.113.3.1/corex/toolbox/rust/rustup.sh -P /tmp \
-&& bash /tmp/rustup.sh -y \
-&& echo "\
-[source.crates-io]\n\
-registry = 'https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git'\n\
-[net]\n\
-git-fetch-with-cli = true\n\
-" > /root/.cargo/config.toml \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV PATH=$PATH:/root/.cargo/bin
-
-# install protoc.
-RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/protoc/protoc-21.12-linux-x86_64.zip -P /tmp \
-&& unzip /tmp/protoc-21.12-linux-x86_64.zip -d /usr/local "bin/protoc" \
-&& unzip /tmp/protoc-21.12-linux-x86_64.zip -d /usr/local 'include/*' \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# install tgi.
-RUN set -x \
-&& apt update \
-&& apt install -y libssl-dev \
-&& export TORCH_CUDA_ARCH_LIST="8.0" \
-&& wget -nv http://10.113.3.1/corex/toolbox/vllm/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
-&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git /root/text-generation-inference \
-&& cd text-generation-inference \
-&& make install \
-&& rm -rf /tmp/* \
-&& echo "end"
-
-# uninstall default flash-attn.
-RUN set -x \
-&& pip uninstall -y flash-attn \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu121-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu121-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
 # install flash-attn.
 RUN set -x \
 && pip install packaging \
 && pip install ninja \
-&& git clone -b v2.4.2 --recursive https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
-&& pip install -e /usr/local/flash-attention --no-build-isolation --verbose \
-&& pip install -e /usr/local/flash-attention/csrc/fused_dense_lib --no-build-isolation --verbose \
-&& pip install -e /usr/local/flash-attention/csrc/fused_softmax --no-build-isolation --verbose \
-&& pip install -e /usr/local/flash-attention/csrc/layer_norm --no-build-isolation --verbose \
-&& pip install -e /usr/local/flash-attention/csrc/rotary --no-build-isolation --verbose \
-&& pip install -e /usr/local/flash-attention/csrc/xentropy --no-build-isolation --verbose \
+&& git clone -b v2.6.3 --recursive https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
+&& pip install -e /usr/local/flash-attention --no-build-isolation \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install tool.
+# install nvte.
 RUN set -x \
-&& apt update \
-&& apt install -y curl \
+&& git clone -b v2.0 --recursive https://github.com/NVIDIA/TransformerEngine.git /usr/local/TransformerEngine \
+&& pip install -e /usr/local/TransformerEngine --no-build-isolation \
 && echo "end"

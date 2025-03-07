@@ -83,23 +83,21 @@ RUN set -x \
 && apt install -y libssl-dev \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
 && wget -nv http://10.113.3.1/corex/toolbox/vllm/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
-&& git clone -b v2.1.1 https://github.com/huggingface/text-generation-inference.git /root/text-generation-inference \
+&& git clone -b v3.1.1 https://github.com/huggingface/text-generation-inference.git /root/text-generation-inference \
 && cd text-generation-inference \
+&& sed -i 's/uv pip install/pip install/' ./server/Makefile \
+&& sed -i 's/install-flash-attention-v2-cuda install-flash-attention/install-flash-attention-v2-cuda/' ./server/Makefile \
+&& sed -i 's/marlin,//' ./server/Makefile \
 && make install \
 && rm -rf /tmp/* \
 && echo "end"
 
-# uninstall default flash-attn.
-RUN set -x \
-&& pip uninstall -y flash-attn \
-&& echo "end"
-
-# install flash-attn.
+# install flash-attn extension.
 RUN set -x \
 && pip install packaging \
 && pip install ninja \
-&& git clone -b v2.4.2 --recursive https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
-&& pip install -e /usr/local/flash-attention --no-build-isolation --verbose \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
+&& git clone -b v2.6.1 --recursive https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
 && pip install -e /usr/local/flash-attention/csrc/fused_dense_lib --no-build-isolation --verbose \
 && pip install -e /usr/local/flash-attention/csrc/fused_softmax --no-build-isolation --verbose \
 && pip install -e /usr/local/flash-attention/csrc/layer_norm --no-build-isolation --verbose \

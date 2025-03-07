@@ -1,21 +1,12 @@
 FROM 10.150.9.98:80/devops_tools/core-testagent:master
 #-----------------------------------------------------------------------------------------------------------------------
-# install libgit2.
+# install pybind11.
 RUN set -x \
-&& apt update \
-&& apt install -y libssl-dev \
-&& git clone -b v1.8.4 https://github.com/libgit2/libgit2.git /tmp/libgit2 \
-&& mkdir /tmp/libgit2/build \
-&& cd /tmp/libgit2/build \
-&& cmake .. \
+&& git clone -b v2.13.6 https://github.com/pybind/pybind11.git /tmp/pybind11 \
+&& mkdir /tmp/pybind11/build \
+&& cd /tmp/pybind11/build \
+&& cmake -DPYBIND11_PYTHON_VERSION=3.10 .. \
 && make -j32 \
 && make install \
 && rm -rf /tmp/* \
-&& echo "end"
-
-# install boost.
-RUN set -x \
-&& apt update \
-&& apt install -y libboost-all-dev \
-&& apt clean all \
 && echo "end"

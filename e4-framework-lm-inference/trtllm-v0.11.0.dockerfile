@@ -53,15 +53,22 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install pytorch.
+# install tensorrt.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu124-cp310-cp310-linux_x86_64.whl \
+&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz -P /tmp \
+&& tar -xzf /tmp/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz -C /usr/local \
+&& mv /usr/local/TensorRT-10.1.0.27 /usr/local/tensorrt \
+&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.1.0 /usr/lib/x86_64-linux-gnu \
+&& pip install /usr/local/tensorrt/python/tensorrt-10.1.0-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-10.1.0-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_lean-10.1.0-cp310-none-linux_x86_64.whl \
+&& rm -rf /tmp/* \
 && echo "end"
+ENV PATH=$PATH:/usr/local/tensorrt/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install torchtitan.
+# install tensorrt-llm.
 RUN set -x \
-&& git clone -b main --recursive https://github.com/pytorch/torchtitan.git /usr/local/torchtitan \
-&& pip install -e /usr/local/torchtitan --no-build-isolation --verbose \
+&& pip install accelerate \
+&& pip install http://10.113.3.1/corex/toolbox/tensorrt-llm/tensorrt_llm-0.11.0-cp310-cp310-linux_x86_64.whl \
 && echo "end"

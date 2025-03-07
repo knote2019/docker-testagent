@@ -55,8 +55,10 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install vllm.
 RUN set -x \
+&& pip install setuptools_scm \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
-&& pip install git+https://github.com/vllm-project/vllm.git@v0.6.3 --verbose \
+&& git clone -b v0.6.3 --recursive https://github.com/vllm-project/vllm.git /usr/local/vllm \
+&& pip install -e /usr/local/vllm --no-build-isolation \
 && echo "end"
 
 # install flashinfer.
@@ -64,7 +66,7 @@ RUN set -x \
 && pip install numpy \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
 && git clone -b v0.2.0 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
-&& pip install -e /usr/local/flashinfer \
+&& pip install -e /usr/local/flashinfer --no-build-isolation --verbose \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------

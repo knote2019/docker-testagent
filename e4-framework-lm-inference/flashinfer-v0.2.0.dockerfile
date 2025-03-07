@@ -64,5 +64,5 @@ RUN set -x \
 && pip install numpy \
 && export TORCH_CUDA_ARCH_LIST="8.0" \
 && git clone -b v0.2.0 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
-&& pip install -e /usr/local/flashinfer \
+&& pip install -e /usr/local/flashinfer --no-build-isolation --verbose \
 && echo "end"

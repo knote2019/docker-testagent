@@ -62,7 +62,8 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install lightllm.
 RUN set -x \
-&& pip install git+https://github.com/ModelTC/lightllm.git@main --verbose \
+&& git clone -b main --recursive https://github.com/ModelTC/lightllm.git /usr/local/lightllm \
+&& pip install -e /usr/local/lightllm --no-build-isolation --verbose \
 && echo "end"
 
 # install 3pp.

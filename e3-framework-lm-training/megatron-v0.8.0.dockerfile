@@ -63,26 +63,28 @@ RUN set -x \
 RUN set -x \
 && pip install packaging \
 && pip install ninja \
-&& pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.4.2 --verbose \
+&& git clone -b v2.4.2 --recursive https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
+&& pip install -e /usr/local/flash-attention --no-build-isolation --verbose \
 && echo "end"
 
-# install transformer-engine.
+# install nvte.
 RUN set -x \
-&& pip install git+https://github.com/NVIDIA/TransformerEngine.git@v1.7 --verbose \
+&& git clone -b v1.7 --recursive https://github.com/NVIDIA/TransformerEngine.git /usr/local/TransformerEngine \
+&& pip install -e /usr/local/TransformerEngine --no-build-isolation --verbose \
 && echo "end"
 
 # install apex.
 # https://github.com/NVIDIA/apex/issues/1594
 RUN set -x \
-&& pip install git+https://github.com/NVIDIA/apex.git@23.05 --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
+&& git clone -b 23.05 --recursive https://github.com/NVIDIA/apex.git /usr/local/apex \
+&& pip install -e /usr/local/apex --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
 && echo "end"
 
 # install megatron-core.
 RUN set -x \
 && pip install nltk \
-&& git clone -b core_r0.8.0 --recursive https://github.com/NVIDIA/Megatron-LM.git /root/Megatron-LM \
-&& cd /root/Megatron-LM \
-&& pip install -e . \
+&& git clone -b core_r0.8.0 --recursive https://github.com/NVIDIA/Megatron-LM.git /usr/local/Megatron-LM \
+&& pip install -e /usr/local/Megatron-LM --no-build-isolation --verbose \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
