@@ -111,6 +111,7 @@ RUN set -x \
 RUN set -x \
 && apt update \
 && apt install -y libxkbcommon-x11-0 \
+&& apt install -y libxcb-cursor0 \
 && apt install -y libxcb-icccm4 \
 && apt install -y libxcb-image0 \
 && apt install -y libxcb-keysyms1 \

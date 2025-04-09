@@ -1,4 +1,4 @@
-FROM 10.150.9.98:80/devops_tools/core-testagent:master
+FROM 10.150.9.98:80/devops_tools/ubuntu22.04-testagent:master
 #-----------------------------------------------------------------------------------------------------------------------
 # install driver.
 RUN set -x \
@@ -43,6 +43,22 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
+# install nccl.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.21.5-1+cuda12.4_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.21.5-1+cuda12.4_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/lib/* /usr/local/cuda/lib64 \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install pytorch.
+RUN set -x \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu124-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
 #-----------------------------------------------------------------------------------------------------------------------
 # install tvm.
 RUN set -x \
@@ -75,4 +91,11 @@ RUN set -x \
 && make -j32 \
 && make install \
 && rm -rf /tmp/* \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install pytest.
+RUN set -x \
+&& pip install pytest \
+&& pip install allure-pytest \
 && echo "end"

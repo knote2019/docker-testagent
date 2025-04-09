@@ -1,4 +1,4 @@
-FROM 10.150.9.98:80/devops_tools/core-testagent:master
+FROM 10.150.9.98:80/devops_tools/ubuntu22.04-testagent:master
 #-----------------------------------------------------------------------------------------------------------------------
 # install driver.
 RUN set -x \
@@ -55,14 +55,35 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install torch.
 RUN set -x \
+&& pip install ninja \
+&& pip install packaging \
 && pip install typing_extensions \
 && wget -nv http://10.113.3.1/corex/toolbox/pytorch/pytorch-v2.4.1.tar.gz -P /tmp \
-&& tar -xzf /tmp/pytorch-v2.4.1.tar.gz -C /tmp \
-&& export USE_CUDA=1 \
-&& export BUILD_TEST=0 \
-&& export DEBUG=0 \
-&& python /tmp/pytorch/tools/build_libtorch.py \
+&& tar -xzf /tmp/pytorch-v2.4.1.tar.gz -C /usr/local \
+&& export DEBUG=ON \
+&& export USE_NINJA=ON \
+&& export USE_CUDA=ON \
+&& export CUDA_HOME=/usr/local/cuda \
+&& export TORCH_CUDA_ARCH_LIST="8.0" \
+&& export USE_CUDNN=ON \
+&& export CUDNN_LIBRARY=/usr/local/cuda \
+&& export CUDNN_INCLUDE_DIR=/usr/local/cuda/include \
+&& export CUDNN_LIB_DIR=/usr/local/cuda/lib64 \
+&& export USE_SYSTEM_NCCL=ON \
+&& export NCCL_ROOT=/usr/local/cuda \
+&& export NCCL_INCLUDE_DIR=/usr/local/cuda/include \
+&& export NCCL_LIB_DIR=/usr/local/cuda/lib64 \
+&& export USE_DISTRIBUTED=ON \
+&& export USE_C10D_NCCL=ON \
+&& export USE_FLASH_ATTENTION=ON \
+&& export BUILD_SHARED_LIBS=ON \
+&& export BUILD_TEST=OFF \
+&& export USE_MKLDNN=OFF \
+&& export USE_FBGEMM=OFF \
+&& cd /usr/local/pytorch \
+&& python ./tools/build_libtorch.py \
 && mkdir /usr/local/torch \
-&& cp -r /tmp/pytorch/torch/include/ /usr/local/torch \
-&& cp -r /tmp/pytorch/torch/lib /usr/local/torch \
+&& cp -r /usr/local/pytorch/torch/include /usr/local/torch \
+&& cp -r /usr/local/pytorch/torch/lib /usr/local/torch \
+&& rm -rf /tmp/* \
 && echo "end"

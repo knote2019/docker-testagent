@@ -14,12 +14,9 @@ https://developer.nvidia.com/nccl/nccl-legacy-downloads
 小模型训练:
 pytorch:
 https://download.pytorch.org/whl
+https://download.pytorch.org/whl/torch/
 
 ------------------------------------------------------------------------------------------------------------------------
-小模型推理:
-libtorch:
-https://download.pytorch.org/libtorch/cu121
-
 tensorrt:
 https://github.com/NVIDIA/TensorRT
 
