@@ -19,9 +19,6 @@ RUN set -x \
 
 # install cuda.
 RUN set -x \
-&& apt update \
-&& apt install -y libxml2 \
-&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
 && bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
@@ -31,6 +28,7 @@ RUN set -x \
 && rm -f /usr/share/applications/nvvp.desktop \
 && rm -rf /tmp/* \
 && echo "end"
+ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
@@ -53,20 +51,33 @@ RUN set -x \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install vllm.
+# install torch.
+ENV TORCH_CUDA_ARCH_LIST="8.0"
 RUN set -x \
-&& pip install setuptools_scm \
-&& export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v0.6.3 --recursive https://github.com/vllm-project/vllm.git /usr/local/vllm \
-&& pip install -e /usr/local/vllm --no-build-isolation \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install flashinfer.
+# install torchvision.
 RUN set -x \
-&& pip install numpy \
-&& export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v0.2.0 --recursive https://github.com/flashinfer-ai/flashinfer.git /usr/local/flashinfer \
-&& pip install -e /usr/local/flashinfer --no-build-isolation --verbose \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu118-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+# install vllm-requirements.
+RUN set -x \
+&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/vllm-v0.6.3.git /tmp/vllm \
+&& pip install -r /tmp/vllm/requirements-cuda.txt \
+&& echo "end"
+
+# force build.
+ARG FORCE_BUILD
+
+# install vllm.
+ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
+RUN set -x \
+&& export MAX_JOBS=32 \
+&& export VLLM_TARGET_DEVICE="cuda" \
+&& pip install /tmp/vllm --no-build-isolation --verbose \
+&& rm -rf /tmp/* \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -84,11 +95,4 @@ RUN set -x \
 # install BNB.
 RUN set -x \
 && pip install bitsandbytes>=0.44.0 \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install tool.
-RUN set -x \
-&& apt update \
-&& apt install -y curl \
 && echo "end"

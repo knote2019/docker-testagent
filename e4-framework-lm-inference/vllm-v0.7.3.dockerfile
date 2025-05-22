@@ -19,11 +19,8 @@ RUN set -x \
 
 # install cuda.
 RUN set -x \
-&& apt update \
-&& apt install -y libxml2 \
-&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.4.1_550.54.15_linux.run -P /tmp \
-&& bash /tmp/cuda_12.4.1_550.54.15_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_11.8.0_520.61.05_linux.run -P /tmp \
+&& bash /tmp/cuda_11.8.0_520.61.05_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
@@ -31,45 +28,71 @@ RUN set -x \
 && rm -f /usr/share/applications/nvvp.desktop \
 && rm -rf /tmp/* \
 && echo "end"
+ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 # install cudnn.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda12-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 
 # install nccl.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.21.5-1+cuda12.4_x86_64.txz -P /tmp \
-&& tar -xf /tmp/nccl_2.21.5-1+cuda12.4_x86_64.txz -C /tmp \
-&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/include/* /usr/local/cuda/include \
-&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.20.5-1+cuda11.0_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.20.5-1+cuda11.0_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.20.5-1+cuda11.0_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install pytorch.
+# install torch.
+ENV TORCH_CUDA_ARCH_LIST="8.0"
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu124-cp310-cp310-linux_x86_64.whl \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu118-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install vllm.
+# install torchvision.
 RUN set -x \
-&& pip install setuptools_scm \
-&& export TORCH_CUDA_ARCH_LIST="8.0" \
-&& git clone -b v0.7.3 --recursive https://github.com/vllm-project/vllm.git /usr/local/vllm \
-&& pip install -e /usr/local/vllm --no-build-isolation \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu118-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+# install vllm-requirements.
+RUN set -x \
+&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/vllm-v0.7.3.git /tmp/vllm \
+&& pip install -r /tmp/vllm/requirements-cuda.txt \
+&& echo "end"
+
+# force build.
+ARG FORCE_BUILD
+
+# install vllm.
+ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
+RUN set -x \
+&& export MAX_JOBS=32 \
+&& export VLLM_TARGET_DEVICE="cuda" \
+&& pip install /tmp/vllm --no-build-isolation --verbose \
+&& rm -rf /tmp/* \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install pytest.
+# install AWQ.
 RUN set -x \
-&& pip install pytest \
-&& pip install allure-pytest \
+&& pip install autoawq \
+&& echo "end"
+
+# install GPTQ.
+RUN set -x \
+&& pip install auto-gptq \
+&& pip install optimum \
+&& echo "end"
+
+# install BNB.
+RUN set -x \
+&& pip install bitsandbytes>=0.44.0 \
 && echo "end"

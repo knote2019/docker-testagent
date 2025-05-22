@@ -65,7 +65,8 @@ RUN set -x \
 
 # install flash-attn.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.6.3+cu123torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
+&& git clone -b v2.6.3 --recursive --depth=1 https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
+&& pip install /usr/local/flash-attention --no-build-isolation --verbose \
 && echo "end"
 
 # install transformer-engine.
@@ -75,10 +76,17 @@ RUN set -x \
 && pip install /usr/local/TransformerEngine --no-build-isolation --verbose \
 && echo "end"
 
+# install grouped_gemm.
+RUN set -x \
+&& pip install git+https://github.com/fanshiqing/grouped_gemm@v1.1.4 \
+&& echo "end"
+
 # install megatron.
 RUN set -x \
+&& apt remove -y python3-blinker \
+&& pip uninstall blinker \
 && pip install nltk \
-&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/megatron-v0.8.0.git /usr/local/megatron \
+&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/megatron-v0.11.0.git /usr/local/megatron \
 && pip install /usr/local/megatron --no-build-isolation --verbose \
 && echo "end"
 

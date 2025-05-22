@@ -19,8 +19,8 @@ RUN set -x \
 
 # install cuda.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.2.0_535.54.03_linux.run -P /tmp \
-&& bash /tmp/cuda_12.2.0_535.54.03_linux.run --toolkit --silent \
+&& wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.4.1_550.54.15_linux.run -P /tmp \
+&& bash /tmp/cuda_12.4.1_550.54.15_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-systems.desktop \
 && sed -i "s,host-linux-x64/nsight-sys,host-linux-x64/nsys-ui,g" /usr/share/applications/nsight-systems.desktop  \
@@ -41,17 +41,29 @@ RUN set -x \
 && rm -rf /tmp/* \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install tensorrt.
+# install nccl.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/tensorrt-9.2.0.5.linux.x86_64-gnu.cuda-12.2.tar.gz -P /tmp \
-&& tar -xzf /tmp/tensorrt-9.2.0.5.linux.x86_64-gnu.cuda-12.2.tar.gz -C /usr/local \
-&& mv /usr/local/TensorRT-9.2.0.5 /usr/local/tensorrt \
-&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.9.2.0 /usr/lib/x86_64-linux-gnu \
-&& pip install /usr/local/tensorrt/python/tensorrt-9.2.0.post12.dev5-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-9.2.0.post12.dev5-cp310-none-linux_x86_64.whl \
-&& pip install /usr/local/tensorrt/python/tensorrt_lean-9.2.0.post12.dev5-cp310-none-linux_x86_64.whl \
+&& wget -nv http://10.113.3.1/corex/toolbox/nccl/nccl_2.21.5-1+cuda12.4_x86_64.txz -P /tmp \
+&& tar -xf /tmp/nccl_2.21.5-1+cuda12.4_x86_64.txz -C /tmp \
+&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/include/* /usr/local/cuda/include \
+&& cp -r /tmp/nccl_2.21.5-1+cuda12.4_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
-ENV PATH=$PATH:/usr/local/tensorrt/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install torch.
+ENV TORCH_CUDA_ARCH_LIST="8.0"
+RUN set -x \
+&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu124-cp310-cp310-linux_x86_64.whl \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install torchvision.
+RUN set -x \
+&& apt install -y libjpeg-dev \
+&& apt install -y libopenblas-dev \
+&& apt install -y libopenmpi-dev \
+&& git clone -b v0.19.1 --recursive --depth=1 https://github.com/pytorch/vision.git /tmp/torchvision \
+&& pip install /tmp/torchvision --no-build-isolation --verbose \
+&& rm -rf /tmp/* \
+&& echo "end"

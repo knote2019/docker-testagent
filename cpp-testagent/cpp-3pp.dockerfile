@@ -10,3 +10,13 @@ RUN set -x \
 && make install \
 && rm -rf /tmp/* \
 && echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install torch.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/pytorch/libtorch-cxx11-abi-shared-with-deps-2.4.1+cpu.zip -P /tmp \
+&& unzip /tmp/libtorch-cxx11-abi-shared-with-deps-2.4.1+cpu.zip -d /usr/local \
+&& mv /usr/local/libtorch /usr/local/torch \
+&& rm -rf /tmp/* \
+&& echo "end"
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/torch/lib

@@ -34,10 +34,10 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 # install cudnn.
 RUN set -x \
-&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -P /tmp \
-&& tar -xf /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive.tar.xz -C /tmp \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/include/* /usr/local/cuda/include \
-&& cp -r /tmp/cudnn-linux-x86_64-9.1.0.70_cuda11-archive/lib/* /usr/local/cuda/lib64 \
+&& wget -nv http://10.113.3.1/corex/toolbox/cudnn/cudnn-linux-x86_64-8.9.5.30_cuda11-archive.tar.xz -P /tmp \
+&& tar -xf /tmp/cudnn-linux-x86_64-8.9.5.30_cuda11-archive.tar.xz -C /tmp \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda11-archive/include/* /usr/local/cuda/include \
+&& cp -r /tmp/cudnn-linux-x86_64-8.9.5.30_cuda11-archive/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
 
@@ -54,45 +54,24 @@ RUN set -x \
 # install torch.
 ENV TORCH_CUDA_ARCH_LIST="8.0"
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu118-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-# install torchvision.
-RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/pytorch/torchvision-0.19.1+cu118-cp310-cp310-linux_x86_64.whl \
-&& echo "end"
-
-# install vllm-requirements.
-RUN set -x \
-&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/vllm-v0.8.3.git /tmp/vllm \
-&& pip install -r /tmp/vllm/requirements-cuda.txt \
-&& echo "end"
-
-# force build.
-ARG FORCE_BUILD
-
-# install vllm.
-ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
-RUN set -x \
-&& export MAX_JOBS=32 \
-&& export VLLM_TARGET_DEVICE="cuda" \
-&& pip install /tmp/vllm --no-build-isolation --verbose \
+&& wget -nv http://10.113.3.1/corex/toolbox/pytorch/libtorch-cxx11-abi-shared-with-deps-2.4.1+cu118.zip -P /tmp \
+&& unzip /tmp/libtorch-cxx11-abi-shared-with-deps-2.4.1+cu118.zip -d /usr/local \
+&& mv /usr/local/libtorch /usr/local/torch \
 && rm -rf /tmp/* \
 && echo "end"
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/torch/lib
 
 #-----------------------------------------------------------------------------------------------------------------------
-# install AWQ.
+# install tensorrt.
 RUN set -x \
-&& pip install autoawq \
+&& wget -nv http://10.113.3.1/corex/toolbox/tensorrt/TensorRT-10.8.0.43.Linux.x86_64-gnu.cuda-11.8.tar.gz -P /tmp \
+&& tar -xzf /tmp/TensorRT-10.8.0.43.Linux.x86_64-gnu.cuda-11.8.tar.gz -C /usr/local \
+&& mv /usr/local/TensorRT-10.8.0.43 /usr/local/tensorrt \
+&& mv /usr/local/tensorrt/lib/libnvinfer_builder_resource.so.10.8.0 /usr/lib/x86_64-linux-gnu \
+&& pip install /usr/local/tensorrt/python/tensorrt-10.8.0.43-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_dispatch-10.8.0.43-cp310-none-linux_x86_64.whl \
+&& pip install /usr/local/tensorrt/python/tensorrt_lean-10.8.0.43-cp310-none-linux_x86_64.whl \
+&& rm -rf /tmp/* \
 && echo "end"
-
-# install GPTQ.
-RUN set -x \
-&& pip install auto-gptq \
-&& pip install optimum \
-&& echo "end"
-
-# install BNB.
-RUN set -x \
-&& pip install bitsandbytes>=0.44.0 \
-&& echo "end"
+ENV PATH=$PATH:/usr/local/tensorrt/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/tensorrt/lib

@@ -52,6 +52,18 @@ pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.5.9.post1 -v
 
 ------------------------------------------------------------------------------------------------------------------------
 问题描述:
+源码安装 apex:
+
+ModuleNotFoundError: No module named 'packaging'
+
+解决方案:
+&& pip install packaging \
+
+NOTE:
+https://github.com/NVIDIA/apex/issues/1594
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
 源码安装 flashinfer:
 Unknown CUDA Architecture Name 9.0a in CUDA_SELECT_NVCC_ARCH_FLAGS (compiling from source)
 
@@ -138,3 +150,55 @@ RuntimeError: Failed to import transformers.models.llama.modeling_llama because 
 
 解决方案:
 && pip uninstall -y flash-attn \
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 megatron-v0.11.0:
+Collecting blinker
+  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/10/cb/f2ad4230dc2eb1a74edf38f1a38b9b52277f75bef262d8908e60d957e13c/blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Installing collected packages: blinker
+  Attempting uninstall: blinker
+    Found existing installation: blinker 1.4
+ERROR: Cannot uninstall 'blinker'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall.
+
+解决方案:
+&& apt remove -y python3-blinker \
+&& pip uninstall blinker \
+
+先remove再uninstall.
+
+NOTE:
+https://github.com/googlecolab/colabtools/issues/3976
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 pytorch-v2.4.1:
+2025-05-16 15:21:19  -- Building using own protobuf under third_party per request.
+2025-05-16 15:21:19  -- Use custom protobuf build.
+2025-05-16 15:21:19  CMake Error at third_party/protobuf/cmake/CMakeLists.txt:2 (cmake_minimum_required):
+2025-05-16 15:21:19    Compatibility with CMake < 3.5 has been removed from CMake.
+2025-05-16 15:21:19
+2025-05-16 15:21:19    Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2025-05-16 15:21:19    to tell CMake that the project requires at least <min> but has been updated
+2025-05-16 15:21:19    to work with policies introduced by <max> or earlier.
+2025-05-16 15:21:19
+2025-05-16 15:21:19    Or, add -DCMAKE_POLICY_VERSION_MINIMUM=3.5 to try configuring anyway.
+
+解决方案:
+&& pip install cmake==3.31.6 \
+或者:
+&& sed -i 's/cmake_minimum_required(VERSION 3.1.3)/cmake_minimum_required(VERSION 3.10)/' third_party/protobuf/cmake/CMakeLists.txt \
+
+NOTE:
+https://cmake.org/cmake/help/latest/release/4.0.html
+Compatibility with versions of CMake older than 3.5 has been removed.
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 pytorch-v2.4.1:
+2025-05-16 18:06:10      File "setup.py", line 1194, in main
+2025-05-16 18:06:10        with open(os.path.join(cwd, "README.md"), encoding="utf-8") as f:
+2025-05-16 18:06:10    FileNotFoundError: [Errno 2] No such file or directory: '/tmp/torch/README.md'
+
+解决方案:
+保留 README.md.

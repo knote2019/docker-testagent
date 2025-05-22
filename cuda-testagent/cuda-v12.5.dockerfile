@@ -19,9 +19,6 @@ RUN set -x \
 
 # install cuda.
 RUN set -x \
-&& apt update \
-&& apt install -y libxml2 \
-&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
 && wget -nv http://10.113.3.1/corex/toolbox/cuda/cuda_12.5.0_555.42.02_linux.run -P /tmp \
 && bash /tmp/cuda_12.5.0_555.42.02_linux.run --toolkit --silent \
 && sed -i 's/Categories.*/Catagories=CUDA/' /usr/share/applications/nsight-compute.desktop \
@@ -31,6 +28,7 @@ RUN set -x \
 && rm -f /usr/share/applications/nvvp.desktop \
 && rm -rf /tmp/* \
 && echo "end"
+ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:/usr/local/cuda/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
@@ -51,9 +49,3 @@ RUN set -x \
 && cp -r /tmp/nccl_2.22.3-1+cuda12.5_x86_64/lib/* /usr/local/cuda/lib64 \
 && rm -rf /tmp/* \
 && echo "end"
-
-# install graphviz.
-RUN set -x \
-&& apt install -y graphviz \
-&& echo "end"
-

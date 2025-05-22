@@ -15,6 +15,7 @@ RUN set -x \
 && apt install -y kmod \
 && apt install -y gnupg \
 && apt install -y iproute2 \
+&& apt install -y curl \
 && apt install -y gdb \
 && apt install -y gdbserver \
 && echo "end"
@@ -58,7 +59,13 @@ RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/ffmpeg/n7.0.tar.gz -P /tmp \
 && tar -xzf /tmp/n7.0.tar.gz -C /tmp \
 && cd /tmp/FFmpeg-n7.0 \
-&& ./configure --prefix=/usr/local/ffmpeg --enable-gpl --enable-libx264 --enable-libx265 --enable-ffplay --enable-ffprobe --enable-shared \
+&& ./configure --prefix=/usr/local/ffmpeg \
+--enable-gpl \
+--enable-libx264 \
+--enable-libx265 \
+--enable-ffplay \
+--enable-ffprobe \
+--enable-shared \
 && make -j32 \
 && make install \
 && echo "/usr/local/ffmpeg/lib" > /etc/ld.so.conf.d/ffmpeg.conf \
@@ -78,8 +85,14 @@ RUN set -x \
 && mkdir /tmp/opencv-4.8.0/build \
 && cd /tmp/opencv-4.8.0/build \
 && export OPENCV_IPPICV_URL="NA" \
-&& cmake -D CMAKE_INSTALL_PREFIX=/tmp/opencv -D CMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1' \
--D BUILD_EXAMPLES=ON -D BUILD_DOCS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_TESTS=OFF .. \
+&& cmake -D CMAKE_INSTALL_PREFIX=/tmp/opencv \
+-D CMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1' \
+-D BUILD_EXAMPLES=OFF \
+-D BUILD_TESTS=OFF \
+-D BUILD_PERF_TESTS=OFF \
+-D BUILD_DOCS=OFF \
+-D BUILD_JAVA=OFF \
+.. \
 && make -j32 \
 && make install \
 && cp -r /tmp/opencv/include/opencv4/* /usr/local/include \
@@ -135,6 +148,42 @@ RUN set -x \
 
 # configure no_proxy.
 ENV no_proxy=pypi.tuna.tsinghua.edu.cn
+
+# install 3pp.
+RUN set -x \
+&& apt update \
+&& apt install -y libssl-dev \
+&& apt install -y libxml2 \
+&& apt install -y graphviz \
+&& apt install -y python3-tk \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install python-3pp.
+RUN set -x \
+&& pip install packaging \
+&& pip install setuptools \
+&& pip install setuptools_scm \
+&& pip install typing_extensions \
+&& pip install pybind11 \
+&& pip install pytest \
+&& pip install allure-pytest \
+&& pip install numpy \
+&& pip install matplotlib \
+&& echo "end"
+
+# configure MAX_JOBS.
+ENV MAX_JOBS=32
+
+# fix which cmd.
+RUN set -x \
+&& sed -i '/deprecated/s/^\(.*\)$/#\1/g' /usr/bin/which \
+&& echo "end"
+
+# configure known_hosts.
+RUN set -x \
+&& ssh-keyscan -H github.com >> ~/.ssh/known_hosts \
+&& echo "end"
 
 # configure bashrc.
 RUN set -x \

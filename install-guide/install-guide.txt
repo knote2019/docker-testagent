@@ -1,35 +1,48 @@
 
 
 ------------------------------------------------------------------------------------------------------------------------
+基础包:
 cuda:
 https://developer.nvidia.com/cuda-toolkit-archive
-
-cudnn:
 https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/
-
-nccl:
 https://developer.nvidia.com/nccl/nccl-legacy-downloads
 
 ------------------------------------------------------------------------------------------------------------------------
-小模型训练:
-pytorch:
-https://download.pytorch.org/whl
+基础框架:
+torch:
+https://download.pytorch.org/libtorch/cpu
+https://download.pytorch.org/libtorch/cu118
 https://download.pytorch.org/whl/torch/
 
+NOTE:
+windows下载r然后上传到FTP.
+
+https://github.com/pytorch/pytorch#from-source
+
 ------------------------------------------------------------------------------------------------------------------------
+小模型训练:
+torchvision:
+https://download.pytorch.org/whl/torchvision/
+
+NOTE:
+https://github.com/pytorch/vision/blob/main/CONTRIBUTING.md#development-installation
+
+2.5	0.20	>=3.9, <=3.12
+2.4	0.19	>=3.8, <=3.12
+2.3	0.18	>=3.8, <=3.12
+2.2	0.17	>=3.8, <=3.11
+2.1	0.16	>=3.8, <=3.11
+2.0	0.15	>=3.8, <=3.11
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+小模型推理:
 tensorrt:
 https://github.com/NVIDIA/TensorRT
 
 tvm:
 https://tvm.apache.org/docs/v0.9.0/install/from_source.html
-
-onnxruntime:
-https://github.com/microsoft/onnxruntime/releases
-
-deepstream:
-https://developer.nvidia.com/deepstream-sdk
-https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream
-https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_Installation.html#dgpu-setup-for-ubuntu
 
 ------------------------------------------------------------------------------------------------------------------------
 大模型训练:
@@ -48,15 +61,6 @@ https://github.com/Dao-AILab/flash-attention
 vllm:
 https://docs.vllm.ai/en/latest/getting_started/installation.html
 
-sglang:
-https://github.com/sgl-project/sglang
-
 tensorrt-llm:
 https://pypi.nvidia.cn/tensorrt-llm
-
-tgi:
-https://github.com/huggingface/text-generation-inference
-https://huggingface.co/docs/text-generation-inference/installation
-
-flashinfer:
-https://github.com/flashinfer-ai/flashinfer
+https://nvidia.github.io/TensorRT-LLM/installation/build-from-source-linux.html

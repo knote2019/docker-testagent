@@ -57,37 +57,15 @@ RUN set -x \
 && pip install http://10.113.3.1/corex/toolbox/pytorch/torch-2.4.1+cu121-cp310-cp310-linux_x86_64.whl \
 && echo "end"
 
-# install apex.
-RUN set -x \
-&& git clone -b 23.05 --recursive --depth=1 https://github.com/NVIDIA/apex.git /usr/local/apex \
-&& pip install /usr/local/apex --global-option="--cpp_ext" --global-option="--cuda_ext" --no-build-isolation --verbose \
-&& echo "end"
-
 # install flash-attn.
 RUN set -x \
-&& pip install http://10.113.3.1/corex/toolbox/flash_attn/flash_attn-2.6.3+cu123torch2.4cxx11abiFALSE-cp310-cp310-linux_x86_64.whl \
+&& git clone -b v2.6.3 --recursive --depth=1 https://github.com/Dao-AILab/flash-attention.git /usr/local/flash-attention \
+&& pip install /usr/local/flash-attention --no-build-isolation --verbose \
 && echo "end"
 
 # install transformer-engine.
 ENV NVTE_FRAMEWORK="pytorch"
 RUN set -x \
-&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/TransformerEngine-v2.1.git /usr/local/TransformerEngine \
-&& pip install /usr/local/TransformerEngine --no-build-isolation --verbose \
-&& echo "end"
-
-# install megatron.
-RUN set -x \
-&& pip install nltk \
-&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/megatron-v0.8.0.git /usr/local/megatron \
-&& pip install /usr/local/megatron --no-build-isolation --verbose \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install tool.
-RUN set -x \
-&& pip install datasets \
-&& pip install sentencepiece \
-&& pip install accelerate \
-&& pip install transformers \
-&& pip install flask-restful --ignore-installed \
+&& git clone -b v2.0 --recursive --depth=1 https://github.com/NVIDIA/TransformerEngine.git /usr/local/TransformerEngine \
+&& pip install /usr/local/TransformerEngine --no-build-isolation \
 && echo "end"
