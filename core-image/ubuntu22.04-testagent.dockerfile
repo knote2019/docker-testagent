@@ -47,59 +47,6 @@ RUN set -x \
 && apt install -y ninja-build \
 && echo "end"
 
-#-----------------------------------------------------------------------------------------------------------------------
-# install ffmpeg.
-RUN set -x \
-&& apt update \
-&& apt install -y yasm \
-&& apt install -y libx264-dev \
-&& apt install -y libx265-dev \
-&& apt install -y libegl-mesa0 \
-&& apt install -y libsdl2-dev \
-&& wget -nv http://10.113.3.1/corex/toolbox/ffmpeg/n7.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/n7.0.tar.gz -C /tmp \
-&& cd /tmp/FFmpeg-n7.0 \
-&& ./configure --prefix=/usr/local/ffmpeg \
---enable-gpl \
---enable-libx264 \
---enable-libx265 \
---enable-ffplay \
---enable-ffprobe \
---enable-shared \
-&& make -j32 \
-&& make install \
-&& echo "/usr/local/ffmpeg/lib" > /etc/ld.so.conf.d/ffmpeg.conf \
-&& ldconfig \
-&& rm -rf /tmp/* \
-&& echo "end"
-ENV PATH=$PATH:/usr/local/ffmpeg/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/ffmpeg/lib
-
-# install opencv.
-RUN set -x \
-&& apt update \
-&& apt install -y libgtk2.0-dev \
-&& apt install -y gtk2-engines-pixbuf \
-&& wget -nv http://10.113.3.1/corex/toolbox/opencv/4.8.0.tar.gz -P /tmp \
-&& tar -xzf /tmp/4.8.0.tar.gz -C /tmp \
-&& mkdir /tmp/opencv-4.8.0/build \
-&& cd /tmp/opencv-4.8.0/build \
-&& export OPENCV_IPPICV_URL="NA" \
-&& cmake -D CMAKE_INSTALL_PREFIX=/tmp/opencv \
--D CMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1' \
--D BUILD_EXAMPLES=OFF \
--D BUILD_TESTS=OFF \
--D BUILD_PERF_TESTS=OFF \
--D BUILD_DOCS=OFF \
--D BUILD_JAVA=OFF \
-.. \
-&& make -j32 \
-&& make install \
-&& cp -r /tmp/opencv/include/opencv4/* /usr/local/include \
-&& cp -r /tmp/opencv/lib/* /usr/local/lib \
-&& rm -rf /tmp/* \
-&& echo "end"
-
 # install openmpi.
 RUN set -x \
 && wget -nv http://10.113.3.1/corex/toolbox/openmpi/openmpi-5.0.2.tar.gz -P /tmp \
