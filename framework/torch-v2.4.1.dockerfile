@@ -1,4 +1,4 @@
-FROM 10.150.9.98:80/devops-nvidia/core-testagent:master
+FROM 10.150.9.98:80/devops_tools/ubuntu22.04-testagent:master
 #-----------------------------------------------------------------------------------------------------------------------
 # install driver.
 RUN set -x \
