@@ -132,6 +132,11 @@ RUN set -x \
 && ssh-keyscan -H github.com >> ~/.ssh/known_hosts \
 && echo "end"
 
+# configure vnc.
+RUN set -x \
+&& echo 'cloud:$5$kasm$vISjZBqIJVoiyNy3DFNACxPr8.i8.A4P0ReFjc00HAB:ow' > /root/.kasmpasswd \
+&& echo "end"
+
 # configure bashrc.
 RUN set -x \
 && echo "alias ll='ls --color -alF'">/root/.bashrc \
