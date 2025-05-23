@@ -29,7 +29,6 @@ rm -rf python_only_dev.py
 rm -rf README.md
 rm -rf .readthedocs.yaml
 rm -rf RELEASE.md
-rm -rf requirements/cpu.txt
 rm -rf requirements/dev.txt
 rm -rf requirements/docs.txt
 rm -rf requirements/hpu.txt
