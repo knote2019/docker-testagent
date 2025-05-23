@@ -8,7 +8,6 @@ https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/
 https://developer.nvidia.com/nccl/nccl-legacy-downloads
 
 ------------------------------------------------------------------------------------------------------------------------
-基础框架:
 torch:
 https://download.pytorch.org/libtorch/cpu
 https://download.pytorch.org/libtorch/cu118
@@ -19,18 +18,5 @@ windows下载r然后上传到FTP.
 https://github.com/pytorch/pytorch#from-source
 
 ------------------------------------------------------------------------------------------------------------------------
-大模型训练:
-flash-attn:
-https://github.com/Dao-AILab/flash-attention
-
-transformer-engine:
-https://github.com/NVIDIA/TransformerEngine.git
-https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/installation.html
-
-megatron:
-https://github.com/NVIDIA/Megatron-LM
-
-------------------------------------------------------------------------------------------------------------------------
-大模型推理:
 vllm:
 https://docs.vllm.ai/en/latest/getting_started/installation.html
