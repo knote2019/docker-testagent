@@ -64,8 +64,8 @@ RUN set -x \
 
 # install vllm-requirements.
 RUN set -x \
-&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/vllm-v0.8.3.git /tmp/vllm \
-&& pip install -r /tmp/vllm/requirements-cuda.txt \
+&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/vllm-v0.6.3.git /usr/local/vllm \
+&& pip install -r /usr/local/vllm/requirements-cuda.txt \
 && echo "end"
 
 # force build.
@@ -76,8 +76,7 @@ ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
 RUN set -x \
 && export MAX_JOBS=32 \
 && export VLLM_TARGET_DEVICE="cuda" \
-&& pip install /tmp/vllm --no-build-isolation --verbose \
-&& rm -rf /tmp/* \
+&& pip install /usr/local/vllm --no-build-isolation --verbose \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
