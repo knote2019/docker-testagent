@@ -5,7 +5,7 @@
 cuda:
 https://developer.nvidia.com/cuda-toolkit-archive
 https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/
-https://developer.nvidia.com/nccl/nccl-legacy-downloads
+https://developer.download.nvidia.com/compute/redist/nccl/
 
 ------------------------------------------------------------------------------------------------------------------------
 torch:
