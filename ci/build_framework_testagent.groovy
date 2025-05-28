@@ -24,7 +24,7 @@ pipeline {
                     steps {
                         script{
                             sh """
-                                cd ${env.WORKSPACE}/e0-framework-base
+                                cd ${env.WORKSPACE}/framework
                                 docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/torch-v2.4.1:master --file torch-v2.4.1.dockerfile .
                                 docker push 10.150.9.98:80/devops_tools/torch-v2.4.1:master
                                 docker images | grep devops_tools
@@ -41,7 +41,7 @@ pipeline {
                     steps {
                         script{
                             sh """
-                                cd ${env.WORKSPACE}/e4-framework-lm-inference
+                                cd ${env.WORKSPACE}/framework
                                 docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/vllm-v0.8.3:master --file vllm-v0.8.3.dockerfile .
                                 docker push 10.150.9.98:80/devops_tools/vllm-v0.8.3:master
                                 docker images | grep devops_tools
