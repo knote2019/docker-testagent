@@ -53,8 +53,8 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install torch-requirements.
 RUN set -x \
-&& git clone -b master --recursive --depth=1 https://github.com/knote2019/torch-v2.4.1.git /tmp/torch \
-&& pip install -r /tmp/torch/requirements.txt \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/torch-v2.4.1.git /usr/local/torch \
+&& pip install -r /usr/local/torch/requirements.txt \
 && echo "end"
 
 # force build.
@@ -88,7 +88,7 @@ RUN set -x \
 && export BUILD_TEST=OFF \
 && export USE_MKLDNN=ON \
 && export USE_FBGEMM=ON \
-&& pip install /tmp/torch --no-build-isolation --verbose \
+&& pip install /usr/local/torch --no-build-isolation --verbose \
 && mkdir /usr/local/torch \
 && ln -sf /usr/local/lib/python3.*/dist-packages/torch/include /usr/local/torch/include \
 && ln -sf /usr/local/lib/python3.*/dist-packages/torch/lib /usr/local/torch/lib \
