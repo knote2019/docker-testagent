@@ -89,7 +89,7 @@ RUN set -x \
 && export BUILD_TEST=OFF \
 && export USE_MKLDNN=ON \
 && export USE_FBGEMM=ON \
-&& pip install /usr/local/torch --no-build-isolation --verbose \
+&& pip install /opt/torch --no-build-isolation --verbose \
 && mkdir /usr/local/torch \
 && ln -sf /usr/local/lib/python3.*/dist-packages/torch/include /usr/local/torch/include \
 && ln -sf /usr/local/lib/python3.*/dist-packages/torch/lib /usr/local/torch/lib \
