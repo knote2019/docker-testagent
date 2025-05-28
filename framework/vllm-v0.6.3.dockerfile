@@ -65,7 +65,7 @@ RUN set -x \
 
 # install vllm-requirements.
 RUN set -x \
-&& git clone -b master --recursive https://github.com/knote2019/vllm-v0.6.3.git /usr/local/vllm \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/vllm-v0.6.3.git /usr/local/vllm \
 && pip install -r /usr/local/vllm/requirements-cuda.txt \
 && echo "end"
 
