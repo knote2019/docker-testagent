@@ -6,7 +6,7 @@ cd pytorch
 git checkout main
 git branch -D master
 git checkout v2.4.1 -b master
-git remote set-url origin ssh://git@bitbucket.iluvatar.ai:7999/swte/pytorch-v2.4.1.git
+git remote set-url origin git@github.com:knote2019/torch-v2.4.1.git
 git push origin master
 
 rm -rf .bazelignore

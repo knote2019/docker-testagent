@@ -6,7 +6,7 @@ cd flash-attention
 git checkout main
 git branch -D master
 git checkout v2.6.3 -b master
-git remote set-url origin ssh://git@bitbucket.iluvatar.ai:7999/swte/flash-attention-v2.6.3.git
+git remote set-url origin git@github.com:knote2019/flash-attention-v2.6.3.git
 git push origin master
 
 rm -rf assets/

@@ -6,7 +6,7 @@ cd vllm
 git checkout main
 git branch -D master
 git checkout v0.6.3 -b master
-git remote set-url origin ssh://git@bitbucket.iluvatar.ai:7999/swte/vllm-v0.6.3.git
+git remote set-url origin git@github.com:knote2019/vllm-v0.6.3.git
 git push origin master
 
 rm -rf benchmarks/
@@ -48,7 +48,7 @@ git add .
 git commit -m "clean"
 git push origin master
 
-sed -i 's@https://github.com/vllm-project/flash-attention.git@http://bitbucket.iluvatar.ai:7990/scm/swte/flash-attention-v2.6.3.git@' CMakeLists.txt
+sed -i 's@https://github.com/vllm-project/flash-attention.git@https://github.com/knote2019/flash-attention-v2.6.3.git@' CMakeLists.txt
 
 git add .
 git commit -m "update flash-attention-url"
