@@ -16,7 +16,6 @@ rm -rf examples/
 rm -rf .github/
 rm -rf LICENSE
 rm -rf MANIFEST.in
-rm -rf README.md
 rm -rf tests/
 rm -rf training/
 rm -rf usage.m
