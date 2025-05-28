@@ -53,7 +53,7 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install torch-requirements.
 RUN set -x \
-&& git clone -b master --recursive --depth=1 http://bitbucket.iluvatar.ai:7990/scm/swte/pytorch-v2.4.1.git /tmp/torch \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/torch-v2.4.1.git /tmp/torch \
 && pip install -r /tmp/torch/requirements.txt \
 && echo "end"
 
