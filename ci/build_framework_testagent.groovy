@@ -25,7 +25,7 @@ pipeline {
                         script{
                             sh """
                                 cd ${env.WORKSPACE}/framework
-                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/torch-v2.4.1:master --file torch-v2.4.1.dockerfile .
+                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/torch-v2.4.1:kenny --file torch-v2.4.1.dockerfile .
                                 docker push 10.150.9.98:80/devops_tools/torch-v2.4.1:kenny
                                 docker images | grep devops_tools
                             """
@@ -42,7 +42,7 @@ pipeline {
                         script{
                             sh """
                                 cd ${env.WORKSPACE}/framework
-                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/vllm-v0.6.3:master --file vllm-v0.6.3.dockerfile .
+                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/vllm-v0.6.3:kenny --file vllm-v0.6.3.dockerfile .
                                 docker push 10.150.9.98:80/devops_tools/vllm-v0.6.3:kenny
                                 docker images | grep devops_tools
                             """
