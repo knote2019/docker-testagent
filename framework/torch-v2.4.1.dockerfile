@@ -53,8 +53,8 @@ RUN set -x \
 #-----------------------------------------------------------------------------------------------------------------------
 # install torch-requirements.
 RUN set -x \
-&& git clone -b master --recursive --depth=1 https://github.com/knote2019/torch-v2.4.1.git /usr/local/pytorch \
-&& pip install -r /usr/local/pytorch/requirements.txt \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/torch-v2.4.1.git /opt/torch \
+&& pip install -r /opt/torch/requirements.txt \
 && echo "end"
 
 # force build.
