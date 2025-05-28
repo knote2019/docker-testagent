@@ -1,4 +1,5 @@
 FROM 10.150.9.98:80/devops_tools/ubuntu22.04-testagent:master
+RUN wget -nv http://10.113.3.1/corex/toolbox/ide/clion.key -P /root/.config/JetBrains/CLion2023.3
 #-----------------------------------------------------------------------------------------------------------------------
 # install driver.
 RUN set -x \
