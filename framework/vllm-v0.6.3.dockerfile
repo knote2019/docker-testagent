@@ -74,25 +74,25 @@ ARG FORCE_BUILD
 
 # install vllm.
 ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
-RUN set -x \
-&& export MAX_JOBS=32 \
-&& export VLLM_TARGET_DEVICE="cuda" \
-&& pip install /usr/local/vllm --no-build-isolation --verbose \
-&& echo "end"
-
-#-----------------------------------------------------------------------------------------------------------------------
-# install AWQ.
-RUN set -x \
-&& pip install autoawq \
-&& echo "end"
-
-# install GPTQ.
-RUN set -x \
-&& pip install auto-gptq \
-&& pip install optimum \
-&& echo "end"
-
-# install BNB.
-RUN set -x \
-&& pip install bitsandbytes>=0.44.0 \
-&& echo "end"
+# RUN set -x \
+# && export MAX_JOBS=32 \
+# && export VLLM_TARGET_DEVICE="cuda" \
+# && pip install /usr/local/vllm --no-build-isolation --verbose \
+# && echo "end"
+#
+# #-----------------------------------------------------------------------------------------------------------------------
+# # install AWQ.
+# RUN set -x \
+# && pip install autoawq \
+# && echo "end"
+#
+# # install GPTQ.
+# RUN set -x \
+# && pip install auto-gptq \
+# && pip install optimum \
+# && echo "end"
+#
+# # install BNB.
+# RUN set -x \
+# && pip install bitsandbytes>=0.44.0 \
+# && echo "end"
