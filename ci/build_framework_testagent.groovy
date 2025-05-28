@@ -42,8 +42,8 @@ pipeline {
                         script{
                             sh """
                                 cd ${env.WORKSPACE}/framework
-                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/vllm-v0.8.3:master --file vllm-v0.8.3.dockerfile .
-                                docker push 10.150.9.98:80/devops_tools/vllm-v0.8.3:master
+                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/vllm-v0.6.3:master --file vllm-v0.6.3.dockerfile .
+                                docker push 10.150.9.98:80/devops_tools/vllm-v0.6.3:master
                                 docker images | grep devops_tools
                             """
                         }
