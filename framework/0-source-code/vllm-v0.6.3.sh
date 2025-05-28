@@ -47,3 +47,9 @@ rm -rf .yapfignore
 git add .
 git commit -m "clean"
 git push origin master
+
+sed -i 's@https://github.com/vllm-project/flash-attention.git@http://bitbucket.iluvatar.ai:7990/scm/swte/flash-attention-v2.6.3.git@' CMakeLists.txt
+
+git add .
+git commit -m "update flash-attention-url"
+git push origin master
