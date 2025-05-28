@@ -74,25 +74,26 @@ ARG FORCE_BUILD
 
 # install vllm.
 ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
-# RUN set -x \
-# && export MAX_JOBS=32 \
-# && export VLLM_TARGET_DEVICE="cuda" \
-# && pip install /usr/local/vllm --no-build-isolation --verbose \
-# && echo "end"
-#
-# #-----------------------------------------------------------------------------------------------------------------------
-# # install AWQ.
-# RUN set -x \
-# && pip install autoawq \
-# && echo "end"
-#
-# # install GPTQ.
-# RUN set -x \
-# && pip install auto-gptq \
-# && pip install optimum \
-# && echo "end"
-#
-# # install BNB.
-# RUN set -x \
-# && pip install bitsandbytes>=0.44.0 \
-# && echo "end"
+RUN set -x \
+&& export VLLM_TARGET_DEVICE="cuda" \
+&& export VLLM_FLASH_ATTN_SRC_DIR="/usr/local/vllm-flash-attention" \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/vllm-flash-attention-v0.6.3.git /usr/local/vllm-flash-attention \
+&& pip install /usr/local/vllm --no-build-isolation --verbose \
+&& echo "end"
+
+#-----------------------------------------------------------------------------------------------------------------------
+# install AWQ.
+RUN set -x \
+&& pip install autoawq \
+&& echo "end"
+
+# install GPTQ.
+RUN set -x \
+&& pip install auto-gptq \
+&& pip install optimum \
+&& echo "end"
+
+# install BNB.
+RUN set -x \
+&& pip install bitsandbytes>=0.44.0 \
+&& echo "end"
