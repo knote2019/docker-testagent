@@ -76,8 +76,8 @@ ARG FORCE_BUILD
 ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
 RUN set -x \
 && export VLLM_TARGET_DEVICE="cuda" \
-&& export VLLM_FLASH_ATTN_SRC_DIR="/usr/local/vllm-flash-attention" \
-&& git clone -b master --recursive --depth=1 https://github.com/knote2019/vllm-flash-attention-v0.6.3.git /usr/local/vllm-flash-attention \
+&& export VLLM_FLASH_ATTN_SRC_DIR="/usr/local/flash-attention-vllm" \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/flash-attention-vllm-v0.6.3.git /usr/local/flash-attention-vllm \
 && pip install /usr/local/vllm --no-build-isolation --verbose \
 && echo "end"
 
