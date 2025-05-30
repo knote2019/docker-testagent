@@ -65,8 +65,9 @@ RUN set -x \
 
 # install vllm-requirements.
 RUN set -x \
-&& git clone -b master --recursive --depth=1 https://github.com/knote2019/vllm-v0.6.3.git /usr/local/vllm \
-&& pip install -r /usr/local/vllm/requirements-cuda.txt \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/vllm-v0.6.3.git /tmp/vllm \
+&& pip install -r /tmp/vllm/requirements-cuda.txt \
+&& rm -rf /tmp/* \
 && echo "end"
 
 # force build.
@@ -76,9 +77,12 @@ ARG FORCE_BUILD
 ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
 RUN set -x \
 && export VLLM_TARGET_DEVICE="cuda" \
-&& export VLLM_FLASH_ATTN_SRC_DIR="/usr/local/flash-attention-vllm" \
-&& git clone -b master --recursive --depth=1 https://github.com/knote2019/flash-attention-vllm-v0.6.3.git /usr/local/flash-attention-vllm \
-&& pip install /usr/local/vllm --no-build-isolation --verbose \
+&& export VLLM_FLASH_ATTN_SRC_DIR="/tmp/flash-attention-vllm" \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/flash-attention-vllm-v0.6.3.git /tmp/flash-attention-vllm \
+&& git clone -b master --recursive --depth=1 https://github.com/knote2019/vllm-v0.6.3.git /tmp/vllm \
+&& cd /tmp/vllm \
+&& python setup.py install \
+&& rm -rf /tmp/* \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
