@@ -3,7 +3,7 @@ def NODE_LABEL_SLAVE = "BI150-X86-U-1.46"
 def DOCKER_IMAGE = "10.150.9.98:80/devops_tools/corex-testagent-ubuntu-x86_64:master"
 
 pipeline {
-    agent NODE_LABEL_SLAVE
+    agent { node { label NODE_LABEL_SLAVE } }
     stages {
         stage("vllm_test") {
             steps {
