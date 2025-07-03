@@ -6,30 +6,37 @@ def dockerImage = docker.image(DOCKER_IMAGE)
 pipeline {
     agent { node { label NODE_LABEL_SLAVE } }
     stages {
-        stage('run_test') {
-            steps {
-                script{
-                    dockerImage.pull()
-                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+        stage('test') {
+            agent {
+                docker {
+                    image DOCKER_IMAGE
+                    args "-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P"
+                }
+            }
+            stages {
+                stage('slave node') {
+                    steps {
                         sh """
                             echo "111"
                             sleep 120
                         """
-                        node(NODE_LABEL_MASTER) {
-                            script{
-                                dockerImage.pull()
-                                dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                                    sh """
-                                        echo "222"
-                                        sleep 120
-                                    """
+                    }
+                }
+                stage('master node') {
+                    steps {
+                        script {
+                            node(NODE_LABEL_MASTER) {
+                                script{
+                                    dockerImage.pull()
+                                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                                        sh """
+                                            echo "222"
+                                            sleep 120
+                                        """
+                                    }
                                 }
                             }
                         }
-                        sh """
-                            echo "333"
-                            sleep 120
-                        """
                     }
                 }
             }
