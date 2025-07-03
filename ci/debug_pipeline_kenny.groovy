@@ -1,58 +1,61 @@
-def CI_NODE_AMD64_LABEL = params.CI_NODE_AMD64_LABEL.trim()
-
-/*****************************************************************
- * common.
- * **************************************************************/
-def build_torch_testagent = params.build_torch_testagent
-def build_vllm_testagent = params.build_vllm_testagent
-
 pipeline {
     agent none
     stages {
-        stage('x86_64'){
-            agent { node { label CI_NODE_AMD64_LABEL } }
-            options {
-                timestamps ()
-                ansiColor('xterm')
-            }
-            stages {
-                /*****************************************************************
-                 * torch.
-                 * **************************************************************/
-                stage('torch') {
-                    when { expression { params.build_torch_testagent == true } }
-                    steps {
-                        script{
-                            sh """
-                                cd ${env.WORKSPACE}/framework
-                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/torch-v2.4.1:kenny --file torch-v2.4.1.dockerfile .
-                                docker push 10.150.9.98:80/devops_tools/torch-v2.4.1:kenny
-                                docker images | grep devops_tools
-                            """
+        stage('Start vLLM Servers') {
+            parallel {
+                stage('host1') {
+                    agent { label 'BI150-X86-U-1.45' }
+                    options {
+                        timestamps()
+                        ansiColor('xterm')
+                    }
+                    stages {
+                        stage('Test1') {
+                            steps {
+                                sh """
+                                    sleep 12000
+                                """
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            echo 'host1 post'
                         }
                     }
                 }
 
-                /*****************************************************************
-                 * vllm.
-                 * **************************************************************/
-                stage('vllm') {
-                    when { expression { params.build_vllm_testagent == true } }
-                    steps {
-                        script{
-                            sh """
-                                cd ${env.WORKSPACE}/framework
-                                docker build --build-arg FORCE_BUILD=\$(date +%s) --force-rm --tag 10.150.9.98:80/devops_tools/vllm-v0.6.3:kenny --file vllm-v0.6.3.dockerfile .
-                                docker push 10.150.9.98:80/devops_tools/vllm-v0.6.3:kenny
-                                docker images | grep devops_tools
-                            """
+                stage('host2') {
+                    agent { label 'BI150-X86-U-1.46' }
+                    options {
+                        timestamps()
+                        ansiColor('xterm')
+                    }
+                    stages {
+                        stage('Test2') {
+                            steps {
+                                sh """
+                                    sleep 12000
+                                """
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            echo 'host2 post'
                         }
                     }
                 }
             }
-            post{
-                always{
-                    cleanWs()
+        }
+
+        stage('Run Distributed Test') {
+            agent { label 'BI150-X86-U-1.22' } // 专用测试节点
+            steps {
+                script {
+                    sh """
+                        sleep 12000
+                    """
                 }
             }
         }
