@@ -9,30 +9,22 @@ pipeline {
         stage('run_test') {
             steps {
                 script{
-                    dockerImage.pull()
-                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                        sh """
-                            echo "111"
-                            sleep 120
-                        """
-
-                        script {
-                            def parallelTasks = [:]
-                            parallelTasks['slave'] = {
-                                node(NODE_LABEL_SLAVE) {
-                                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                                        sh "echo 222; ip a;  sleep 120"
-                                    }
-                                }
+                    def parallelTasks = [:]
+                    parallelTasks['master'] = {
+                        node(NODE_LABEL_MASTER) {
+                            dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                                sh "echo master; ip a;  sleep 120"
                             }
-                            parallel(parallelTasks)
                         }
-
-                        sh """
-                            echo "333"
-                            sleep 120
-                        """
                     }
+                    parallelTasks['slave'] = {
+                        node(NODE_LABEL_SLAVE) {
+                            dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                                sh "echo slave; ip a;  sleep 120"
+                            }
+                        }
+                    }
+                    parallel(parallelTasks)
                 }
             }
         }
