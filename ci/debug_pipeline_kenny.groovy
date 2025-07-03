@@ -12,20 +12,23 @@ pipeline {
                     dockerImage.pull()
                     dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
                         sh """
-                            echo "kkk"
+                            echo "111"
+                            sleep 120
                         """
                         node(NODE_LABEL_MASTER) {
                             script{
                                 dockerImage.pull()
                                 dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
                                     sh """
+                                        echo "222"
                                         sleep 120
                                     """
                                 }
                             }
                         }
                         sh """
-                            echo "mmm"
+                            echo "333"
+                            sleep 120
                         """
                     }
                 }
