@@ -46,16 +46,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Run Distributed Test') {
-            agent { label 'BI150-X86-U-1.22' } // 专用测试节点
-            steps {
-                script {
-                    sh """
-                        sleep 12000
-                    """
-                }
-            }
-        }
     }
 }
