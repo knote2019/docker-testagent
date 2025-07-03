@@ -6,68 +6,37 @@ def dockerImage = docker.image(DOCKER_IMAGE)
 pipeline {
     agent none
     stages {
-        stage('Test on Slave') {
-            agent { label NODE_LABEL_SLAVE }
+        stage('run_test') {
             steps {
-                script {
+                script{
+                    dockerImage.pull()
                     dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                        sh "echo 111; ip a;  sleep 120"
-                    }
-                }
-            }
-        }
-        stage('Test on Master') {
-            agent { label NODE_LABEL_MASTER }
-            steps {
-                script {
-                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                        sh "echo 222; ip a;  sleep 120"
-                    }
-                }
-            }
-        }
-        stage('Final Steps on Slave') {
-            agent { label NODE_LABEL_SLAVE }
-            steps {
-                script {
-                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                        sh "echo 333; ip a; sleep 120"
+                        sh """
+                            echo "111"
+                            sleep 120
+                        """
+
+                        script {
+                            def parallelTasks = [:]
+                            parallelTasks['slave'] = {
+                                node(NODE_LABEL_SLAVE) {
+                                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                                        sh "echo 222; ip a;  sleep 120"
+                                    }
+                                }
+                            }
+                            parallel(parallelTasks)
+                        }
+
+                        sh """
+                            echo "333"
+                            sleep 120
+                        """
                     }
                 }
             }
         }
     }
-
-//     stages {
-//         stage('run_test') {
-//             steps {
-//                 script{
-//                     dockerImage.pull()
-//                     dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-//                         sh """
-//                             echo "111"
-//                             sleep 120
-//                         """
-//                         node(NODE_LABEL_MASTER) {
-//                             script{
-//                                 dockerImage.pull()
-//                                 dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-//                                     sh """
-//                                         echo "222"
-//                                         sleep 120
-//                                     """
-//                                 }
-//                             }
-//                         }
-//                         sh """
-//                             echo "333"
-//                             sleep 120
-//                         """
-//                     }
-//                 }
-//             }
-//         }
-//     }
     post{
         always{
             script{
