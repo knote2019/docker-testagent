@@ -13,7 +13,7 @@ pipeline {
                     parallelTasks['master'] = {
                         node(NODE_LABEL_MASTER) {
                             dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                                sh "echo master; ip a;  sleep 120"
+                                sh "echo master; ip a;  sleep 120; exit 1"
                             }
                         }
                     }
