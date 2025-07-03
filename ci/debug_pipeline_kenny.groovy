@@ -19,7 +19,7 @@ pipeline {
                                 dockerImage.pull()
                                 dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
                                     sh """
-                                        sleep 12000
+                                        sleep 120
                                     """
                                 }
                             }
