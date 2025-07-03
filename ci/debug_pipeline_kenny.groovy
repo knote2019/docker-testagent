@@ -6,7 +6,6 @@ pipeline {
                 stage('host1') {
                     agent { label 'BI150-X86-U-1.45' }
                     options {
-                        timestamps()
                         ansiColor('xterm')
                     }
                     stages {
@@ -28,7 +27,6 @@ pipeline {
                 stage('host2') {
                     agent { label 'BI150-X86-U-1.46' }
                     options {
-                        timestamps()
                         ansiColor('xterm')
                     }
                     stages {
