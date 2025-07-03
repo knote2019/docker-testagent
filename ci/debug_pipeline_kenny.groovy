@@ -9,24 +9,30 @@ pipeline {
         stage('Test on Slave') {
             agent { label NODE_LABEL_SLAVE }
             steps {
-                dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                    sh "echo 111; ip a;  sleep 120"
+                script {
+                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                        sh "echo 111; ip a;  sleep 120"
+                    }
                 }
             }
         }
         stage('Test on Master') {
             agent { label NODE_LABEL_MASTER }
             steps {
-                dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                    sh "echo 222; ip a;  sleep 120"
+                script {
+                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                        sh "echo 222; ip a;  sleep 120"
+                    }
                 }
             }
         }
         stage('Final Steps on Slave') {
             agent { label NODE_LABEL_SLAVE }
             steps {
-                dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
-                    sh "echo 333; ip a; sleep 120"
+                script {
+                    dockerImage.inside("-v /dev:/dev -v /lib/modules:/lib/modules --privileged --shm-size 64g -v /stores:/stores -P") {
+                        sh "echo 333; ip a; sleep 120"
+                    }
                 }
             }
         }
