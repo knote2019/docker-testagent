@@ -1,0 +1,262 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+pip install flash-attn==v2.5.9.post1
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting flash-attn==v2.5.9.post1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/14/cd/53cbd9bd45e9bf1002f0c4de488e549501d085f4318c906807a0e50164cd/flash_attn-2.5.9.post1.tar.gz (2.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.6/2.6 MB 6.0 MB/s eta 0:00:00
+  Preparing metadata (setup.py) ... error
+  error: subprocess-exited-with-error
+
+  × python setup.py egg_info did not run successfully.
+  │ exit code: 1
+  ╰─> [20 lines of output]
+      fatal: not a git repository (or any of the parent directories): .git
+      /tmp/pip-install-9aubx2q3/flash-attn_8df54e2d727c4090bf8ee7ac3d82623b/setup.py:78: UserWarning: flash_attn was requested, but nvcc was not found.  Are you sure your environment has nvcc available?  If you're installing within a container from https://hub.docker.com/r/pytorch/pytorch, only images whose names contain 'devel' will provide nvcc.
+        warnings.warn(
+      Traceback (most recent call last):
+        File "<string>", line 2, in <module>
+        File "<pip-setuptools-caller>", line 34, in <module>
+        File "/tmp/pip-install-9aubx2q3/flash-attn_8df54e2d727c4090bf8ee7ac3d82623b/setup.py", line 134, in <module>
+          CUDAExtension(
+        File "/usr/local/lib/python3.10/dist-packages/torch/utils/cpp_extension.py", line 1076, in CUDAExtension
+          library_dirs += library_paths(cuda=True)
+        File "/usr/local/lib/python3.10/dist-packages/torch/utils/cpp_extension.py", line 1207, in library_paths
+          if (not os.path.exists(_join_cuda_home(lib_dir)) and
+        File "/usr/local/lib/python3.10/dist-packages/torch/utils/cpp_extension.py", line 2416, in _join_cuda_home
+          raise OSError('CUDA_HOME environment variable is not set. '
+      OSError: CUDA_HOME environment variable is not set. Please set it to your CUDA install root.
+
+
+      torch.__version__  = 2.4.0+cu121
+
+
+      [end of output]
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+make[1]: *** [Makefile-flash-att-v2:6: build-flash-attention-v2-cuda] Error 1
+make[1]: Leaving directory '/tmp/text-generation-inference-2.1.1/server'
+make: *** [Makefile:2: install-server] Error 2
+
+解决方案:
+pip install git+https://github.com/Dao-AILab/flash-attention.git@v2.5.9.post1 -v
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 apex:
+
+ModuleNotFoundError: No module named 'packaging'
+
+解决方案:
+&& pip install packaging \
+
+NOTE:
+https://github.com/NVIDIA/apex/issues/1594
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 flashinfer:
+Unknown CUDA Architecture Name 9.0a in CUDA_SELECT_NVCC_ARCH_FLAGS (compiling from source)
+
+解决方案:
+export TORCH_CUDA_ARCH_LIST="8.0"
+https://github.com/pytorch/pytorch/issues/113948
+
+nvcc --list-gpu-arch
+compute_50
+compute_52
+compute_53
+compute_60
+compute_61
+compute_62
+compute_70
+compute_72
+compute_75
+compute_80
+compute_86
+compute_87
+compute_89
+compute_90
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 tgi:
+error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet.
+13:58:46  error: 39 bytes of body are still expected
+13:58:46  fetch-pack: unexpected disconnect while reading sideband packet
+13:58:46  fatal: early EOF
+13:58:46  fatal: fetch-pack: invalid index-pack output
+13:58:46  make[1]: *** [Makefile-vllm:4: build-vllm-cuda] Error 128
+13:58:46  make[1]: Leaving directory '/root/text-generation-inference/server'
+
+解决方案:
+&& git config --global http.version HTTP/1.1 \
+&& git config --global http.postBuffer 524288000 \
+&& git config --global https.postBuffer 524288000 \
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 tgi:
+17:14:55  Collecting vllm-nccl-cu12<2.19,>=2.18 (from vllm==0.4.1)
+17:14:55    Downloading https://pypi.tuna.tsinghua.edu.cn/packages/41/07/c1be8f4ffdc257646dda26470b803487150c732aa5c9f532dd789f186a54/vllm_nccl_cu12-2.18.1.0.4.0.tar.gz (6.2 kB)
+
+解决方案:
+&& wget -nv https://github.com/vllm-project/vllm-nccl/releases/download/v0.1.0/cu12-libnccl.so.2.18.1 -P /root/.config/vllm/nccl/cu12 \
+
+NOTE:
+https://github.com/vllm-project/vllm/issues/4360
+https://github.com/vllm-project/vllm-nccl/releases/tag/v0.1.0
+yes, it is not required now after #5091 , starting in v0.4.3.
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+text-generation-launcher --model-id /stores/llm_models/llama/Llama-2-7b-hf \
+--sharded false \
+--dtype float16 \
+--disable-custom-kernels \
+--trust-remote-code \
+--max-total-tokens 6144 \
+--max-batch-total-tokens 6144 \
+--max-batch-prefill-tokens 4096 \
+--port 4000 \
+--max-input-length 4096
+运行出错:
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 748, in _load_attr_from_module
+    return getattribute_from_module(self._modules[module_name], attr)
+
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 692, in getattribute_from_module
+    if hasattr(module, attr):
+
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/import_utils.py", line 1525, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/import_utils.py", line 1537, in _get_module
+    raise RuntimeError(
+
+RuntimeError: Failed to import transformers.models.llama.modeling_llama because of the following error (look up to see its traceback):
+/usr/local/lib/python3.10/dist-packages/flash_attn_2_cuda.cpython-310-x86_64-linux-gnu.so: undefined symbol: _ZN3c1021throwNullDataPtrErrorEv
+ rank=0
+2024-09-14T13:42:12.005358Z ERROR text_generation_launcher: Shard 0 failed to start
+2024-09-14T13:42:12.005401Z  INFO text_generation_launcher: Shutting down shards
+
+解决方案:
+&& pip uninstall -y flash-attn \
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 megatron-v0.11.0:
+Collecting blinker
+  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/10/cb/f2ad4230dc2eb1a74edf38f1a38b9b52277f75bef262d8908e60d957e13c/blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Installing collected packages: blinker
+  Attempting uninstall: blinker
+    Found existing installation: blinker 1.4
+ERROR: Cannot uninstall 'blinker'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall.
+
+解决方案:
+&& apt remove -y python3-blinker \
+&& pip uninstall blinker \
+
+先remove再uninstall.
+
+NOTE:
+https://github.com/googlecolab/colabtools/issues/3976
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 pytorch-v2.4.1:
+2025-05-16 15:21:19  -- Building using own protobuf under third_party per request.
+2025-05-16 15:21:19  -- Use custom protobuf build.
+2025-05-16 15:21:19  CMake Error at third_party/protobuf/cmake/CMakeLists.txt:2 (cmake_minimum_required):
+2025-05-16 15:21:19    Compatibility with CMake < 3.5 has been removed from CMake.
+2025-05-16 15:21:19
+2025-05-16 15:21:19    Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2025-05-16 15:21:19    to tell CMake that the project requires at least <min> but has been updated
+2025-05-16 15:21:19    to work with policies introduced by <max> or earlier.
+2025-05-16 15:21:19
+2025-05-16 15:21:19    Or, add -DCMAKE_POLICY_VERSION_MINIMUM=3.5 to try configuring anyway.
+
+解决方案:
+&& pip install cmake==3.31.6 \
+或者:
+&& sed -i 's/cmake_minimum_required(VERSION 3.1.3)/cmake_minimum_required(VERSION 3.10)/' third_party/protobuf/cmake/CMakeLists.txt \
+
+NOTE:
+https://cmake.org/cmake/help/latest/release/4.0.html
+Compatibility with versions of CMake older than 3.5 has been removed.
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 pytorch-v2.4.1:
+2025-05-16 18:06:10      File "setup.py", line 1194, in main
+2025-05-16 18:06:10        with open(os.path.join(cwd, "README.md"), encoding="utf-8") as f:
+2025-05-16 18:06:10    FileNotFoundError: [Errno 2] No such file or directory: '/tmp/torch/README.md'
+
+解决方案:
+保留 README.md.
+
+------------------------------------------------------------------------------------------------------------------------
+问题描述:
+源码安装 megatron-v0.11.0:
+
+[root@a85e6a794abd ~]$ python
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import transformer_engine.pytorch
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/__init__.py", line 13, in <module>
+    import torch
+  File "/usr/local/lib/python3.10/dist-packages/torch/__init__.py", line 409, in <module>
+    from torch._C import *  # noqa: F403
+ImportError: /usr/local/lib/python3.10/dist-packages/torch/lib/../../nvidia/cusparse/lib/libcusparse.so.12: undefined symbol: __nvJitLinkGetErrorLog_12_6, version libnvJitLink.so.12
+
+[root@a85e6a794abd ~]$ python
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import torch
+>>> import transformer_engine.pytorch
+/usr/local/lib/python3.10/dist-packages/torch/cuda/__init__.py:129: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/__init__.py", line 77, in <module>
+    from transformer_engine.pytorch.attention import DotProductAttention
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/attention.py", line 155, in <module>
+    from flash_attn_2_cuda import varlen_bwd as flash_attn_cuda_bwd
+ImportError: /usr/local/lib/python3.10/dist-packages/flash_attn_2_cuda.cpython-310-x86_64-linux-gnu.so: undefined symbol: _ZN3c105ErrorC2ENS_14SourceLocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import transformer_engine.pytorch
+/usr/local/lib/python3.10/dist-packages/torch/cuda/__init__.py:129: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/__init__.py", line 13, in <module>
+    from . import pytorch
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/__init__.py", line 81, in <module>
+    from transformer_engine.pytorch.permutation import (
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/permutation.py", line 11, in <module>
+    import transformer_engine.pytorch.triton.permutation as triton_permutation
+  File "/usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/triton/permutation.py", line 123, in <module>
+    def _permute_kernel(
+  File "/usr/local/lib/python3.10/dist-packages/triton/runtime/autotuner.py", line 368, in decorator
+    return Autotuner(fn, fn.arg_names, configs, key, reset_to_zero, restore_value, pre_hook=pre_hook,
+  File "/usr/local/lib/python3.10/dist-packages/triton/runtime/autotuner.py", line 130, in __init__
+    self.do_bench = driver.active.get_benchmarker()
+  File "/usr/local/lib/python3.10/dist-packages/triton/runtime/driver.py", line 23, in __getattr__
+    self._initialize_obj()
+  File "/usr/local/lib/python3.10/dist-packages/triton/runtime/driver.py", line 20, in _initialize_obj
+    self._obj = self._init_fn()
+  File "/usr/local/lib/python3.10/dist-packages/triton/runtime/driver.py", line 8, in _create_driver
+    raise RuntimeError(f"{len(actives)} active drivers ({actives}). There should only be one.")
+RuntimeError: 0 active drivers ([]). There should only be one.

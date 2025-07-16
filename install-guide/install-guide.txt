@@ -1,0 +1,69 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+基础包:
+cuda:
+https://download.nvidia.com/XFree86/Linux-x86_64/
+https://developer.nvidia.com/cuda-toolkit-archive
+https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/
+https://developer.download.nvidia.com/compute/redist/nccl/
+
+------------------------------------------------------------------------------------------------------------------------
+基础框架:
+torch:
+https://download.pytorch.org/libtorch/cpu
+https://download.pytorch.org/libtorch/cu118
+https://download.pytorch.org/whl/torch/
+
+NOTE:
+windows下载，然后上传到FTP.
+
+https://github.com/pytorch/pytorch#from-source
+
+------------------------------------------------------------------------------------------------------------------------
+小模型训练:
+vision:
+https://download.pytorch.org/whl/torchvision/
+
+NOTE:
+https://github.com/pytorch/vision/blob/main/CONTRIBUTING.md#development-installation
+
+2.5	0.20	>=3.9, <=3.12
+2.4	0.19	>=3.8, <=3.12
+2.3	0.18	>=3.8, <=3.12
+2.2	0.17	>=3.8, <=3.11
+2.1	0.16	>=3.8, <=3.11
+2.0	0.15	>=3.8, <=3.11
+
+------------------------------------------------------------------------------------------------------------------------
+小模型推理:
+tensorrt:
+https://github.com/NVIDIA/TensorRT
+
+tvm:
+https://tvm.apache.org/docs/v0.9.0/install/from_source.html
+
+------------------------------------------------------------------------------------------------------------------------
+大模型训练:
+megatron:
+https://github.com/NVIDIA/Megatron-LM
+
+nvte:
+https://github.com/NVIDIA/TransformerEngine.git
+https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/installation.html
+
+flash-attn:
+https://github.com/Dao-AILab/flash-attention
+
+------------------------------------------------------------------------------------------------------------------------
+大模型推理:
+vllm:
+https://docs.vllm.ai/en/latest/getting_started/installation.html
+
+sglang:
+https://docs.sglang.ai/start/install.html#
+https://github.com/sgl-project/whl/tree/gh-pages
+
+tensorrt-llm:
+https://pypi.nvidia.cn/tensorrt-llm
+https://nvidia.github.io/TensorRT-LLM/installation/build-from-source-linux.html
