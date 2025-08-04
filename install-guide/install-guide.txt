@@ -59,11 +59,14 @@ https://github.com/Dao-AILab/flash-attention
 大模型推理:
 vllm:
 https://docs.vllm.ai/en/latest/getting_started/installation.html
+dockerhub:
 https://hub.docker.com/r/vllm/vllm-openai
 
 sglang:
 https://docs.sglang.ai/start/install.html#
 https://github.com/sgl-project/whl/tree/gh-pages
+dockerhub:
+https://hub.docker.com/r/lmsysorg/sglang
 
 tensorrt-llm:
 https://pypi.nvidia.cn/tensorrt-llm
