@@ -54,19 +54,47 @@ RUN set -x \
 # install vllm.
 ENV VLLM_ATTENTION_BACKEND="FLASH_ATTN"
 RUN set -x \
-&& pip install vllm==0.9.1 \
+&& pip install vllm==0.10.0 \
+&& echo "end"
+
+# install nixl.
+RUN set -x \
+&& pip install nixl \
+&& echo "end"
+
+# install mooncake.
+RUN set -x \
+&& wget -nv http://10.113.3.1/corex/toolbox/etcd/etcd-v3.6.4-linux-amd64.tar.gz -P /tmp \
+&& tar -xzf /tmp/etcd-v3.6.4-linux-amd64.tar.gz -C /tmp \
+&& cp /tmp/etcd-v3.6.4-linux-amd64/etcd /usr/bin \
+&& cp /tmp/etcd-v3.6.4-linux-amd64/etcdctl /usr/bin \
+&& cp /tmp/etcd-v3.6.4-linux-amd64/etcdutl /usr/bin \
+&& echo "etcd --listen-client-urls http://127.0.0.1:2379 --advertise-client-urls http://127.0.0.1:2379 &" >> /boot.sh \
+&& apt install -y libibverbs-dev \
+&& apt install -y ibverbs-utils \
+&& apt install -y rdma-core \
+&& pip install mooncake-transfer-engine \
+&& echo "mooncake_master --rpc_port 50001 --etcd_endpoints http://127.0.0.1:2379 --enable_ha=1 &" >> /boot.sh \
+&& rm -rf /tmp/* \
+&& echo "end"
+
+# install lmcache.
+RUN set -x \
+&& pip install lmcache \
 && echo "end"
 
 #-----------------------------------------------------------------------------------------------------------------------
 # install 3pp.
 RUN set -x \
 && pip install sentencepiece \
+&& pip install autoawq \
+&& pip install auto-gptq \
 && pip install llmcompressor \
-&& pip install nixl \
-&& pip install mooncake-transfer-engine \
+&& pip install quart --ignore-installed \
+&& pip install transformers==4.54.1 \
 && echo "end"
 
-# install ibverbs.
+# clone vllm.
 RUN set -x \
-&& apt install -y libibverbs-dev \
+&& git clone -b v0.10.0 --recursive --depth=1 https://github.com/vllm-project/vllm.git /root/vllm \
 && echo "end"
