@@ -3,8 +3,8 @@
 git clone https://github.com/vllm-project/vllm.git
 cd vllm
 
-git checkout v0.6.3 -b master
-git remote set-url origin git@github.com:knote2019/vllm-v0.6.3.git
+git checkout v0.11.2 -b master
+git remote set-url origin git@github.com:knote2019/vllm-v0.11.2.git
 git push origin master
 
 rm -rf benchmarks/
