@@ -47,6 +47,10 @@ RUN set -x \
 && apt install -y xfce4-goodies \
 && apt purge -y xfce4-power-manager-plugins \
 && apt purge -y gnome-terminal \
+&& mkdir -p /root/.config/xfce4/terminal \
+&& echo > /root/.config/xfce4/terminal/terminalrc \
+&& echo "[Configuration]"  >> /root/.config/xfce4/terminal/terminalrc \
+&& echo "Encoding=UTF-8"   >> /root/.config/xfce4/terminal/terminalrc \
 && wget -nv http://10.113.3.1/corex/toolbox/kasmvncserver/kasmvncserver_noble_1.3.2_amd64.deb -P /tmp \
 && apt install -y /tmp/kasmvncserver_noble_1.3.2_amd64.deb \
 && echo 'cloud:$5$kasm$DAH8fimyo3/UVSYcM534anM9sdDKXe1qfQmzNtiUBw/:ow' > /root/.kasmpasswd \
